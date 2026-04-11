@@ -1,283 +1,200 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>VUW Security — Patrol Tool</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --surface2: #1c2230;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.14);
-  --text: #e6edf3;
-  --text2: #7d8590;
-  --text3: #4a5568;
-  --accent: #58a6ff;
-  --accent-dim: rgba(88,166,255,0.12);
-  --green: #3fb950;
-  --green-dim: rgba(63,185,80,0.12);
-  --amber: #d29922;
-  --amber-dim: rgba(210,153,34,0.12);
-  --red: #f85149;
-  --red-dim: rgba(248,81,73,0.12);
-  --radius: 10px;
-  --radius-sm: 6px;
+:root{
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --surface2:#f7f8fa;
+  --surface3:#eef0f4;
+  --border:#e2e5ea;
+  --border2:#c8cdd6;
+  --text:#1a1f2e;
+  --text2:#5a6278;
+  --text3:#9ba3b8;
+  --accent:#1a56db;
+  --accent-dim:#e8effe;
+  --accent-mid:rgba(26,86,219,0.12);
+  --green:#0a7c42;
+  --green-dim:#e6f5ee;
+  --green-mid:rgba(10,124,66,0.12);
+  --amber:#92590a;
+  --amber-dim:#fef3e2;
+  --amber-mid:rgba(146,89,10,0.12);
+  --red:#c0182a;
+  --red-dim:#fde8eb;
+  --red-mid:rgba(192,24,42,0.12);
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.06),0 2px 6px rgba(0,0,0,0.04);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'IBM Plex Sans', sans-serif;
-  background: var(--bg); color: var(--text);
-  min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-  padding: 0 0 60px;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 0 80px;}
 
-/* Header */
-.header {
-  width: 100%; background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 20;
-}
-.header-logo { display: flex; align-items: center; gap: 10px; }
-.header-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--green); box-shadow: 0 0 8px var(--green);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
-.header-title { font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; }
-.header-time  { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text2); }
+.header{width:100%;background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;height:56px;box-shadow:var(--shadow-sm);}
+.header-logo{display:flex;align-items:center;gap:12px;}
+.header-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 2px var(--green-dim);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 2px var(--green-dim)}50%{box-shadow:0 0 0 5px rgba(10,124,66,0.08)}}
+.header-title{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
+.header-time{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);background:var(--surface2);padding:4px 10px;border-radius:6px;border:1px solid var(--border);}
 
-/* Breadcrumb */
-.breadcrumb {
-  width:100%; max-width:1280px; padding:12px 24px 0;
-  display:flex; align-items:center; gap:6px;
-  font-size:12px; color:var(--text3); font-family:'IBM Plex Mono',monospace; flex-wrap:wrap;
-}
-.breadcrumb span { color:var(--text2); cursor:pointer; transition:color .15s; }
-.breadcrumb span:hover { color:var(--accent); }
-.breadcrumb .sep { color:var(--text3); }
-.breadcrumb .current { color:var(--accent); cursor:default; }
+.breadcrumb{width:100%;max-width:1400px;padding:14px 28px 0;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;flex-wrap:wrap;}
+.breadcrumb span{color:var(--text2);cursor:pointer;transition:color .15s;}
+.breadcrumb span:hover{color:var(--accent);}
+.breadcrumb .sep{color:var(--text3);}
+.breadcrumb .current{color:var(--accent);cursor:default;font-weight:500;}
 
-/* Container */
-.container { width:100%; max-width:1280px; padding:24px; }
+.container{width:100%;max-width:1400px;padding:24px 28px;}
 
-/* Screens */
-.screen { display:none; }
-.screen.active { display:block; animation:fadeIn .2s ease; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-.screen-title { font-size:22px; font-weight:500; margin-bottom:6px; }
-.screen-sub { font-size:13px; color:var(--text2); margin-bottom:20px; font-family:'IBM Plex Mono',monospace; }
+.screen{display:none;}
+.screen.active{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.screen-title{font-size:24px;font-weight:600;margin-bottom:4px;color:var(--text);}
+.screen-sub{font-size:13px;color:var(--text2);margin-bottom:24px;font-family:'DM Mono',monospace;}
 
-/* Campus grid */
-.campus-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:560px; }
-@media(max-width:480px){ .campus-grid{grid-template-columns:1fr} }
-.campus-card {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:20px 16px; cursor:pointer; transition:border-color .15s,background .15s,transform .1s; text-align:left;
-}
-.campus-card:hover { border-color:var(--border2); background:var(--surface2); transform:translateY(-2px); }
-.campus-card .c-icon { font-size:28px; margin-bottom:12px; display:block; }
-.campus-card .c-name { font-size:15px; font-weight:600; margin-bottom:4px; }
-.campus-card .c-desc { font-size:12px; color:var(--text2); font-family:'IBM Plex Mono',monospace; }
+/* Campus */
+.campus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:580px;}
+@media(max-width:480px){.campus-grid{grid-template-columns:1fr}}
+.campus-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 20px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .15s;text-align:left;box-shadow:var(--shadow-sm);}
+.campus-card:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-3px);}
+.campus-card .c-icon{font-size:30px;margin-bottom:14px;display:block;}
+.campus-card .c-name{font-size:16px;font-weight:600;margin-bottom:5px;color:var(--text);}
+.campus-card .c-desc{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace;}
 
-/* ── Clear bar ── */
-.clear-bar {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 14px;
-  margin-bottom: 16px;
-}
-.clear-bar-label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-  color: var(--text2); text-transform: uppercase; letter-spacing: .07em;
-  margin-right: 4px; white-space: nowrap;
-}
-.clear-btn {
-  padding: 4px 12px; border-radius: 20px; cursor: pointer;
-  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-  border: 1px solid var(--border2); background: var(--surface2); color: var(--text2);
-  transition: all .15s; white-space: nowrap;
-}
-.clear-btn:hover { border-color: var(--red); color: var(--red); background: var(--red-dim); }
-.clear-btn.all { border-color: var(--red); color: var(--red); background: var(--red-dim); font-weight: 500; }
-.clear-btn.all:hover { background: rgba(248,81,73,.22); }
+/* Zone tabs */
+.zone-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px;width:fit-content;box-shadow:var(--shadow-sm);}
+.zone-tab{padding:7px 22px;border-radius:6px;border:none;background:transparent;color:var(--text2);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s;letter-spacing:.04em;text-transform:uppercase;font-weight:500;}
+.zone-tab:hover{background:var(--surface2);color:var(--text);}
+.zone-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(26,86,219,0.25);}
+.zone-panel{display:none;}
+.zone-panel.active{display:block;animation:fadeIn .15s ease;}
 
-/* Te Aro 3-col grid */
-.tearo-grid {
-  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px; align-items:start;
-}
-@media(max-width:900px){ .tearo-grid{grid-template-columns:1fr 1fr} }
-@media(max-width:560px){ .tearo-grid{grid-template-columns:1fr} }
+/* Sub-tabs (External / Internal) */
+.sub-tabs{display:flex;gap:5px;margin-bottom:16px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px;width:fit-content;}
+.sub-tab{padding:6px 18px;border-radius:6px;border:none;background:transparent;color:var(--text2);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em;}
+.sub-tab:hover{background:var(--surface);color:var(--text);}
+.sub-tab.active{background:var(--surface);color:var(--accent);font-weight:500;box-shadow:var(--shadow-sm);}
+.sub-panel{display:none;}
+.sub-panel.active{display:block;animation:fadeIn .15s ease;}
 
-/* Section card */
-.section-card {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--radius); overflow:hidden; transition:border-color .2s;
-}
-.section-card.included { border-color:var(--accent); }
-.section-header {
-  display:flex; align-items:center; gap:10px; padding:11px 13px;
-  background:var(--surface2); border-bottom:1px solid var(--border);
-  cursor:pointer; user-select:none;
-}
-.section-header:hover { background:rgba(255,255,255,0.04); }
-.section-checkbox {
-  width:16px; height:16px; flex-shrink:0;
-  border:1.5px solid var(--border2); border-radius:3px; background:var(--surface);
-  display:flex; align-items:center; justify-content:center;
-  transition:background .15s,border-color .15s;
-}
-.section-checkbox.checked { background:var(--accent); border-color:var(--accent); }
-.section-checkbox.checked::after {
-  content:''; width:9px; height:5px;
-  border-left:2px solid #000; border-bottom:2px solid #000;
-  transform:rotate(-45deg) translateY(-1px); display:block;
-}
-.section-title { font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text); }
-.section-tag {
-  margin-left:auto; font-family:'IBM Plex Mono',monospace;
-  font-size:10px; padding:2px 7px; border-radius:20px;
-  border:1px solid var(--border2); color:var(--text2); white-space:nowrap;
-}
-.section-tag.on { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
-.section-body { padding:11px; }
+/* Clear bar */
+.clear-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 16px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+.clear-bar-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-right:4px;white-space:nowrap;}
+.clear-btn{padding:4px 14px;border-radius:20px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.clear-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-dim);}
+.clear-btn.all{border-color:var(--red);color:var(--red);background:var(--red-dim);font-weight:500;}
+.clear-btn.all:hover{background:rgba(192,24,42,.16);}
+
+/* Section card (with checkbox) */
+.section-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm);}
+.section-card.included{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-mid),var(--shadow-sm);}
+.section-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface2);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:background .15s;}
+.section-header:hover{background:var(--surface3);}
+.section-checkbox{width:16px;height:16px;flex-shrink:0;border:2px solid var(--border2);border-radius:4px;background:var(--surface);display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.section-checkbox.checked{background:var(--accent);border-color:var(--accent);}
+.section-checkbox.checked::after{content:'';width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block;}
+.section-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text);}
+.section-tag{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--text3);white-space:nowrap;background:var(--surface);}
+.section-tag.on{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.section-body{padding:12px;}
 
 /* Sub-label */
-.sub-label {
-  font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text2);
-  text-transform:uppercase; letter-spacing:.08em; margin:10px 0 5px;
-}
-.sub-label:first-child { margin-top:0; }
-
-/* Status rows */
-.status-row {
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:9px 10px; margin-bottom:6px;
-}
-.status-row-label { font-size:12px; font-weight:500; margin-bottom:7px; }
-.status-btns { display:flex; gap:4px; }
-.status-btn {
-  flex:1; padding:5px 4px; border-radius:var(--radius-sm);
-  border:1px solid var(--border2); background:var(--surface); color:var(--text2);
-  font-size:11px; font-family:'IBM Plex Mono',monospace; cursor:pointer; text-align:center;
-  transition:all .15s;
-}
-.status-btn:hover { color:var(--text); border-color:var(--text2); }
-.status-btn.active-green { background:var(--green-dim); border-color:var(--green); color:var(--green); }
-.status-btn.active-amber { background:var(--amber-dim); border-color:var(--amber); color:var(--amber); }
-.status-btn.active-red   { background:var(--red-dim);   border-color:var(--red);   color:var(--red); }
+.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:10px 0 6px;font-weight:500;}
+.sub-label:first-child{margin-top:0;}
 
 /* Level rows */
-.level-row {
-  display:flex; align-items:center; justify-content:space-between;
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:7px 9px; margin-bottom:5px;
-  transition:border-color .15s;
-}
-.level-row.occupied { border-color:var(--amber); }
-.lv-name { font-size:12px; font-weight:500; }
-.lv-status { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text3); margin-top:2px; }
-.lv-status.occ { color:var(--amber); }
-.counter { display:flex; align-items:center; gap:7px; }
-.cnt-btn {
-  width:22px; height:22px; border-radius:50%;
-  border:1px solid var(--border2); background:var(--surface); color:var(--text);
-  font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:background .1s,border-color .1s; font-family:'IBM Plex Mono',monospace; line-height:1;
-}
-.cnt-btn:hover { border-color:var(--accent); background:var(--accent-dim); }
-.cnt-val { font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; min-width:20px; text-align:center; }
+.level-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:7px 10px;margin-bottom:5px;transition:border-color .15s,background .15s;}
+.level-row.occupied{border-color:var(--amber);background:var(--amber-dim);}
+.lv-name{font-size:12px;font-weight:500;color:var(--text);}
+.lv-status{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px;}
+.lv-status.occ{color:var(--amber);}
+.counter{display:flex;align-items:center;gap:6px;}
+.cnt-btn{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);background:var(--surface);color:var(--text2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Mono',monospace;line-height:1;box-shadow:var(--shadow-sm);}
+.cnt-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.cnt-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;min-width:20px;text-align:center;color:var(--text);}
+
+/* Status row */
+.status-row{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 11px;margin-bottom:6px;}
+.status-row-label{font-size:12px;font-weight:500;margin-bottom:8px;color:var(--text);}
+.status-btns{display:flex;gap:4px;}
+.status-btn{flex:1;padding:5px 4px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-size:10px;font-family:'DM Mono',monospace;cursor:pointer;text-align:center;transition:all .15s;font-weight:500;}
+.status-btn:hover{border-color:var(--border2);color:var(--text);background:var(--surface3);}
+.status-btn.active-green{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.status-btn.active-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+.status-btn.active-red{background:var(--red-dim);border-color:var(--red);color:var(--red);}
 
 /* Notes */
-.notes-area {
-  width:100%; min-height:64px;
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:7px 9px;
-  color:var(--text); font-family:'IBM Plex Sans',sans-serif;
-  font-size:12px; resize:vertical; line-height:1.5; transition:border-color .15s;
-}
-.notes-area:focus { outline:none; border-color:var(--accent); }
-.notes-area::placeholder { color:var(--text3); }
+.notes-area{width:100%;min-height:60px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;line-height:1.5;transition:border-color .15s;}
+.notes-area:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-mid);}
+.notes-area::placeholder{color:var(--text3);}
+
+/* Info tag */
+.info-tag{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;padding:4px 12px;border-radius:20px;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(26,86,219,.2);margin-bottom:20px;font-weight:500;}
+.info-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);}
 
 /* Divider */
-.divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+.divider{border:none;border-top:1px solid var(--border);margin:16px 0;}
 
 /* Buttons */
-.btn {
-  display:inline-flex; align-items:center; gap:8px; padding:10px 20px;
-  border-radius:var(--radius-sm); font-size:14px; font-weight:500; cursor:pointer;
-  transition:all .15s; font-family:'IBM Plex Sans',sans-serif;
-  border:1px solid var(--border2); background:var(--surface2); color:var(--text);
-}
-.btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
-.btn-generate {
-  background:var(--accent-dim); border-color:var(--accent); color:var(--accent);
-  font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.04em;
-  text-transform:uppercase; padding:12px 24px; width:100%; justify-content:center; margin-top:16px;
-}
-.btn-generate:hover { background:rgba(88,166,255,.22); }
-.btn-copy {
-  background:var(--green-dim); border-color:var(--green); color:var(--green);
-  font-family:'IBM Plex Mono',monospace; font-size:12px;
-}
-.btn-copy:hover { background:rgba(63,185,80,.22); }
-.btn-row { display:flex; gap:10px; flex-wrap:wrap; }
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;border:1.5px solid var(--border2);background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.btn-generate{background:var(--accent);border-color:var(--accent);color:#fff;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:14px 24px;width:100%;justify-content:center;margin-top:20px;box-shadow:0 4px 14px rgba(26,86,219,0.3);}
+.btn-generate:hover{background:#1548c0;border-color:#1548c0;box-shadow:0 6px 20px rgba(26,86,219,0.4);}
+.btn-copy{background:var(--green-dim);border-color:var(--green);color:var(--green);font-family:'DM Mono',monospace;font-size:12px;}
+.btn-copy:hover{background:rgba(10,124,66,.16);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;}
 
 /* Report */
-/* .report-box {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:20px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
-  white-space:pre-wrap; line-height:1.8; margin-bottom:16px;
-  line-height: 1.8;
+.report-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;font-family:'DM Mono',monospace;font-size:12px;white-space:pre-wrap;line-height:1.9;margin-bottom:18px;box-shadow:var(--shadow);color:var(--text);}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;padding:5px 14px;border-radius:20px;margin-bottom:18px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;}
+.status-pill::before{content:'';width:7px;height:7px;border-radius:50%;}
+.pill-clear{background:var(--green-dim);color:var(--green);border:1.5px solid var(--green);}
+.pill-clear::before{background:var(--green);}
+.pill-occupied{background:var(--amber-dim);color:var(--amber);border:1.5px solid var(--amber);}
+.pill-occupied::before{background:var(--amber);}
+.copy-msg{font-size:12px;color:var(--green);font-family:'DM Mono',monospace;margin-top:8px;display:none;}
 
-  
+/* All Normal button */
+.all-normal-btn{width:100%;padding:9px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--green);background:var(--green-dim);color:var(--green);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;cursor:pointer;text-align:center;letter-spacing:.04em;margin-bottom:12px;transition:all .15s;box-shadow:var(--shadow-sm);}
+.all-normal-btn:hover{background:rgba(10,124,66,.16);box-shadow:0 2px 8px rgba(10,124,66,.2);}
 
-} */
+/* Responsive card grids */
+.grid-fp{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+.grid-bldg{display:grid;gap:10px;align-items:start;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));}
 
+/* Accordion building rows */
+.bldg-accordion{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm);}
+.bldg-accordion.open{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-mid);}
+.bldg-accordion-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;user-select:none;background:var(--surface2);transition:background .15s;}
+.bldg-accordion-hd:hover{background:var(--surface3);}
+.bldg-accordion-name{font-size:13px;font-weight:600;color:var(--text);}
+.bldg-accordion-meta{display:flex;align-items:center;gap:8px;}
+.bldg-accordion-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;background:var(--accent-dim);padding:2px 8px;border-radius:20px;display:none;}
+.bldg-accordion-count.visible{display:inline-block;}
+.bldg-accordion-chevron{font-size:10px;color:var(--text3);transition:transform .2s;}
+.bldg-accordion.open .bldg-accordion-chevron{transform:rotate(180deg);}
+.bldg-accordion-body{display:none;padding:10px;}
+.bldg-accordion.open .bldg-accordion-body{display:block;}
 
-.report-box {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:1px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:12.5px;
-  white-space:pre-wrap;
-  line-height:0.8;   /* ⬅ reduced spacing */
-  margin-bottom:16px;
-  white-space: pre-wrap;
-}
-
-.status-pill {
-  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
-  padding:4px 12px; border-radius:20px; margin-bottom:16px;
-  letter-spacing:.06em; text-transform:uppercase;
-}
-.pill-clear    { background:var(--green-dim); color:var(--green); border:1px solid var(--green); }
-.pill-occupied { background:var(--amber-dim); color:var(--amber); border:1px solid var(--amber); }
-.copy-msg { font-size:12px; color:var(--green); font-family:'IBM Plex Mono',monospace; margin-top:8px; display:none; }
-.info-tag {
-  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
-  padding:3px 9px; border-radius:20px; background:var(--accent-dim); color:var(--accent);
-  border:1px solid rgba(88,166,255,.3); margin-bottom:20px;
-}
+/* Counter with text input */
+.counter{display:flex;align-items:center;gap:5px;}
+.cnt-input{width:38px;height:26px;border:1.5px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--text);font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-align:center;outline:none;transition:border-color .15s;-moz-appearance:textfield;}
+.cnt-input:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-mid);}
+.cnt-input::-webkit-inner-spin-button,.cnt-input::-webkit-outer-spin-button{-webkit-appearance:none;}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-logo">
-    <div class="header-dot"></div>
-    <span class="header-title">VUW Security · Patrol Tool</span>
-  </div>
+  <div class="header-logo"><div class="header-dot"></div><span class="header-title">VUW Security</span></div>
   <span class="header-time" id="header-time"></span>
 </div>
-
 <div class="breadcrumb" id="breadcrumb"></div>
 
 <div class="container">
@@ -287,32 +204,20 @@ body {
     <div class="screen-title">Select campus</div>
     <div class="screen-sub">// Which campus are you patrolling?</div>
     <div class="campus-grid">
-      <button class="campus-card" onclick="selectCampus('Te Aro')">
-        <span class="c-icon">🏙</span>
-        <div class="c-name">Te Aro</div>
-        <div class="c-desc">Design &amp; Creative Arts</div>
-      </button>
-      <button class="campus-card" onclick="selectCampus('Kelburn')">
-        <span class="c-icon">🏛</span>
-        <div class="c-name">Kelburn</div>
-        <div class="c-desc">Main campus</div>
-      </button>
-      <button class="campus-card" onclick="selectCampus('Pipitea')">
-        <span class="c-icon">⚖️</span>
-        <div class="c-name">Pipitea</div>
-        <div class="c-desc">Law &amp; Commerce</div>
-      </button>
+      <button class="campus-card" onclick="selectCampus('Te Aro')"><span class="c-icon">🏙</span><div class="c-name">Te Aro</div><div class="c-desc">Design &amp; Creative Arts</div></button>
+      <button class="campus-card" onclick="selectCampus('Kelburn')"><span class="c-icon">🏛</span><div class="c-name">Kelburn</div><div class="c-desc">Main campus</div></button>
+      <button class="campus-card" onclick="selectCampus('Pipitea')"><span class="c-icon">⚖️</span><div class="c-name">Pipitea</div><div class="c-desc">Law &amp; Commerce</div></button>
     </div>
   </div>
 
-  <!-- ══ S2: Generic building list ══ -->
+  <!-- ══ Pipitea building list ══ -->
   <div id="s2" class="screen">
     <div class="screen-title" id="s2-title">Buildings</div>
     <div class="screen-sub">// Select a building to inspect</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;" id="building-grid"></div>
   </div>
 
-  <!-- ══ S3: Generic levels ══ -->
+  <!-- ══ Generic levels (Pipitea) ══ -->
   <div id="s3" class="screen">
     <div class="info-tag" id="s3-badge"></div>
     <div class="screen-title" id="s3-title">Building levels</div>
@@ -322,110 +227,238 @@ body {
     <button class="btn btn-generate" onclick="generateGenericReport()">⬡ Generate control room report</button>
   </div>
 
-  <!-- ══ STA: Te Aro 3-column ══ -->
+  <!-- ══ Te Aro ══ -->
   <div id="sta" class="screen">
     <div class="info-tag">Te Aro Campus</div>
-    <div class="screen-title">Te Aro — Patrol Check</div>
-    <div class="screen-sub">// Tick the checkbox at the top of each section to include it in the report</div>
-
-    <!-- ── Clear bar ── -->
+    <div class="screen-title">Te Aro — Check</div>
+    <div class="screen-sub">// Select tab · tick checkbox to include in report</div>
     <div class="clear-bar">
       <span class="clear-bar-label">Clear:</span>
-      <button class="clear-btn all" onclick="clearSection('all')">All sections</button>
-      <button class="clear-btn" onclick="clearSection('ext')">External</button>
-      <button class="clear-btn" onclick="clearSection('wigan')">WiGAN</button>
-      <button class="clear-btn" onclick="clearSection('vivian')">VIVIAN</button>
+      <button class="clear-btn all" onclick="clearTA('all')">All sections</button>
+      <button class="clear-btn" onclick="clearTA('ext')">External</button>
+      <button class="clear-btn" onclick="clearTA('wigan')">WiGAN</button>
+      <button class="clear-btn" onclick="clearTA('vivian')">VIVIAN</button>
+    </div>
+    <div class="sub-tabs" id="ta-sub-tabs">
+      <button class="sub-tab active" onclick="showTASub('ext',this)">External Check</button>
+      <button class="sub-tab" onclick="showTASub('wigan',this)">WiGAN</button>
+      <button class="sub-tab" onclick="showTASub('vivian',this)">VIVIAN</button>
     </div>
 
-    <div class="tearo-grid">
-
-      <!-- ── Col 1: External Check ── -->
-      <div class="section-card" id="card-ext">
-        <div class="section-header" onclick="toggleSection('ext')">
-          <div class="section-checkbox" id="chk-ext"></div>
+    <!-- External -->
+    <div id="ta-sub-ext" class="sub-panel active">
+      <div class="section-card" id="ta-card-ext">
+        <div class="section-header" onclick="toggleTA('ext')">
+          <div class="section-checkbox" id="ta-chk-ext"></div>
           <span class="section-title">External Check</span>
-          <span class="section-tag" id="tag-ext">off</span>
+          <span class="section-tag" id="ta-tag-ext">off</span>
         </div>
         <div class="section-body">
+          <button class="all-normal-btn" onclick="setTAAllNormal()">✓ Nothing to Report</button>
           <div class="sub-label">Roller Doors</div>
-          <div class="status-row">
-            <div class="status-row-label">Car Park Door</div>
-            <div class="status-btns">
-              <button class="status-btn" id="ext-carpark-Secure"  onclick="setStatus('carpark','Secure')">Secure</button>
-              <button class="status-btn" id="ext-carpark-Open"    onclick="setStatus('carpark','Open')">Open</button>
-              <button class="status-btn" id="ext-carpark-Stuck"   onclick="setStatus('carpark','Stuck')">Stuck-No secure</button>
-            </div>
-          </div>
-          <div class="status-row">
-            <div class="status-row-label">Workshop Door</div>
-            <div class="status-btns">
-              <button class="status-btn" id="ext-workshop-Secure" onclick="setStatus('workshop','Secure')">Secure</button>
-              <button class="status-btn" id="ext-workshop-Open"   onclick="setStatus('workshop','Open')">Open</button>
-              <button class="status-btn" id="ext-workshop-Stuck"  onclick="setStatus('workshop','Stuck')">Stuck-No secure</button>
-            </div>
-          </div>
-          <div class="sub-label" style="margin-top:12px;">Fire Panel</div>
-          <div class="status-row">
-            <div class="status-row-label">Fire Panel Status</div>
-            <div class="status-btns">
-              <button class="status-btn" id="ext-firepanel-Normal"     onclick="setStatus('firepanel','Normal')">Normal</button>
-              <button class="status-btn" id="ext-firepanel-Detector"   onclick="setStatus('firepanel','Detector')">Detector</button>
-              <button class="status-btn" id="ext-firepanel-Emergency"  onclick="setStatus('firepanel','Emergency')">Emergency</button>
-            </div>
-          </div>
-          <div class="sub-label" style="margin-top:12px;">Notes</div>
-          <textarea class="notes-area" id="ext-notes" placeholder="Any additional comments…"></textarea>
+          <div class="status-row"><div class="status-row-label">Car Park Door</div><div class="status-btns"><button class="status-btn" id="ta-ext-carpark-Secure" onclick="setTAStatus('carpark','Secure')">Secure</button><button class="status-btn" id="ta-ext-carpark-Open" onclick="setTAStatus('carpark','Open')">Open</button><button class="status-btn" id="ta-ext-carpark-Stuck" onclick="setTAStatus('carpark','Stuck')">Stuck</button></div></div>
+          <div class="status-row"><div class="status-row-label">Workshop Door</div><div class="status-btns"><button class="status-btn" id="ta-ext-workshop-Secure" onclick="setTAStatus('workshop','Secure')">Secure</button><button class="status-btn" id="ta-ext-workshop-Open" onclick="setTAStatus('workshop','Open')">Open</button><button class="status-btn" id="ta-ext-workshop-Stuck" onclick="setTAStatus('workshop','Stuck')">Stuck</button></div></div>
+          <div class="sub-label" style="margin-top:10px;">Fire Panel</div>
+          <div class="status-row"><div class="status-row-label">Fire Panel Status</div><div class="status-btns"><button class="status-btn" id="ta-ext-firepanel-Normal" onclick="setTAStatus('firepanel','Normal')">Normal</button><button class="status-btn" id="ta-ext-firepanel-Detector" onclick="setTAStatus('firepanel','Detector')">Detector</button><button class="status-btn" id="ta-ext-firepanel-Emergency" onclick="setTAStatus('firepanel','Emergency')">Emergency</button></div></div>
+          <div class="sub-label" style="margin-top:10px;">Notes</div>
+          <textarea class="notes-area" id="ta-ext-notes" placeholder="Any additional comments…"></textarea>
         </div>
       </div>
+    </div>
 
-      <!-- ── Col 2: WiGAN Building ── -->
-      <div class="section-card" id="card-wigan">
-        <div class="section-header" onclick="toggleSection('wigan')">
-          <div class="section-checkbox" id="chk-wigan"></div>
+    <!-- WiGAN -->
+    <div id="ta-sub-wigan" class="sub-panel">
+      <div class="section-card" id="ta-card-wigan">
+        <div class="section-header" onclick="toggleTA('wigan')">
+          <div class="section-checkbox" id="ta-chk-wigan"></div>
           <span class="section-title">WiGAN Building</span>
-          <span class="section-tag" id="tag-wigan">off</span>
+          <span class="section-tag" id="ta-tag-wigan">off</span>
         </div>
         <div class="section-body">
           <div class="sub-label">Internal Check — Levels</div>
-          <div id="wigan-levels"></div>
-          <div class="sub-label" style="margin-top:8px;">Internal Notes</div>
-          <textarea class="notes-area" id="wigan-notes" placeholder="Notes for internal check…"></textarea>
+          <div id="ta-wigan-levels"></div>
+          <div class="sub-label" style="margin-top:6px;">Notes</div>
+          <textarea class="notes-area" id="ta-wigan-notes" placeholder="Notes for internal check…"></textarea>
         </div>
       </div>
+    </div>
 
-      <!-- ── Col 3: VIVIAN Building ── -->
-      <div class="section-card" id="card-vivian">
-        <div class="section-header" onclick="toggleSection('vivian')">
-          <div class="section-checkbox" id="chk-vivian"></div>
+    <!-- VIVIAN -->
+    <div id="ta-sub-vivian" class="sub-panel">
+      <div class="section-card" id="ta-card-vivian">
+        <div class="section-header" onclick="toggleTA('vivian')">
+          <div class="section-checkbox" id="ta-chk-vivian"></div>
           <span class="section-title">VIVIAN Building</span>
-          <span class="section-tag" id="tag-vivian">off</span>
+          <span class="section-tag" id="ta-tag-vivian">off</span>
         </div>
         <div class="section-body">
           <div class="sub-label">Internal Check — Levels</div>
-          <div id="vivian-levels"></div>
-          <div class="sub-label" style="margin-top:8px;">Library</div>
-          <div class="level-row" id="row-library">
-            <div>
-              <div class="lv-name">Library</div>
-              <div class="lv-status" id="lib-status">0</div>
-            </div>
-            <div class="counter">
-              <button class="cnt-btn" onclick="libChange(-1)">−</button>
-              <span class="cnt-val" id="val-library">0</span>
-              <button class="cnt-btn" onclick="libChange(1)">+</button>
-            </div>
-          </div>
-          <div class="sub-label" style="margin-top:8px;">Internal Notes</div>
-          <textarea class="notes-area" id="vivian-notes" placeholder="Notes for internal check…"></textarea>
+          <div id="ta-vivian-levels"></div>
+          <div class="sub-label" style="margin-top:6px;">Library</div>
+          <div class="level-row" id="ta-row-library"><div><div class="lv-name">Library</div><div class="lv-status" id="ta-lib-status">0</div></div><div class="counter"><button class="cnt-btn" onclick="taLibChange(-1)">−</button><input class="cnt-input" type="number" id="ta-val-library" value="0" min="0" oninput="taLibSet(this.value)" onclick="this.select()"><button class="cnt-btn" onclick="taLibChange(1)">+</button></div></div>
+          <div class="sub-label" style="margin-top:6px;">Notes</div>
+          <textarea class="notes-area" id="ta-vivian-notes" placeholder="Notes for internal check…"></textarea>
         </div>
       </div>
-
-    </div><!-- /tearo-grid -->
+    </div>
 
     <button class="btn btn-generate" onclick="generateTearoReport()">⬡ Generate control room report</button>
   </div>
 
-  <!-- ══ S4: Report ══ -->
+  <!-- ══ Kelburn ══ -->
+  <div id="skb" class="screen">
+    <div class="info-tag">Kelburn Campus</div>
+    <div class="screen-title">Kelburn — Check</div>
+    <div class="screen-sub">// Select zone · use External / Internal tabs · tick checkbox to include in report</div>
+
+    <div class="zone-tabs">
+      <button class="zone-tab active" onclick="showZone('north',this)">North</button>
+      <button class="zone-tab" onclick="showZone('middle',this)">Middle</button>
+      <button class="zone-tab" onclick="showZone('south',this)">South</button>
+    </div>
+
+    <!-- ── NORTH ── -->
+    <div id="zone-north" class="zone-panel active">
+      <div class="clear-bar">
+        <span class="clear-bar-label">Clear North:</span>
+        <button class="clear-btn all"  onclick="clearKB('north','all')">All</button>
+        <button class="clear-btn" onclick="clearKB('north','ext')">External</button>
+        <button class="clear-btn" onclick="clearKB('north','int')">Internal</button>
+      </div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="showSub('north','ext',this)">External Check</button>
+        <button class="sub-tab"        onclick="showSub('north','int',this)">Internal Check</button>
+      </div>
+      <!-- North External -->
+      <div id="kb-north-sub-ext" class="sub-panel active">
+        <div class="section-card" id="kb-north-card-ext">
+          <div class="section-header" onclick="toggleKBSection('north','ext')">
+            <div class="section-checkbox" id="kb-north-chk-ext"></div>
+            <span class="section-title">External Check — North</span>
+            <span class="section-tag" id="kb-north-tag-ext">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Fire Panels</div>
+            <div id="kb-north-fp-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Von Zedlitz — Doors &amp; Windows</div>
+            <div id="kb-north-vz-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-north-ext-notes" placeholder="Any additional comments…"></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- North Internal -->
+      <div id="kb-north-sub-int" class="sub-panel">
+        <div class="section-card" id="kb-north-card-int">
+          <div class="section-header" onclick="toggleKBSection('north','int')">
+            <div class="section-checkbox" id="kb-north-chk-int"></div>
+            <span class="section-title">Internal Check — North</span>
+            <span class="section-tag" id="kb-north-tag-int">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Buildings — People per level</div>
+            <div class="grid-bldg" id="kb-north-bldg-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-north-int-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MIDDLE ── -->
+    <div id="zone-middle" class="zone-panel">
+      <div class="clear-bar">
+        <span class="clear-bar-label">Clear Middle:</span>
+        <button class="clear-btn all"  onclick="clearKB('middle','all')">All</button>
+        <button class="clear-btn" onclick="clearKB('middle','ext')">External</button>
+        <button class="clear-btn" onclick="clearKB('middle','int')">Internal</button>
+      </div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="showSub('middle','ext',this)">External Check</button>
+        <button class="sub-tab"        onclick="showSub('middle','int',this)">Internal Check</button>
+      </div>
+      <!-- Middle External -->
+      <div id="kb-middle-sub-ext" class="sub-panel active">
+        <div class="section-card" id="kb-middle-card-ext">
+          <div class="section-header" onclick="toggleKBSection('middle','ext')">
+            <div class="section-checkbox" id="kb-middle-chk-ext"></div>
+            <span class="section-title">External Check — Middle</span>
+            <span class="section-tag" id="kb-middle-tag-ext">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Fire Panels</div>
+            <div id="kb-middle-fp-grid"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Middle Internal -->
+      <div id="kb-middle-sub-int" class="sub-panel">
+        <div class="section-card" id="kb-middle-card-int">
+          <div class="section-header" onclick="toggleKBSection('middle','int')">
+            <div class="section-checkbox" id="kb-middle-chk-int"></div>
+            <span class="section-title">Internal Check — Middle</span>
+            <span class="section-tag" id="kb-middle-tag-int">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Buildings — People per level</div>
+            <div class="grid-bldg" id="kb-middle-bldg-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SOUTH ── -->
+    <div id="zone-south" class="zone-panel">
+      <div class="clear-bar">
+        <span class="clear-bar-label">Clear South:</span>
+        <button class="clear-btn all"  onclick="clearKB('south','all')">All</button>
+        <button class="clear-btn" onclick="clearKB('south','ext')">External</button>
+        <button class="clear-btn" onclick="clearKB('south','int')">Internal</button>
+      </div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="showSub('south','ext',this)">External Check</button>
+        <button class="sub-tab"        onclick="showSub('south','int',this)">Internal Check</button>
+      </div>
+      <!-- South External -->
+      <div id="kb-south-sub-ext" class="sub-panel active">
+        <div class="section-card" id="kb-south-card-ext">
+          <div class="section-header" onclick="toggleKBSection('south','ext')">
+            <div class="section-checkbox" id="kb-south-chk-ext"></div>
+            <span class="section-title">External Check — South</span>
+            <span class="section-tag" id="kb-south-tag-ext">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Fire Panels</div>
+            <div id="kb-south-fp-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Garage &amp; Roller Doors</div>
+            <div id="kb-south-extras-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-south-ext-notes" placeholder="Any additional comments…"></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- South Internal -->
+      <div id="kb-south-sub-int" class="sub-panel">
+        <div class="section-card" id="kb-south-card-int">
+          <div class="section-header" onclick="toggleKBSection('south','int')">
+            <div class="section-checkbox" id="kb-south-chk-int"></div>
+            <span class="section-title">Internal Check — South</span>
+            <span class="section-tag" id="kb-south-tag-int">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Buildings — People per level</div>
+            <div class="grid-bldg" id="kb-south-bldg-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-south-int-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-generate" onclick="generateKelburnReport()">⬡ Generate control room report</button>
+  </div>
+
+  <!-- ══ Report ══ -->
   <div id="s4" class="screen">
     <div class="screen-title">Control room report</div>
     <div class="screen-sub">// Ready to send — copy and transmit</div>
@@ -433,422 +466,710 @@ body {
     <div class="report-box" id="report-text"></div>
     <div class="btn-row">
       <button class="btn btn-copy" onclick="copyReport()">⎘ Copy report</button>
-      <button class="btn" onclick="newPatrol()">New patrol</button>
+      <button class="btn" onclick="newPatrol()">New check</button>
     </div>
     <div class="copy-msg" id="copy-msg">✓ Copied to clipboard</div>
   </div>
 
-</div><!-- /container -->
+</div>
 
 <script>
-/* ── Data ── */
-const CAMPUSES = {
-  Kelburn: { buildings: [
-    { id:'kb1', name:'Hunter',          floors:['Ground','Level 1','Level 2','Level 3','Level 4','Level 5'] },
-    { id:'kb2', name:'Cotton',          floors:['Ground','Level 1','Level 2','Level 3','Level 4'] },
-    { id:'kb3', name:'Rankine Brown',   floors:['Ground','Level 1','Level 2','Level 3','Level 4','Level 5','Level 6'] },
-    { id:'kb4', name:'Alan MacDiarmid', floors:['Ground','Level 1','Level 2','Level 3','Level 4','Level 5'] },
-    { id:'kb5', name:'Murphy',          floors:['Ground','Level 1','Level 2','Level 3'] },
-    { id:'kb6', name:'Easterfield',     floors:['Ground','Level 1','Level 2','Level 3','Level 4'] },
-    { id:'kb7', name:'Von Zedlitz',     floors:['Ground','Level 1','Level 2','Level 3'] },
-    { id:'kb8', name:'Laby',            floors:['Ground','Level 1','Level 2'] },
-  ]},
-  Pipitea: { buildings: [
-    { id:'pp1', name:'Rutherford House',  floors:['Ground','Level 1','Level 2','Level 3','Level 4','Level 5','Level 6','Level 7','Level 8'] },
-    { id:'pp2', name:'Weir House',        floors:['Ground','Level 1','Level 2','Level 3','Level 4'] },
-    { id:'pp3', name:'Railway Building',  floors:['Ground','Level 1','Level 2','Level 3'] },
-    { id:'pp4', name:'Commerce Building', floors:['Ground','Level 1','Level 2','Level 3','Level 4'] },
-  ]}
+/* ════════════════════════════════════
+   HELPERS
+════════════════════════════════════ */
+function floors(hi, lo, asc) {
+  const a = [];
+  if (asc) { for (let i = lo; i <= hi; i++) a.push('Level ' + i); }
+  else      { for (let i = hi; i >= lo; i--) a.push('Level ' + i); }
+  return a;
+}
+function flist(...ns) { return ns.map(n => 'Level ' + n); }
+function fpKey(s) { return s.replace(/[\s&]/g, '-'); }
+
+/* ════════════════════════════════════
+   DATA
+════════════════════════════════════ */
+const KB = {
+  north: {
+    buildings: [
+      { id:'hunter',  name:'Hunter',          floors: floors(4,0)      },
+      { id:'robst',   name:'Robert Stout',     floors: floors(4,0)      },
+      { id:'adamart', name:'Adam Art Gallery', floors: floors(3,0)      },
+      { id:'oldkirk', name:'Old Kirk',         floors: flist(5,4,3)     },
+      { id:'newkirk', name:'New Kirk',         floors: floors(8,0,true) },
+      { id:'vonz',    name:'Von Zedlitz',      floors: floors(9,0)      },
+      { id:'hugmac',  name:'Hugh Mackenzie',   floors: floors(3,0)      },
+      { id:'murphy',  name:'Murphy',           floors: floors(11,1)     },
+      { id:'moko',    name:'Mokopuna',         floors: floors(3,0)      },
+      { id:'marae',   name:'Marae',            floors: floors(2,0)      },
+      { id:'stunion', name:'Student Union',    floors: floors(5,0)      },
+    ],
+    firePanels: ['Hunter','Robert Stout','Adam Art Gallery','Old Kirk','New Kirk','Von Zedlitz','Hugh Mackenzie','Murphy','Mokopuna','Marae','Student Union'],
+    vonzExtras: [
+      { key:'win-l0',   label:'Window — Level 0', opts:['Secure','Open','Broken'] },
+      { key:'win-l1',   label:'Window — Level 1', opts:['Secure','Open','Broken'] },
+      { key:'door-001', label:'Door 001',          opts:['Secure','Faulty','Broken'] },
+    ]
+  },
+  middle: {
+    buildings: [
+      { id:'oldkirk2', name:'Old Kirk',        floors: flist(5,4,3)       },
+      { id:'newkirk2', name:'New Kirk',        floors: floors(8,0,true)   },
+      { id:'stunion2', name:'Student Union',   floors: floors(5,0)        },
+      { id:'rankine',  name:'Rankine Brown',   floors: floors(9,0)        },
+      { id:'maclau',   name:'Maclaurin',       floors: floors(2,0,true)   },
+      { id:'easter',   name:'Easterfield',     floors: floors(6,0,true)   },
+      { id:'adamart2', name:'Adam Art Gallery', floors: floors(3,0)        },
+    ],
+    firePanels: ['Old Kirk','New Kirk','Student Union','Rankine Brown','Maclaurin','Easterfield','Adam Art Gallery']
+  },
+  south: {
+    buildings: [
+      { id:'rankines', name:'Rankine Brown',    floors: floors(9,0)                   },
+      { id:'easters',  name:'Easterfield',      floors: floors(6,0,true)              },
+      { id:'maclaus',  name:'Maclaurin',        floors: floors(2,0,true)              },
+      { id:'cottons',  name:'Cotton',           floors: floors(5,0)                   },
+      { id:'amd',      name:'Alan MacDiarmid',  floors: floors(4,0)                   },
+      { id:'labys',    name:'Laby',             floors: floors(5,0)                   },
+      { id:'maru',     name:'Maru',             floors: flist(2,1)                    },
+      { id:'rec',      name:'Recreation Centre',floors: flist(6,5,4,3,1)              },
+      { id:'ttr',      name:'TTR',              floors: floors(4,0)                   },
+      { id:'csb',      name:'CSB',              floors: []                            },
+    ],
+    firePanels: ['Rankine Brown','Easterfield','Maclaurin','Cotton','Alan MacDiarmid','Laby','Maru','Recreation Centre','TTR','CSB'],
+    southExtras: [
+      { key:'amd-garage',  label:'Alan MacDiarmid — Garage', opts:['Secure','Not Secure'] },
+      { key:'csb-door1',   label:'CSB — Roller Door 1',      opts:['Secure','Open','Stuck'] },
+      { key:'csb-door2',   label:'CSB — Roller Door 2',      opts:['Secure','Open','Stuck'] },
+      { key:'laby-door1',  label:'Laby — Roller Door 1',     opts:['Secure','Open','Stuck'] },
+      { key:'laby-door2',  label:'Laby — Roller Door 2',     opts:['Secure','Open','Stuck'] },
+      { key:'laby-door3',  label:'Laby — Roller Door 3',     opts:['Secure','Open','Stuck'] },
+    ]
+  }
 };
 
-const WIGAN_FLOORS  = ['Level 6','Level 5','Level 4','Level 3','Level 2','Level 1','Level 0'];
-const VIVIAN_FLOORS = ['Level 3','Level 2','Level 1','Level 0'];
-
-const STATUS_OPTIONS = {
-  carpark:   ['Secure','Open','Stuck'],
-  workshop:  ['Secure','Open','Stuck'],
-  firepanel: ['Normal','Detector','Emergency']
-};
+const TA_WIGAN_FLOORS  = floors(6,0);
+const TA_VIVIAN_FLOORS = floors(3,0);
+const TA_STATUS_OPTS   = { carpark:['Secure','Open','Stuck'], workshop:['Secure','Open','Stuck'], firepanel:['Normal','Detector','Emergency'] };
+const FP_OPTS   = ['Normal','Defective','Emergency'];
+const DOOR_OPTS = ['Secure','Faulty','Broken'];
 const STATUS_COLOR = {
   Secure:'active-green', Normal:'active-green',
-  Open:'active-amber',   Detector:'active-amber',
-  Stuck:'active-red',    Emergency:'active-red'
+  Open:'active-amber',   Detector:'active-amber', Defective:'active-amber', Faulty:'active-amber',
+  Stuck:'active-red',    Emergency:'active-red',  Broken:'active-red',
+  'Not Secure':'active-red'
 };
 
-/* ── State ── */
-let S = freshState();
-function freshState() {
+/* ════════════════════════════════════
+   STATE
+════════════════════════════════════ */
+let S = makeState();
+function makeState() {
   const s = {
     campus:'', building:null, counts:{},
-    sections:{ ext:false, wigan:false, vivian:false },
-    ext:{ carpark:null, workshop:null, firepanel:null },
-    wiganCounts:{}, vivianCounts:{}
+    ta: { sections:{ext:false,wigan:false,vivian:false}, ext:{carpark:null,workshop:null,firepanel:null}, wiganC:{}, vivianC:{} },
+    kb: {
+      north:  { sections:{ext:false,int:false}, firePanels:{}, vonzExtras:{}, buildingC:{} },
+      middle: { sections:{ext:false,int:false}, firePanels:{}, buildingC:{} },
+      south:  { sections:{ext:false,int:false}, firePanels:{}, southExtras:{}, buildingC:{} }
+    }
   };
-  WIGAN_FLOORS.forEach(f  => s.wiganCounts[f]  = 0);
-  VIVIAN_FLOORS.forEach(f => s.vivianCounts[f] = 0);
-  s.vivianCounts.library = 0;
+  TA_WIGAN_FLOORS.forEach(f  => s.ta.wiganC[f]  = 0);
+  TA_VIVIAN_FLOORS.forEach(f => s.ta.vivianC[f] = 0);
+  s.ta.vivianC.library = 0;
+  ['north','middle','south'].forEach(z => {
+    KB[z].buildings.forEach(b => { s.kb[z].buildingC[b.id] = {}; b.floors.forEach(f => s.kb[z].buildingC[b.id][f] = 0); s.kb[z].buildingC[b.id+'_inc'] = false; });
+    KB[z].firePanels.forEach(fp => s.kb[z].firePanels[fp] = null);
+  });
+  KB.north.vonzExtras.forEach(e => s.kb.north.vonzExtras[e.key] = null);
+  KB.south.southExtras.forEach(e => s.kb.south.southExtras[e.key] = null);
   return s;
 }
 
-/* ── Navigation ── */
+/* ════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════ */
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   updateBreadcrumb(id);
-  window.scrollTo({ top:0, behavior:'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function updateBreadcrumb(id) {
-  const bc = document.getElementById('breadcrumb');
-  const cr = (lbl,fn) => `<span onclick="${fn}">${lbl}</span>`;
-  const cu = lbl => `<span class="current">${lbl}</span>`;
-  const sp = '<span class="sep"> / </span>';
-  if      (id==='s1')  bc.innerHTML = cu('Campuses');
-  else if (id==='s2')  bc.innerHTML = cr('Campuses',"goTo('s1')") + sp + cu(S.campus);
-  else if (id==='s3')  bc.innerHTML = cr('Campuses',"goTo('s1')") + sp + cr(S.campus,"goTo('s2')") + sp + cu(S.building?S.building.name:'');
-  else if (id==='sta') bc.innerHTML = cr('Campuses',"goTo('s1')") + sp + cu('Te Aro');
-  else if (id==='s4')  bc.innerHTML = cr('Campuses',"goTo('s1')") + sp + cu('Report');
+  const bc=document.getElementById('breadcrumb');
+  const cr=(l,f)=>`<span onclick="${f}">${l}</span>`;
+  const cu=l=>`<span class="current">${l}</span>`;
+  const sp='<span class="sep"> / </span>';
+  if      (id==='s1')  bc.innerHTML=cu('Campuses');
+  else if (id==='s2')  bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu(S.campus);
+  else if (id==='s3')  bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cr(S.campus,"goTo('s2')")+sp+cu(S.building?S.building.name:'');
+  else if (id==='sta') bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu('Te Aro');
+  else if (id==='skb') bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu('Kelburn');
+  else if (id==='s4')  bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu('Report');
 }
+function newPatrol() { S=makeState(); resetAllUI(); goTo('s1'); }
 
-function newPatrol() {
-  S = freshState();
-  resetTearoUI();
-  goTo('s1');
-}
-
-function resetTearoUI() {
-  ['ext','wigan','vivian'].forEach(k => {
-    document.getElementById('chk-'+k).classList.remove('checked');
-    const tag = document.getElementById('tag-'+k);
-    tag.textContent='off'; tag.classList.remove('on');
-    document.getElementById('card-'+k).classList.remove('included');
-  });
-  document.querySelectorAll('.status-btn').forEach(b => b.className='status-btn');
-  ['ext-notes','wigan-notes','vivian-notes'].forEach(id => document.getElementById(id).value='');
-  renderWigan();
-  renderVivian();
-  // reset library
-  document.getElementById('val-library').textContent = '0';
-  document.getElementById('lib-status').textContent  = '0';
-  document.getElementById('lib-status').className    = 'lv-status';
-  document.getElementById('row-library').classList.remove('occupied');
-}
-
-/* ── Clear functions ── */
-function clearSection(which) {
-
-  function resetUI(section) {
-    // Reset state
-    S.sections[section] = false;
-
-    // Reset checkbox UI
-    document.getElementById('chk-' + section).classList.remove('checked');
-
-    // Reset tag
-    const tag = document.getElementById('tag-' + section);
-    tag.textContent = 'off';
-    tag.classList.remove('on');
-
-    // Reset card highlight
-    document.getElementById('card-' + section).classList.remove('included');
-  }
-
-  if (which === 'all' || which === 'ext') {
-    S.ext = { carpark:null, workshop:null, firepanel:null };
-    document.querySelectorAll('.status-btn').forEach(b => b.className='status-btn');
-    document.getElementById('ext-notes').value = '';
-
-    resetUI('ext'); // ✅ uncheck External
-  }
-
-  if (which === 'all' || which === 'wigan') {
-    WIGAN_FLOORS.forEach(f => S.wiganCounts[f] = 0);
-    document.getElementById('wigan-notes').value = '';
-    renderWigan();
-
-    resetUI('wigan'); // ✅ uncheck WiGAN
-  }
-
-  if (which === 'all' || which === 'vivian') {
-    VIVIAN_FLOORS.forEach(f => S.vivianCounts[f] = 0);
-    S.vivianCounts.library = 0;
-    document.getElementById('vivian-notes').value = '';
-    renderVivian();
-
-    document.getElementById('val-library').textContent = '0';
-    document.getElementById('lib-status').textContent  = '0';
-    document.getElementById('lib-status').className    = 'lv-status';
-    document.getElementById('row-library').classList.remove('occupied');
-
-    resetUI('vivian'); // ✅ uncheck VIVIAN
-  }
-}
-
-/* ── Campus / building ── */
+/* ════════════════════════════════════
+   CAMPUS SELECT
+════════════════════════════════════ */
 function selectCampus(c) {
   S.campus = c;
-  if (c === 'Te Aro') { goTo('sta'); return; }
-  document.getElementById('s2-title').textContent = c + ' — Buildings';
-  const grid = document.getElementById('building-grid');
-  grid.innerHTML = '';
-  CAMPUSES[c].buildings.forEach(b => {
-    const btn = document.createElement('button');
-    btn.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;text-align:left;width:100%;transition:border-color .15s,background .15s,transform .1s;';
-    btn.innerHTML = `<span style="font-size:20px;display:block;margin-bottom:10px;">🏢</span><div style="font-size:14px;font-weight:500;margin-bottom:3px;">${b.name}</div><div style="font-size:11px;color:var(--text2);font-family:'IBM Plex Mono',monospace;">${b.floors.length} levels</div>`;
-    btn.onmouseover = () => { btn.style.borderColor='var(--accent)'; btn.style.background='var(--surface2)'; btn.style.transform='translateY(-1px)'; };
-    btn.onmouseout  = () => { btn.style.borderColor='var(--border)';  btn.style.background='var(--surface)';  btn.style.transform='none'; };
-    btn.onclick = () => selectBuilding(b);
+  if (c==='Te Aro')  { goTo('sta'); return; }
+  if (c==='Kelburn') { goTo('skb'); return; }
+  document.getElementById('s2-title').textContent = c+' — Buildings';
+  const grid=document.getElementById('building-grid'); grid.innerHTML='';
+  const PIP=[
+    {name:'Rutherford House', floors:floors(8,0)},
+    {name:'Weir House',       floors:floors(4,0)},
+    {name:'Railway Building', floors:floors(3,0)},
+    {name:'Commerce Building',floors:floors(4,0)},
+  ];
+  PIP.forEach(b => {
+    const btn=document.createElement('button');
+    btn.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;text-align:left;width:100%;transition:border-color .15s,background .15s,transform .1s;';
+    btn.innerHTML=`<span style="font-size:20px;display:block;margin-bottom:10px;">🏢</span><div style="font-size:14px;font-weight:500;margin-bottom:3px;">${b.name}</div><div style="font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;">${b.floors.length} levels</div>`;
+    btn.onmouseover=()=>{btn.style.borderColor='var(--accent)';btn.style.background='var(--surface2)';btn.style.transform='translateY(-1px)';};
+    btn.onmouseout=()=>{btn.style.borderColor='var(--border)';btn.style.background='var(--surface)';btn.style.transform='none';};
+    btn.onclick=()=>selectBuilding(b);
     grid.appendChild(btn);
   });
   goTo('s2');
 }
-
 function selectBuilding(b) {
-  S.building = b; S.counts = {};
-  b.floors.forEach(f => S.counts[f] = 0);
-  document.getElementById('s3-badge').textContent = S.campus + '  ·  ' + b.name;
-  document.getElementById('s3-title').textContent = b.name + ' — Levels';
-  renderGenericLevels();
-  goTo('s3');
+  S.building=b; S.counts={};
+  b.floors.forEach(f=>S.counts[f]=0);
+  document.getElementById('s3-badge').textContent=S.campus+'  ·  '+b.name;
+  document.getElementById('s3-title').textContent=b.name+' — Levels';
+  renderGenericLevels(); goTo('s3');
 }
 
-/* ── Generic levels (Kelburn/Pipitea) ── */
+/* ════════════════════════════════════
+   GENERIC LEVELS (Pipitea)
+════════════════════════════════════ */
 function renderGenericLevels() {
-  const list = document.getElementById('levels-list');
-  list.innerHTML = '';
+  const list=document.getElementById('levels-list'); list.innerHTML='';
   S.building.floors.forEach(f => {
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:6px;transition:border-color .15s;';
-    const left = document.createElement('div');
-    const nm = document.createElement('div');
-    nm.style.cssText = 'font-size:14px;font-weight:500;';
-    nm.textContent = f;
-    const st = document.createElement('div');
-    st.style.cssText = "font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px;";
-    st.textContent = '0';
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:6px;transition:border-color .15s;';
+    const left=document.createElement('div');
+    const nm=document.createElement('div'); nm.style.cssText='font-size:14px;font-weight:500;'; nm.textContent=f;
+    const st=document.createElement('div'); st.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px;"; st.textContent='0';
     left.appendChild(nm); left.appendChild(st);
-    const right = document.createElement('div');
-    right.style.cssText = 'display:flex;align-items:center;gap:10px;';
-    const val = document.createElement('span');
-    val.style.cssText = "font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;min-width:22px;text-align:center;";
-    val.textContent = '0';
-    const mkBtn = (lbl, delta) => {
-      const b = document.createElement('button');
-      b.style.cssText = "width:24px;height:24px;border-radius:50%;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;";
-      b.textContent = lbl;
-      b.onclick = () => {
-        S.counts[f] = Math.max(0, S.counts[f] + delta);
-        val.textContent = S.counts[f];
-        if (S.counts[f]===0) {
-          row.style.borderColor='var(--border)'; st.style.color='var(--text3)'; st.textContent='0';
-        } else {
-          row.style.borderColor='var(--amber)'; st.style.color='var(--amber)'; st.textContent=S.counts[f]+' person'+(S.counts[f]>1?'s':'')+' present';
-        }
-      };
-      return b;
-    };
-    right.appendChild(mkBtn('−',-1)); right.appendChild(val); right.appendChild(mkBtn('+',1));
-    row.appendChild(left); row.appendChild(right);
-    list.appendChild(row);
+    const right=document.createElement('div'); right.style.cssText='display:flex;align-items:center;gap:10px;';
+    const val=document.createElement('span'); val.style.cssText="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;min-width:22px;text-align:center;"; val.textContent='0';
+    const mk=(lbl,d)=>{ const b=document.createElement('button'); b.style.cssText="width:24px;height:24px;border-radius:50%;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;"; b.textContent=lbl; b.onclick=()=>{ S.counts[f]=Math.max(0,S.counts[f]+d); val.textContent=S.counts[f]; if(S.counts[f]===0){row.style.borderColor='var(--border)';st.style.color='var(--text3)';st.textContent='0';}else{row.style.borderColor='var(--amber)';st.style.color='var(--amber)';st.textContent=S.counts[f]+' person'+(S.counts[f]>1?'s':'')+' present';} }; return b; };
+    right.appendChild(mk('−',-1)); right.appendChild(val); right.appendChild(mk('+',1));
+    row.appendChild(left); row.appendChild(right); list.appendChild(row);
   });
 }
 
-/* ── Te Aro: section toggle ── */
-function toggleSection(id) {
-  S.sections[id] = !S.sections[id];
-  const chk=document.getElementById('chk-'+id), tag=document.getElementById('tag-'+id), card=document.getElementById('card-'+id);
-  if (S.sections[id]) { chk.classList.add('checked'); tag.textContent='included'; tag.classList.add('on'); card.classList.add('included'); }
-  else                { chk.classList.remove('checked'); tag.textContent='off'; tag.classList.remove('on'); card.classList.remove('included'); }
+/* ════════════════════════════════════
+   TE ARO
+════════════════════════════════════ */
+function toggleTA(id) {
+  const inc=!S.ta.sections[id]; S.ta.sections[id]=inc;
+  document.getElementById('ta-chk-'+id).classList.toggle('checked',inc);
+  const tag=document.getElementById('ta-tag-'+id); tag.textContent=inc?'included':'off'; tag.classList.toggle('on',inc);
+  document.getElementById('ta-card-'+id).classList.toggle('included',inc);
+}
+function showTASub(id, tabEl) {
+  document.querySelectorAll('#ta-sub-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#sta .sub-panel').forEach(p=>p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('ta-sub-'+id).classList.add('active');
+}
+function setTAStatus(item,value) {
+  S.ta.ext[item]=value;
+  TA_STATUS_OPTS[item].forEach(v=>{const el=document.getElementById('ta-ext-'+item+'-'+v);if(el)el.className='status-btn';});
+  const el=document.getElementById('ta-ext-'+item+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  // Auto-include external section
+  if(!S.ta.sections.ext) toggleTA('ext');
+}
+function setTAAllNormal() {
+  setTAStatus('carpark','Secure');
+  setTAStatus('workshop','Secure');
+  setTAStatus('firepanel','Normal');
+  if(!S.ta.sections.ext) toggleTA('ext');
+}
+function clearTA(which) {
+  if(which==='all'||which==='ext'){
+    S.ta.ext={carpark:null,workshop:null,firepanel:null};
+    document.querySelectorAll('[id^="ta-ext-"]').forEach(b=>{if(b.classList.contains('status-btn'))b.className='status-btn';});
+    document.getElementById('ta-ext-notes').value='';
+  }
+  if(which==='all'||which==='wigan'){TA_WIGAN_FLOORS.forEach(f=>S.ta.wiganC[f]=0);document.getElementById('ta-wigan-notes').value='';renderTAWigan();}
+  if(which==='all'||which==='vivian'){
+    TA_VIVIAN_FLOORS.forEach(f=>S.ta.vivianC[f]=0);S.ta.vivianC.library=0;
+    document.getElementById('ta-vivian-notes').value='';renderTAVivian();
+    const libInp=document.getElementById('ta-val-library');if(libInp)libInp.value='0';
+    document.getElementById('ta-lib-status').textContent='0';
+    document.getElementById('ta-lib-status').className='lv-status';document.getElementById('ta-row-library').classList.remove('occupied');
+  }
+}
+function renderTAWigan()  {const c=document.getElementById('ta-wigan-levels');c.innerHTML='';TA_WIGAN_FLOORS.forEach(f=>buildLvRow(c,f,S.ta.wiganC,()=>{if(!S.ta.sections.wigan)toggleTA('wigan');}));}
+function renderTAVivian() {const c=document.getElementById('ta-vivian-levels');c.innerHTML='';TA_VIVIAN_FLOORS.forEach(f=>buildLvRow(c,f,S.ta.vivianC,()=>{if(!S.ta.sections.vivian)toggleTA('vivian');}));}
+function taLibChange(d) {
+  S.ta.vivianC.library=Math.max(0,S.ta.vivianC.library+d);
+  const n=S.ta.vivianC.library;
+  const inp=document.getElementById('ta-val-library'); if(inp) inp.value=n;
+  const row=document.getElementById('ta-row-library');const st=document.getElementById('ta-lib-status');
+  if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}
+  else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
+  if(d>0&&!S.ta.sections.vivian) toggleTA('vivian');
+}
+function taLibSet(val) {
+  const n=Math.max(0,parseInt(val)||0);
+  S.ta.vivianC.library=n;
+  const inp=document.getElementById('ta-val-library'); if(inp) inp.value=n;
+  const row=document.getElementById('ta-row-library');const st=document.getElementById('ta-lib-status');
+  if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}
+  else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
+  if(n>0&&!S.ta.sections.vivian) toggleTA('vivian');
 }
 
-/* ── Te Aro: status buttons ── */
-function setStatus(item, value) {
-  S.ext[item] = value;
-  STATUS_OPTIONS[item].forEach(v => {
-    const el = document.getElementById(`ext-${item}-${v}`);
-    if (el) el.className = 'status-btn';
-  });
-  const el = document.getElementById(`ext-${item}-${value}`);
-  if (el) el.classList.add(STATUS_COLOR[value]);
+/* ════════════════════════════════════
+   KELBURN ZONES / SUB-TABS
+════════════════════════════════════ */
+function showZone(zone, tabEl) {
+  document.querySelectorAll('.zone-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.zone-panel').forEach(p=>p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('zone-'+zone).classList.add('active');
 }
 
-/* ── WiGAN / VIVIAN level renderers ── */
-function renderWigan() {
-  const c = document.getElementById('wigan-levels');
-  c.innerHTML = '';
-  WIGAN_FLOORS.forEach(f => buildLevelRow(c, f, S.wiganCounts));
-}
-function renderVivian() {
-  const c = document.getElementById('vivian-levels');
-  c.innerHTML = '';
-  VIVIAN_FLOORS.forEach(f => buildLevelRow(c, f, S.vivianCounts));
+function showSub(zone, sub, tabEl) {
+  /* scope siblings within same zone panel */
+  const panel=document.getElementById('zone-'+zone);
+  panel.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  panel.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('kb-'+zone+'-sub-'+sub).classList.add('active');
 }
 
-function buildLevelRow(container, floor, countsObj) {
-  const row = document.createElement('div'); row.className='level-row';
-  const left = document.createElement('div');
-  const nm = document.createElement('div'); nm.className='lv-name'; nm.textContent=floor;
-  const st = document.createElement('div'); st.className='lv-status'; st.textContent='0';
-  left.appendChild(nm); left.appendChild(st);
-  const right = document.createElement('div'); right.className='counter';
-  const val = document.createElement('span'); val.className='cnt-val'; val.textContent='0';
-  const upd = () => {
-    val.textContent = countsObj[floor];
-    if (countsObj[floor]===0) {
-      row.classList.remove('occupied'); st.className='lv-status'; st.textContent='0';
-    } else {
-      row.classList.add('occupied'); st.className='lv-status occ';
-      st.textContent = countsObj[floor]+' person'+(countsObj[floor]>1?'s':'')+' present';
+function toggleKBSection(zone, sub) {
+  const inc=!S.kb[zone].sections[sub]; S.kb[zone].sections[sub]=inc;
+  document.getElementById('kb-'+zone+'-chk-'+sub).classList.toggle('checked',inc);
+  const tag=document.getElementById('kb-'+zone+'-tag-'+sub); tag.textContent=inc?'included':'off'; tag.classList.toggle('on',inc);
+  document.getElementById('kb-'+zone+'-card-'+sub).classList.toggle('included',inc);
+}
+
+/* ════════════════════════════════════
+   BUILD KB ZONE UI
+════════════════════════════════════ */
+function setKBExtAllNormal(zone) {
+  KB[zone].firePanels.forEach(fp=>setKBFP(zone,fp,'Normal'));
+  if(zone==='north') KB.north.vonzExtras.forEach(e=>setKBVZ(e.key,'Secure'));
+  if(zone==='south') KB.south.southExtras.forEach(e=>setKBSE(e.key,e.opts[0]==='Secure'?'Secure':'Normal'));
+  if(!S.kb[zone].sections.ext) toggleKBSection(zone,'ext');
+}
+
+function buildKBZone(zone) {
+  const zd=KB[zone];
+
+  /* ── Fire panels ── */
+  const fpGrid=document.getElementById('kb-'+zone+'-fp-grid');
+  if(fpGrid){
+    fpGrid.style.cssText='display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));';
+    fpGrid.innerHTML='';
+    // Nothing to Report button spanning full width
+    const ntrWrap=document.createElement('div');
+    ntrWrap.style.cssText='grid-column:1/-1;';
+    const ntrBtn=document.createElement('button');
+    ntrBtn.className='all-normal-btn';
+    ntrBtn.textContent='✓ Nothing to Report';
+    ntrBtn.onclick=()=>setKBExtAllNormal(zone);
+    ntrWrap.appendChild(ntrBtn);
+    fpGrid.appendChild(ntrWrap);
+    zd.firePanels.forEach(fp=>{
+      const sr=document.createElement('div'); sr.className='status-row';
+      const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent='Fire Panel — '+fp;
+      const btns=document.createElement('div'); btns.className='status-btns';
+      FP_OPTS.forEach(o=>{
+        const b=document.createElement('button'); b.className='status-btn';
+        b.id='kb-'+zone+'-fp-'+fpKey(fp)+'-'+o; b.textContent=o;
+        b.onclick=()=>setKBFP(zone,fp,o);
+        btns.appendChild(b);
+      });
+      sr.appendChild(lbl); sr.appendChild(btns); fpGrid.appendChild(sr);
+    });
+  }
+
+  /* ── North: Von Zedlitz extras ── */
+  if(zone==='north'){
+    const vzGrid=document.getElementById('kb-north-vz-grid');
+    if(vzGrid){
+      vzGrid.innerHTML='';
+      KB.north.vonzExtras.forEach(e=>{
+        const sr=document.createElement('div'); sr.className='status-row';
+        const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent=e.label;
+        const btns=document.createElement('div'); btns.className='status-btns';
+        e.opts.forEach(o=>{
+          const b=document.createElement('button'); b.className='status-btn';
+          b.id='kb-north-vz-'+e.key+'-'+o; b.textContent=o;
+          b.onclick=()=>setKBVZ(e.key,o);
+          btns.appendChild(b);
+        });
+        sr.appendChild(lbl); sr.appendChild(btns); vzGrid.appendChild(sr);
+      });
     }
-  };
-  const minus = document.createElement('button'); minus.className='cnt-btn'; minus.textContent='−';
-  minus.onclick = () => { countsObj[floor]=Math.max(0,countsObj[floor]-1); upd(); };
-  const plus = document.createElement('button'); plus.className='cnt-btn'; plus.textContent='+';
-  plus.onclick = () => { countsObj[floor]++; upd(); };
-  right.appendChild(minus); right.appendChild(val); right.appendChild(plus);
-  row.appendChild(left); row.appendChild(right);
-  container.appendChild(row);
+  }
+
+  /* ── South: Garage & Roller Door extras ── */
+  if(zone==='south'){
+    const seGrid=document.getElementById('kb-south-extras-grid');
+    if(seGrid){
+      seGrid.innerHTML='';
+      KB.south.southExtras.forEach(e=>{
+        const sr=document.createElement('div'); sr.className='status-row';
+        const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent=e.label;
+        const btns=document.createElement('div'); btns.className='status-btns';
+        e.opts.forEach(o=>{
+          const b=document.createElement('button'); b.className='status-btn';
+          b.id='kb-south-se-'+e.key+'-'+o; b.textContent=o;
+          b.onclick=()=>setKBSE(e.key,o);
+          btns.appendChild(b);
+        });
+        sr.appendChild(lbl); sr.appendChild(btns); seGrid.appendChild(sr);
+      });
+    }
+  }
+
+  /* ── Buildings ── */
+  const bldgGrid=document.getElementById('kb-'+zone+'-bldg-grid');
+  if(bldgGrid){
+    bldgGrid.innerHTML='';
+    bldgGrid.style.cssText='display:flex;flex-direction:column;gap:0;';
+    zd.buildings.forEach(b=>{
+      const acc=document.createElement('div'); acc.className='bldg-accordion'; acc.id='kb-'+zone+'-bcard-'+b.id;
+      // Header
+      const hd=document.createElement('div'); hd.className='bldg-accordion-hd';
+      hd.onclick=()=>{
+        const isOpen=acc.classList.contains('open');
+        acc.classList.toggle('open',!isOpen);
+        if(!isOpen&&!S.kb[zone].buildingC[b.id+'_inc']) toggleKBBldg(zone,b.id,acc);
+      };
+      const nameEl=document.createElement('span'); nameEl.className='bldg-accordion-name'; nameEl.textContent=b.name;
+      const meta=document.createElement('div'); meta.className='bldg-accordion-meta';
+      const countBadge=document.createElement('span'); countBadge.className='bldg-accordion-count'; countBadge.id='kb-'+zone+'-bcount-'+b.id;
+      const chev=document.createElement('span'); chev.className='bldg-accordion-chevron'; chev.textContent='▼';
+      meta.appendChild(countBadge); meta.appendChild(chev);
+      hd.appendChild(nameEl); hd.appendChild(meta);
+      // Body
+      const body=document.createElement('div'); body.className='bldg-accordion-body';
+      if(b.floors.length===0){
+        const note=document.createElement('div');
+        note.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);padding:4px;";
+        note.textContent='External access only — no internal levels';
+        body.appendChild(note);
+      } else {
+        b.floors.forEach(f=>{
+          const row=document.createElement('div'); row.className='level-row'; row.id='kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_');
+          const left=document.createElement('div');
+          const nm=document.createElement('div'); nm.className='lv-name'; nm.textContent=f;
+          const st=document.createElement('div'); st.className='lv-status'; st.id='kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'); st.textContent='0';
+          left.appendChild(nm); left.appendChild(st);
+          const right=document.createElement('div'); right.className='counter';
+          const inp=document.createElement('input'); inp.type='number'; inp.className='cnt-input'; inp.value='0'; inp.min='0';
+          inp.addEventListener('click',()=>inp.select());
+          const updateRow=(n)=>{
+            S.kb[zone].buildingC[b.id][f]=n; inp.value=n;
+            if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}
+            else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
+            // Update building count badge
+            const tot=b.floors.reduce((a,fl)=>a+(S.kb[zone].buildingC[b.id][fl]||0),0);
+            if(tot>0){countBadge.textContent=tot+' person'+(tot>1?'s':'');countBadge.classList.add('visible');}
+            else{countBadge.classList.remove('visible');}
+          };
+          inp.addEventListener('input',(ev)=>{ev.stopPropagation();const n=Math.max(0,parseInt(inp.value)||0);updateRow(n);if(n>0){if(!S.kb[zone].buildingC[b.id+'_inc'])toggleKBBldg(zone,b.id,acc);if(!S.kb[zone].sections.int)toggleKBSection(zone,'int');}});
+          const mkb=(lbl,d)=>{
+            const btn=document.createElement('button'); btn.className='cnt-btn'; btn.textContent=lbl;
+            btn.onclick=(ev)=>{ev.stopPropagation();const n=Math.max(0,(S.kb[zone].buildingC[b.id][f]||0)+d);updateRow(n);if(n>0){if(!S.kb[zone].buildingC[b.id+'_inc'])toggleKBBldg(zone,b.id,acc);if(!S.kb[zone].sections.int)toggleKBSection(zone,'int');}};
+            return btn;
+          };
+          right.appendChild(mkb('−',-1)); right.appendChild(inp); right.appendChild(mkb('+',1));
+          row.appendChild(left); row.appendChild(right); body.appendChild(row);
+        });
+      }
+      acc.appendChild(hd); acc.appendChild(body); bldgGrid.appendChild(acc);
+    });
+  }
 }
 
-/* ── Library counter ── */
-function libChange(delta) {
-  S.vivianCounts.library = Math.max(0, S.vivianCounts.library + delta);
-  const n = S.vivianCounts.library;
-  document.getElementById('val-library').textContent = n;
-  const row = document.getElementById('row-library');
-  const st  = document.getElementById('lib-status');
-  if (n===0) { row.classList.remove('occupied'); st.className='lv-status'; st.textContent='0'; }
-  else       { row.classList.add('occupied');    st.className='lv-status occ'; st.textContent=n+' person'+(n>1?'s':'')+' present'; }
+function setKBFP(zone,fp,value) {
+  S.kb[zone].firePanels[fp]=value;
+  FP_OPTS.forEach(v=>{const el=document.getElementById('kb-'+zone+'-fp-'+fpKey(fp)+'-'+v);if(el)el.className='status-btn';});
+  const el=document.getElementById('kb-'+zone+'-fp-'+fpKey(fp)+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  // Auto-include external section
+  if(!S.kb[zone].sections.ext) toggleKBSection(zone,'ext');
+}
+function setKBVZ(key,value) {
+  S.kb.north.vonzExtras[key]=value;
+  KB.north.vonzExtras.find(e=>e.key===key).opts.forEach(o=>{const el=document.getElementById('kb-north-vz-'+key+'-'+o);if(el)el.className='status-btn';});
+  const el=document.getElementById('kb-north-vz-'+key+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  if(!S.kb.north.sections.ext) toggleKBSection('north','ext');
+}
+function setKBSE(key,value) {
+  S.kb.south.southExtras[key]=value;
+  KB.south.southExtras.find(e=>e.key===key).opts.forEach(o=>{const el=document.getElementById('kb-south-se-'+key+'-'+o);if(el)el.className='status-btn';});
+  const el=document.getElementById('kb-south-se-'+key+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  if(!S.kb.south.sections.ext) toggleKBSection('south','ext');
 }
 
-/* ── Report helpers ── */
-const LINE = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
-function pad(str, len) { return String(str).padEnd(len); }
-function nowStrings() {
-  const now = new Date();
-  return {
-    date: now.toLocaleDateString('en-NZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),
-    time: now.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',hour12:false})
-  };
-}
-function fmtCount(n) {
-  return n===0 ? 'Clear (0)' : n+' person'+(n>1?'s':'')+' present';
+function toggleKBBldg(zone,bid,card){
+  const inc=!S.kb[zone].buildingC[bid+'_inc'];
+  S.kb[zone].buildingC[bid+'_inc']=inc;
+  // accordion style - just track state, visual handled by open class
 }
 
-/* Generic report */
-function generateGenericReport() {
-  const {date,time} = nowStrings();
-  const b = S.building;
-  const lines = [
-    'VUW SECURITY — BUILDING CHECK REPORT', LINE,
-    'Date     : '+date, 'Time     : '+time,
-    'Campus   : '+S.campus, 'Building : '+b.name,
-    LINE, 'LEVEL SUMMARY:', ''
-  ];
-  let hasOcc=false;
-  b.floors.forEach(f => {
-    const n=S.counts[f]; if(n>0) hasOcc=true;
-    lines.push('  '+pad(f,16)+': '+fmtCount(n));
+function clearKB(zone,which) {
+  if(which==='all'||which==='ext'){
+    KB[zone].firePanels.forEach(fp=>{
+      S.kb[zone].firePanels[fp]=null;
+      FP_OPTS.forEach(v=>{const el=document.getElementById('kb-'+zone+'-fp-'+fpKey(fp)+'-'+v);if(el)el.className='status-btn';});
+    });
+    if(zone==='north'){
+      KB.north.vonzExtras.forEach(e=>{
+        S.kb.north.vonzExtras[e.key]=null;
+        e.opts.forEach(o=>{const el=document.getElementById('kb-north-vz-'+e.key+'-'+o);if(el)el.className='status-btn';});
+      });
+    }
+    if(zone==='south'){
+      KB.south.southExtras.forEach(e=>{
+        S.kb.south.southExtras[e.key]=null;
+        e.opts.forEach(o=>{const el=document.getElementById('kb-south-se-'+e.key+'-'+o);if(el)el.className='status-btn';});
+      });
+    }
+  }
+  if(which==='all'||which==='int'){
+    KB[zone].buildings.forEach(b=>{
+      b.floors.forEach(f=>{
+        S.kb[zone].buildingC[b.id][f]=0;
+        const row=document.getElementById('kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_'));
+        const st=document.getElementById('kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'));
+        const inp=row?row.querySelector('.cnt-input'):null;
+        if(row)row.classList.remove('occupied');
+        if(st){st.className='lv-status';st.textContent='0';}
+        if(inp)inp.value='0';
+      });
+      S.kb[zone].buildingC[b.id+'_inc']=false;
+      const acc=document.getElementById('kb-'+zone+'-bcard-'+b.id);
+      const badge=document.getElementById('kb-'+zone+'-bcount-'+b.id);
+      if(acc)acc.classList.remove('open');
+      if(badge)badge.classList.remove('visible');
+    });
+  }
+}
+
+/* ════════════════════════════════════
+   SHARED LEVEL ROW BUILDER
+════════════════════════════════════ */
+function buildLvRow(container,floor,countsObj,onIncrement) {
+  const row=document.createElement('div'); row.className='level-row';
+  const left=document.createElement('div');
+  const nm=document.createElement('div'); nm.className='lv-name'; nm.textContent=floor;
+  const st=document.createElement('div'); st.className='lv-status'; st.textContent='0';
+  left.appendChild(nm); left.appendChild(st);
+  const right=document.createElement('div'); right.className='counter';
+  const inp=document.createElement('input'); inp.type='number'; inp.className='cnt-input'; inp.value='0'; inp.min='0';
+  inp.addEventListener('click',()=>inp.select());
+  const upd=(n)=>{countsObj[floor]=n;inp.value=n;if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}};
+  inp.addEventListener('input',()=>{const n=Math.max(0,parseInt(inp.value)||0);upd(n);if(n>0&&onIncrement)onIncrement();});
+  const minus=document.createElement('button'); minus.className='cnt-btn'; minus.textContent='−'; minus.onclick=()=>{const n=Math.max(0,countsObj[floor]-1);upd(n);};
+  const plus=document.createElement('button'); plus.className='cnt-btn'; plus.textContent='+'; plus.onclick=()=>{const n=(countsObj[floor]||0)+1;upd(n);if(onIncrement)onIncrement();};
+  right.appendChild(minus); right.appendChild(inp); right.appendChild(plus);
+  row.appendChild(left); row.appendChild(right); container.appendChild(row);
+}
+
+/* ════════════════════════════════════
+   RESET UI
+════════════════════════════════════ */
+function resetAllUI() {
+  // Te Aro
+  ['ext','wigan','vivian'].forEach(k=>{
+    document.getElementById('ta-chk-'+k).classList.remove('checked');
+    const tag=document.getElementById('ta-tag-'+k); tag.textContent='off'; tag.classList.remove('on');
+    document.getElementById('ta-card-'+k).classList.remove('included');
   });
-  const total=Object.values(S.counts).reduce((a,v)=>a+v,0);
+  document.querySelectorAll('[id^="ta-ext-"]').forEach(b=>{if(b.classList.contains('status-btn'))b.className='status-btn';});
+  ['ta-ext-notes','ta-wigan-notes','ta-vivian-notes'].forEach(id=>document.getElementById(id).value='');
+  renderTAWigan(); renderTAVivian();
+  document.getElementById('ta-val-library').textContent='0'; document.getElementById('ta-lib-status').textContent='0';
+  document.getElementById('ta-lib-status').className='lv-status'; document.getElementById('ta-row-library').classList.remove('occupied');
+  // Kelburn
+  ['north','middle','south'].forEach(z=>{
+    clearKB(z,'all');
+    ['ext','int'].forEach(sub=>{
+      const chk=document.getElementById('kb-'+z+'-chk-'+sub);
+      const tag=document.getElementById('kb-'+z+'-tag-'+sub);
+      const card=document.getElementById('kb-'+z+'-card-'+sub);
+      if(chk)chk.classList.remove('checked');
+      if(tag){tag.textContent='off';tag.classList.remove('on');}
+      if(card)card.classList.remove('included');
+    });
+    ['ext','int'].forEach(sub=>{
+      const ta=document.getElementById('kb-'+z+'-'+sub+'-notes');
+      if(ta) ta.value='';
+    });
+  });
+}
+
+/* ════════════════════════════════════
+   REPORT
+════════════════════════════════════ */
+const LINE='━━━━━━━━━━━━';
+function pad(s,l){return String(s).padEnd(l);}
+function nowStr(){const n=new Date();return{date:n.toLocaleDateString('en-NZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),time:n.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',hour12:false})};}
+function fmtN(n){return n===0?'Clear (0)':n+' person'+(n>1?'s':'')+' present';}
+
+function generateGenericReport(){
+  const{date,time}=nowStr();const b=S.building;
+  const lines=['VUW SECURITY — BUILDING CHECK REPORT',LINE,'Date     : '+date,'Time     : '+time,'Campus   : '+S.campus,'Building : '+b.name,LINE,'LEVEL SUMMARY:',''];
+  let hasOcc=false;
+  b.floors.forEach(f=>{const n=S.counts[f];if(n>0)hasOcc=true;lines.push('  '+pad(f,16)+': '+fmtN(n));});
+  const tot=Object.values(S.counts).reduce((a,v)=>a+v,0);
   lines.push('',LINE);
-  lines.push('STATUS   : '+(hasOcc?'OCCUPIED — '+total+' person'+(total>1?'s':'')+' in building':'ALL CLEAR — Building unoccupied'));
+  if(hasOcc) lines.push('STATUS   : OCCUPIED — '+tot+' person'+(tot>1?'s':'')+' in building');
   lines.push('END OF REPORT');
-  document.getElementById('report-status').innerHTML = hasOcc
-    ? '<div class="status-pill pill-occupied">⚠ Occupied · '+total+' person'+(total>1?'s':'')+' </div>'
-    : '<div class="status-pill pill-clear">✓ All clear</div>';
+  document.getElementById('report-status').innerHTML=hasOcc?'<div class="status-pill pill-occupied">⚠ Occupied</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
   showReport(lines.join('\n'));
 }
 
-/* Te Aro report */
-function generateTearoReport() {
-  const {date,time} = nowStrings();
-  const lines = [
-    'VUW SECURITY — TE ARO CAMPUS PATROL REPORT', LINE,
-    'Date     : '+date, 'Time     : '+time, 'Campus   : Te Aro', LINE
-  ];
+function generateTearoReport(){
+  const{date,time}=nowStr();
+  const lines=['VUW SECURITY — TE ARO CAMPUS REPORT',LINE,'Date     : '+date,'Time     : '+time,'Campus   : Te Aro',LINE];
   let anyOcc=false;
-
-  /* External */
-  if (S.sections.ext) {
-    lines.push('','[ EXTERNAL CHECK ]','');
-    lines.push('  Roller Doors:');
-    lines.push('    Car Park Door  : '+(S.ext.carpark   || 'Not checked'));
-    lines.push('    Workshop Door  : '+(S.ext.workshop  || 'Not checked'));
-    lines.push('','  Fire Panel:');
-    lines.push('    Status         : '+(S.ext.firepanel || 'Not checked'));
-    const n=document.getElementById('ext-notes').value.trim();
-    if(n){ lines.push('','  Notes:','    '+n.replace(/\n/g,'\n    ')); }
+  if(S.ta.sections.ext){
+    if(!S.ta.ext.carpark)   setTAStatus('carpark','Secure');
+    if(!S.ta.ext.workshop)  setTAStatus('workshop','Secure');
+    if(!S.ta.ext.firepanel) setTAStatus('firepanel','Normal');
+    const issues=[];
+    if(S.ta.ext.carpark!=='Secure')   issues.push('  Car Park Door: '+S.ta.ext.carpark);
+    if(S.ta.ext.workshop!=='Secure')  issues.push('  Workshop Door: '+S.ta.ext.workshop);
+    if(S.ta.ext.firepanel!=='Normal') issues.push('  Fire Panel: '+S.ta.ext.firepanel);
+    const extNote=document.getElementById('ta-ext-notes').value.trim();
+    lines.push('','[ EXTERNAL CHECK ]');
+    if(issues.length===0&&!extNote){
+      lines.push('  External check completed — all secure, fire panels normal.');
+    } else {
+      issues.forEach(i=>lines.push(i));
+      lines.push('  All others secure.');
+      if(extNote) lines.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
+    }
     lines.push(LINE);
   }
-
-  /* WiGAN */
-  if (S.sections.wigan) {
+  if(S.ta.sections.wigan){
     lines.push('','[ WiGAN BUILDING — INTERNAL CHECK ]','');
     let occ=false;
-    WIGAN_FLOORS.forEach(f => {
-      const n=S.wiganCounts[f]; if(n>0){occ=true;anyOcc=true;}
-      lines.push('  '+pad(f,14)+': '+fmtCount(n));
-    });
-    const tot=WIGAN_FLOORS.reduce((a,f)=>a+S.wiganCounts[f],0);
+    TA_WIGAN_FLOORS.forEach(f=>{const n=S.ta.wiganC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
+    const tot=TA_WIGAN_FLOORS.reduce((a,f)=>a+S.ta.wiganC[f],0);
     lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
-    const n=document.getElementById('wigan-notes').value.trim();
-    if(n){ lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    ')); }
+    const n=document.getElementById('ta-wigan-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
     lines.push(LINE);
   }
-
-  /* VIVIAN */
-  if (S.sections.vivian) {
+  if(S.ta.sections.vivian){
     lines.push('','[ VIVIAN BUILDING — INTERNAL CHECK ]','');
     let occ=false;
-    VIVIAN_FLOORS.forEach(f => {
-      const n=S.vivianCounts[f]; if(n>0){occ=true;anyOcc=true;}
-      lines.push('  '+pad(f,14)+': '+fmtCount(n));
-    });
-    const libN=S.vivianCounts.library;
-    if(libN>0){occ=true;anyOcc=true;}
-    lines.push('  '+pad('Library',14)+': '+fmtCount(libN));
-    const tot=VIVIAN_FLOORS.reduce((a,f)=>a+S.vivianCounts[f],0)+libN;
+    TA_VIVIAN_FLOORS.forEach(f=>{const n=S.ta.vivianC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
+    const libN=S.ta.vivianC.library;if(libN>0){occ=true;anyOcc=true;}
+    lines.push('  '+pad('Library',14)+': '+fmtN(libN));
+    const tot=TA_VIVIAN_FLOORS.reduce((a,f)=>a+S.ta.vivianC[f],0)+libN;
     lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
-    const n=document.getElementById('vivian-notes').value.trim();
-    if(n){ lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    ')); }
+    const n=document.getElementById('ta-vivian-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
     lines.push(LINE);
   }
-
-  if(!S.sections.ext && !S.sections.wigan && !S.sections.vivian){
-    lines.push('','NOTE     : No sections were selected for this report.',LINE);
-  }
-  lines.push('','OVERALL  : '+(anyOcc?'PERSONS ON SITE — review sections above':'ALL CLEAR — Campus secure'));
+  if(!S.ta.sections.ext&&!S.ta.sections.wigan&&!S.ta.sections.vivian)lines.push('','NOTE     : No sections selected.',LINE);
+  if(anyOcc) lines.push('','OVERALL  : PERSONS ON SITE — review sections above');
   lines.push('END OF REPORT');
-
-  document.getElementById('report-status').innerHTML = anyOcc
-    ? '<div class="status-pill pill-occupied">⚠ Persons on site — review report</div>'
-    : '<div class="status-pill pill-clear">✓ All clear</div>';
+  document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
   showReport(lines.join('\n'));
 }
 
-function showReport(text) {
-  document.getElementById('report-text').textContent = text;
-  goTo('s4');
+function generateKelburnReport(){
+  const{date,time}=nowStr();
+  const lines=['VUW SECURITY — KELBURN CAMPUS REPORT',LINE,'Date     : '+date,'Time     : '+time,'Campus   : Kelburn',LINE];
+  let anyOcc=false;
+
+  ['north','middle','south'].forEach(zone=>{
+    const zd=KB[zone];
+    const secExt=S.kb[zone].sections.ext;
+    const secInt=S.kb[zone].sections.int;
+    if(!secExt&&!secInt) return;
+
+    lines.push('','[ '+zone.toUpperCase()+' ZONE ]');
+
+    if(secExt){
+      KB[zone].firePanels.forEach(fp=>{ if(!S.kb[zone].firePanels[fp]) setKBFP(zone,fp,'Normal'); });
+      if(zone==='north') KB.north.vonzExtras.forEach(e=>{ if(!S.kb.north.vonzExtras[e.key]) setKBVZ(e.key,'Secure'); });
+      if(zone==='south') KB.south.southExtras.forEach(e=>{ if(!S.kb.south.southExtras[e.key]) setKBSE(e.key,e.opts[0]==='Secure'?'Secure':'Normal'); });
+      const issues=[];
+      KB[zone].firePanels.forEach(fp=>{ if(S.kb[zone].firePanels[fp]!=='Normal') issues.push('  Fire Panel — '+fp+': '+S.kb[zone].firePanels[fp]); });
+      if(zone==='north') KB.north.vonzExtras.forEach(e=>{ if(S.kb.north.vonzExtras[e.key]!=='Secure') issues.push('  '+e.label+': '+S.kb.north.vonzExtras[e.key]); });
+      if(zone==='south') KB.south.southExtras.forEach(e=>{ const def=e.opts[0]==='Secure'?'Secure':'Normal'; if(S.kb.south.southExtras[e.key]!==def) issues.push('  '+e.label+': '+S.kb.south.southExtras[e.key]); });
+      const extNote=zone==='north'?document.getElementById('kb-north-ext-notes').value.trim():zone==='south'?document.getElementById('kb-south-ext-notes').value.trim():'';
+      lines.push('','  — External Check:');
+      if(issues.length===0&&!extNote){
+        lines.push('    External check completed — all secure, fire panels normal.');
+      } else {
+        issues.forEach(i=>lines.push('    '+i));
+        lines.push('    All others secure.');
+        if(extNote) lines.push('    Notes: '+extNote.replace(/\n/g,'\n    '));
+      }
+    }
+
+    if(secInt){
+      const incB=zd.buildings.filter(b=>b.floors.length>0&&S.kb[zone].buildingC[b.id+'_inc']);
+      const csbInc=zone==='south'&&S.kb[zone].buildingC['csb_inc'];
+      if(incB.length||csbInc){
+        lines.push('','  — Internal Check:','');
+        incB.forEach(b=>{
+          let bOcc=false;
+          lines.push('    '+b.name+':');
+          b.floors.forEach(f=>{
+            const n=S.kb[zone].buildingC[b.id][f];
+            if(n>0){bOcc=true;anyOcc=true;}
+            lines.push('      '+pad(f,14)+': '+fmtN(n));
+          });
+          const tot=b.floors.reduce((a,f)=>a+S.kb[zone].buildingC[b.id][f],0);
+          lines.push('      '+pad('Status',14)+': '+(bOcc?'OCCUPIED — '+tot+' person'+(tot>1?'s':'')+' present':'ALL CLEAR'));
+          lines.push('');
+        });
+        if(csbInc){
+          lines.push('    CSB:');
+          lines.push('      '+pad('Access',14)+': External access only');
+          lines.push('      '+pad('Status',14)+': N/A — External only');
+          lines.push('');
+        }
+        const intNotesEl=document.getElementById('kb-'+zone+'-int-notes');
+        if(intNotesEl){const n=intNotesEl.value.trim();if(n)lines.push('    Notes:','      '+n.replace(/\n/g,'\n      '),'');}
+      } else {
+        lines.push('','  — Internal Check: No buildings selected.');
+      }
+    }
+
+        lines.push(LINE);
+  });
+
+  if(anyOcc) lines.push('','OVERALL  : PERSONS ON SITE — review zones above');
+  lines.push('END OF REPORT');
+  document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
+  showReport(lines.join('\n'));
 }
 
-function copyReport() {
-  navigator.clipboard.writeText(document.getElementById('report-text').textContent).then(() => {
-    const m=document.getElementById('copy-msg');
-    m.style.display='block';
-    setTimeout(()=>m.style.display='none',2500);
+function showReport(t){document.getElementById('report-text').textContent=t;resetAllUI();goTo('s4');}
+function copyReport(){
+  navigator.clipboard.writeText(document.getElementById('report-text').textContent).then(()=>{
+    const m=document.getElementById('copy-msg');m.style.display='block';setTimeout(()=>m.style.display='none',2500);
   });
 }
 
-/* ── Init ── */
-renderWigan();
-renderVivian();
-(function clock(){
-  const now=new Date();
-  document.getElementById('header-time').textContent=
-    now.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
-  setTimeout(clock,1000);
-})();
+/* ════════════════════════════════════
+   INIT
+════════════════════════════════════ */
+renderTAWigan();
+renderTAVivian();
+['north','middle','south'].forEach(z=>buildKBZone(z));
+
+(function clock(){const n=new Date();document.getElementById('header-time').textContent=n.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});setTimeout(clock,1000);})();
 updateBreadcrumb('s1');
 </script>
 </body>
