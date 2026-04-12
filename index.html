@@ -275,10 +275,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <span class="section-tag" id="ta-tag-wigan">off</span>
         </div>
         <div class="section-body">
+          <button class="all-normal-btn" id="ta-wigan-sl-btn" onclick="toggleTASL('wigan')" style="border-color:var(--green);background:var(--green-dim);color:var(--green);">10-0:10-6  —  Building Secure &amp; Locked</button>
+          <div id="ta-wigan-detail">
           <div class="sub-label">Internal Check — Levels</div>
           <div id="ta-wigan-levels"></div>
           <div class="sub-label" style="margin-top:6px;">Notes</div>
           <textarea class="notes-area" id="ta-wigan-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -292,12 +295,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <span class="section-tag" id="ta-tag-vivian">off</span>
         </div>
         <div class="section-body">
+          <button class="all-normal-btn" id="ta-vivian-sl-btn" onclick="toggleTASL('vivian')" style="border-color:var(--green);background:var(--green-dim);color:var(--green);">10-0:10-6  —  Building Secure &amp; Locked</button>
+          <div id="ta-vivian-detail">
           <div class="sub-label">Internal Check — Levels</div>
           <div id="ta-vivian-levels"></div>
           <div class="sub-label" style="margin-top:6px;">Library</div>
           <div class="level-row" id="ta-row-library"><div><div class="lv-name">Library</div><div class="lv-status" id="ta-lib-status">0</div></div><div class="counter"><button class="cnt-btn" onclick="taLibChange(-1)">−</button><input class="cnt-input" type="number" id="ta-val-library" value="0" min="0" oninput="taLibSet(this.value)" onclick="this.select()"><button class="cnt-btn" onclick="taLibChange(1)">+</button></div></div>
           <div class="sub-label" style="margin-top:6px;">Notes</div>
           <textarea class="notes-area" id="ta-vivian-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -340,8 +346,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div class="section-body">
             <div class="sub-label">Fire Panels</div>
             <div id="kb-north-fp-grid"></div>
-            <div class="sub-label" style="margin-top:10px;">Von Zedlitz — Doors &amp; Windows</div>
-            <div id="kb-north-vz-grid"></div>
             <div class="sub-label" style="margin-top:10px;">Notes</div>
             <textarea class="notes-area" id="kb-north-ext-notes" placeholder="Any additional comments…"></textarea>
           </div>
@@ -501,11 +505,13 @@ const KB = {
       { id:'hugmac',  name:'Hugh Mackenzie',   floors: floors(3,0)      },
       { id:'murphy',  name:'Murphy',           floors: floors(11,1)     },
       { id:'moko',    name:'Mokopuna',         floors: floors(3,0)      },
-      { id:'marae',   name:'Marae',            floors: floors(2,0)      },
+      { id:'marae',   name:'Marae',            floors: ['Marae'], isSingleLevel:true },
       { id:'stunion', name:'Student Union',    floors: floors(5,0)      },
+      { id:'rankinen',name:'Rankine Brown',    floors: floors(9,0)      },
     ],
-    firePanels: ['Hunter','Robert Stout','Adam Art Gallery','Old Kirk','New Kirk','Von Zedlitz','Hugh Mackenzie','Murphy','Mokopuna','Marae','Student Union'],
-    vonzExtras: [
+    firePanels: ['Hunter','Robert Stout','Adam Art Gallery','Old Kirk','New Kirk','Von Zedlitz','Hugh Mackenzie','Murphy','Mokopuna','Marae','Student Union','Rankine Brown'],
+    vonzExtras: [],
+    vonzInternal: [
       { key:'win-l0',   label:'Window — Level 0', opts:['Secure','Open','Broken'] },
       { key:'win-l1',   label:'Window — Level 1', opts:['Secure','Open','Broken'] },
       { key:'door-001', label:'Door 001',          opts:['Secure','Faulty','Broken'] },
@@ -567,9 +573,9 @@ let S = makeState();
 function makeState() {
   const s = {
     campus:'', building:null, counts:{},
-    ta: { sections:{ext:false,wigan:false,vivian:false}, ext:{carpark:null,workshop:null,firepanel:null}, wiganC:{}, vivianC:{} },
+    ta: { sections:{ext:false,wigan:false,vivian:false}, ext:{carpark:null,workshop:null,firepanel:null}, wiganC:{}, vivianC:{}, wiganSL:false, vivianSL:false },
     kb: {
-      north:  { sections:{ext:false,int:false}, firePanels:{}, vonzExtras:{}, buildingC:{} },
+      north:  { sections:{ext:false,int:false}, firePanels:{}, vonzExtras:{}, vonzInternal:{}, buildingC:{} },
       middle: { sections:{ext:false,int:false}, firePanels:{}, buildingC:{} },
       south:  { sections:{ext:false,int:false}, firePanels:{}, southExtras:{}, buildingC:{} }
     }
@@ -578,10 +584,12 @@ function makeState() {
   TA_VIVIAN_FLOORS.forEach(f => s.ta.vivianC[f] = 0);
   s.ta.vivianC.library = 0;
   ['north','middle','south'].forEach(z => {
-    KB[z].buildings.forEach(b => { s.kb[z].buildingC[b.id] = {}; b.floors.forEach(f => s.kb[z].buildingC[b.id][f] = 0); s.kb[z].buildingC[b.id+'_inc'] = false; });
+    KB[z].buildings.forEach(b => { s.kb[z].buildingC[b.id] = {}; b.floors.forEach(f => s.kb[z].buildingC[b.id][f] = 0); s.kb[z].buildingC[b.id+'_inc'] = false; s.kb[z].buildingC[b.id+'_sl'] = false; });
     KB[z].firePanels.forEach(fp => s.kb[z].firePanels[fp] = null);
   });
   KB.north.vonzExtras.forEach(e => s.kb.north.vonzExtras[e.key] = null);
+  KB.north.vonzInternal.forEach(e => s.kb.north.vonzInternal[e.key] = null);
+  KB.north.vonzInternal.forEach(e => s.kb.north.vonzInternal[e.key] = null);
   KB.south.southExtras.forEach(e => s.kb.south.southExtras[e.key] = null);
   return s;
 }
@@ -697,13 +705,38 @@ function clearTA(which) {
     document.querySelectorAll('[id^="ta-ext-"]').forEach(b=>{if(b.classList.contains('status-btn'))b.className='status-btn';});
     document.getElementById('ta-ext-notes').value='';
   }
-  if(which==='all'||which==='wigan'){TA_WIGAN_FLOORS.forEach(f=>S.ta.wiganC[f]=0);document.getElementById('ta-wigan-notes').value='';renderTAWigan();}
+  if(which==='all'||which==='wigan'){
+    S.ta.wiganSL=false;
+    const wb=document.getElementById('ta-wigan-sl-btn');
+    if(wb){wb.style.background='var(--green-dim)';wb.style.color='var(--green)';wb.style.borderColor='var(--green)';wb.textContent='10-0:10-6 — Building Secure & Locked';}
+    const wd=document.getElementById('ta-wigan-detail'); if(wd)wd.style.opacity='1';
+    TA_WIGAN_FLOORS.forEach(f=>S.ta.wiganC[f]=0);document.getElementById('ta-wigan-notes').value='';renderTAWigan();
+  }
   if(which==='all'||which==='vivian'){
+    S.ta.vivianSL=false;
+    const vb=document.getElementById('ta-vivian-sl-btn');
+    if(vb){vb.style.background='var(--green-dim)';vb.style.color='var(--green)';vb.style.borderColor='var(--green)';vb.textContent='10-0:10-6 — Building Secure & Locked';}
+    const vd=document.getElementById('ta-vivian-detail'); if(vd)vd.style.opacity='1';
     TA_VIVIAN_FLOORS.forEach(f=>S.ta.vivianC[f]=0);S.ta.vivianC.library=0;
     document.getElementById('ta-vivian-notes').value='';renderTAVivian();
     const libInp=document.getElementById('ta-val-library');if(libInp)libInp.value='0';
     document.getElementById('ta-lib-status').textContent='0';
     document.getElementById('ta-lib-status').className='lv-status';document.getElementById('ta-row-library').classList.remove('occupied');
+  }
+}
+function toggleTASL(bldg){
+  const active=!S.ta[bldg+'SL']; S.ta[bldg+'SL']=active;
+  const btn=document.getElementById('ta-'+bldg+'-sl-btn');
+  const det=document.getElementById('ta-'+bldg+'-detail');
+  if(active){
+    btn.style.background='var(--green)'; btn.style.color='#fff'; btn.style.borderColor='var(--green)';
+    btn.textContent='✓ 10-0:10-6  —  Building Secure & Locked';
+    if(det)det.style.opacity='0.35';
+    if(!S.ta.sections[bldg])toggleTA(bldg);
+  } else {
+    btn.style.background='var(--green-dim)'; btn.style.color='var(--green)'; btn.style.borderColor='var(--green)';
+    btn.textContent='10-0:10-6  —  Building Secure & Locked';
+    if(det)det.style.opacity='1';
   }
 }
 function renderTAWigan()  {const c=document.getElementById('ta-wigan-levels');c.innerHTML='';TA_WIGAN_FLOORS.forEach(f=>buildLvRow(c,f,S.ta.wiganC,()=>{if(!S.ta.sections.wigan)toggleTA('wigan');}));}
@@ -794,26 +827,6 @@ function buildKBZone(zone) {
     });
   }
 
-  /* ── North: Von Zedlitz extras ── */
-  if(zone==='north'){
-    const vzGrid=document.getElementById('kb-north-vz-grid');
-    if(vzGrid){
-      vzGrid.innerHTML='';
-      KB.north.vonzExtras.forEach(e=>{
-        const sr=document.createElement('div'); sr.className='status-row';
-        const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent=e.label;
-        const btns=document.createElement('div'); btns.className='status-btns';
-        e.opts.forEach(o=>{
-          const b=document.createElement('button'); b.className='status-btn';
-          b.id='kb-north-vz-'+e.key+'-'+o; b.textContent=o;
-          b.onclick=()=>setKBVZ(e.key,o);
-          btns.appendChild(b);
-        });
-        sr.appendChild(lbl); sr.appendChild(btns); vzGrid.appendChild(sr);
-      });
-    }
-  }
-
   /* ── South: Garage & Roller Door extras ── */
   if(zone==='south'){
     const seGrid=document.getElementById('kb-south-extras-grid');
@@ -856,26 +869,81 @@ function buildKBZone(zone) {
       hd.appendChild(nameEl); hd.appendChild(meta);
       // Body
       const body=document.createElement('div'); body.className='bldg-accordion-body';
+      // 10-0:10-6 Secure & Locked button
+      const slBtn=document.createElement('button');
+      slBtn.style.cssText='width:100%;padding:8px 10px;border-radius:6px;border:1.5px solid var(--green);background:var(--green-dim);color:var(--green);font-family:\'DM Mono\',monospace;font-size:11px;font-weight:600;cursor:pointer;text-align:center;letter-spacing:.04em;margin-bottom:8px;transition:all .15s;';
+      slBtn.id='kb-'+zone+'-slbtn-'+b.id;
+      slBtn.textContent='10-0:10-6  \u2014  Building Secure & Locked';
+      slBtn.onclick=(ev)=>{
+        ev.stopPropagation();
+        const active=!S.kb[zone].buildingC[b.id+'_sl'];
+        S.kb[zone].buildingC[b.id+'_sl']=active;
+        if(active){
+          slBtn.style.background='var(--green)'; slBtn.style.color='#fff';
+          slBtn.textContent='\u2713 10-0:10-6  \u2014  Building Secure & Locked';
+          b.floors.forEach(f=>{
+            S.kb[zone].buildingC[b.id][f]=0;
+            const r2=document.getElementById('kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_'));
+            const s2=document.getElementById('kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'));
+            const i2=r2?r2.querySelector('.cnt-input'):null;
+            if(r2)r2.classList.remove('occupied'); if(s2){s2.className='lv-status';s2.textContent='0';} if(i2)i2.value='0';
+          });
+          countBadge.classList.remove('visible');
+          if(!S.kb[zone].buildingC[b.id+'_inc'])toggleKBBldg(zone,b.id,acc);
+          if(!S.kb[zone].sections.int)toggleKBSection(zone,'int');
+        } else {
+          slBtn.style.background='var(--green-dim)'; slBtn.style.color='var(--green)';
+          slBtn.textContent='10-0:10-6  \u2014  Building Secure & Locked';
+        }
+      };
+      body.appendChild(slBtn);
+
       if(b.floors.length===0){
         const note=document.createElement('div');
         note.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);padding:4px;";
         note.textContent='External access only — no internal levels';
         body.appendChild(note);
       } else {
+        // Von Zedlitz internal extras (windows + door)
+        if(b.id==='vonz'){
+          const vzIntLabel=document.createElement('div'); vzIntLabel.className='sub-label'; vzIntLabel.style.marginBottom='6px'; vzIntLabel.textContent='Doors & Windows';
+          body.appendChild(vzIntLabel);
+          KB.north.vonzInternal.forEach(e=>{
+            const sr=document.createElement('div'); sr.className='status-row'; sr.style.marginBottom='6px';
+            const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent=e.label;
+            const btns=document.createElement('div'); btns.className='status-btns';
+            e.opts.forEach(o=>{
+              const vb=document.createElement('button'); vb.className='status-btn';
+              vb.id='kb-north-vz-'+e.key+'-'+o; vb.textContent=o;
+              vb.onclick=(ev)=>{
+                ev.stopPropagation();
+                S.kb.north.vonzInternal[e.key]=o;
+                e.opts.forEach(o2=>{const el2=document.getElementById('kb-north-vz-'+e.key+'-'+o2);if(el2)el2.className='status-btn';});
+                vb.classList.add(STATUS_COLOR[o]);
+                if(!S.kb.north.sections.int)toggleKBSection('north','int');
+                if(!S.kb.north.buildingC['vonz_inc'])toggleKBBldg('north','vonz',acc);
+              };
+              btns.appendChild(vb);
+            });
+            sr.appendChild(lbl); sr.appendChild(btns); body.appendChild(sr);
+          });
+          const vzLvLabel=document.createElement('div'); vzLvLabel.className='sub-label'; vzLvLabel.style.cssText='margin-top:10px;margin-bottom:6px;'; vzLvLabel.textContent='Levels';
+          body.appendChild(vzLvLabel);
+        }
         b.floors.forEach(f=>{
+          const isSingle=b.isSingleLevel;
           const row=document.createElement('div'); row.className='level-row'; row.id='kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_');
           const left=document.createElement('div');
-          const nm=document.createElement('div'); nm.className='lv-name'; nm.textContent=f;
-          const st=document.createElement('div'); st.className='lv-status'; st.id='kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'); st.textContent='0';
+          const nm=document.createElement('div'); nm.className='lv-name'; nm.textContent=isSingle?'':f;
+          const st=document.createElement('div'); st.className='lv-status'; st.id='kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'); st.textContent=isSingle?'No persons present':'0';
           left.appendChild(nm); left.appendChild(st);
           const right=document.createElement('div'); right.className='counter';
           const inp=document.createElement('input'); inp.type='number'; inp.className='cnt-input'; inp.value='0'; inp.min='0';
           inp.addEventListener('click',()=>inp.select());
           const updateRow=(n)=>{
             S.kb[zone].buildingC[b.id][f]=n; inp.value=n;
-            if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}
+            if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent=isSingle?'No persons present':'0';}
             else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
-            // Update building count badge
             const tot=b.floors.reduce((a,fl)=>a+(S.kb[zone].buildingC[b.id][fl]||0),0);
             if(tot>0){countBadge.textContent=tot+' person'+(tot>1?'s':'');countBadge.classList.add('visible');}
             else{countBadge.classList.remove('visible');}
@@ -952,6 +1020,11 @@ function clearKB(zone,which) {
         if(inp)inp.value='0';
       });
       S.kb[zone].buildingC[b.id+'_inc']=false;
+      S.kb[zone].buildingC[b.id+'_sl']=false;
+      const slEl=document.getElementById('kb-'+zone+'-slbtn-'+b.id);
+      if(slEl){slEl.style.background='var(--green-dim)';slEl.style.color='var(--green)';slEl.textContent='10-0:10-6 — Building Secure & Locked';}
+      // clear vonz internal
+      if(zone==='north'&&b.id==='vonz'){KB.north.vonzInternal.forEach(e=>{S.kb.north.vonzInternal[e.key]=null;e.opts.forEach(o=>{const el=document.getElementById('kb-north-vz-'+e.key+'-'+o);if(el)el.className='status-btn';});});}
       const acc=document.getElementById('kb-'+zone+'-bcard-'+b.id);
       const badge=document.getElementById('kb-'+zone+'-bcount-'+b.id);
       if(acc)acc.classList.remove('open');
@@ -1016,18 +1089,18 @@ function resetAllUI() {
 /* ════════════════════════════════════
    REPORT
 ════════════════════════════════════ */
-const LINE='━━━━━━━━━━━━';
+const LINE='';
 function pad(s,l){return String(s).padEnd(l);}
 function nowStr(){const n=new Date();return{date:n.toLocaleDateString('en-NZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),time:n.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',hour12:false})};}
 function fmtN(n){return n===0?'Clear (0)':n+' person'+(n>1?'s':'')+' present';}
 
 function generateGenericReport(){
   const{date,time}=nowStr();const b=S.building;
-  const lines=['VUW SECURITY — BUILDING CHECK REPORT',LINE,'Date     : '+date,'Time     : '+time,'Campus   : '+S.campus,'Building : '+b.name,LINE,'LEVEL SUMMARY:',''];
+  const lines=['VUW SECURITY — BUILDING CHECK REPORT','','Date     : '+date,'Time     : '+time,'Campus   : '+S.campus,'Building : '+b.name,'','LEVEL SUMMARY:',''];
   let hasOcc=false;
   b.floors.forEach(f=>{const n=S.counts[f];if(n>0)hasOcc=true;lines.push('  '+pad(f,16)+': '+fmtN(n));});
   const tot=Object.values(S.counts).reduce((a,v)=>a+v,0);
-  lines.push('',LINE);
+  lines.push('');
   if(hasOcc) lines.push('STATUS   : OCCUPIED — '+tot+' person'+(tot>1?'s':'')+' in building');
   lines.push('END OF REPORT');
   document.getElementById('report-status').innerHTML=hasOcc?'<div class="status-pill pill-occupied">⚠ Occupied</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
@@ -1036,7 +1109,7 @@ function generateGenericReport(){
 
 function generateTearoReport(){
   const{date,time}=nowStr();
-  const lines=['VUW SECURITY — TE ARO CAMPUS REPORT',LINE,'Date     : '+date,'Time     : '+time,'Campus   : Te Aro',LINE];
+  const lines=['VUW SECURITY — TE ARO CAMPUS REPORT','','Date     : '+date,'Time     : '+time,'Campus   : Te Aro',''];
   let anyOcc=false;
   if(S.ta.sections.ext){
     if(!S.ta.ext.carpark)   setTAStatus('carpark','Secure');
@@ -1055,29 +1128,39 @@ function generateTearoReport(){
       lines.push('  All others secure.');
       if(extNote) lines.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
     }
-    lines.push(LINE);
+    lines.push('');
   }
   if(S.ta.sections.wigan){
-    lines.push('','[ WiGAN BUILDING — INTERNAL CHECK ]','');
-    let occ=false;
-    TA_WIGAN_FLOORS.forEach(f=>{const n=S.ta.wiganC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
-    const tot=TA_WIGAN_FLOORS.reduce((a,f)=>a+S.ta.wiganC[f],0);
-    lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
-    const n=document.getElementById('ta-wigan-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
-    lines.push(LINE);
+    lines.push('[ WiGAN BUILDING ]');
+    if(S.ta.wiganSL){
+      lines.push('  10-0:10-6 — Building secure and locked');
+    } else {
+      lines.push('');
+      let occ=false;
+      TA_WIGAN_FLOORS.forEach(f=>{const n=S.ta.wiganC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
+      const tot=TA_WIGAN_FLOORS.reduce((a,f)=>a+S.ta.wiganC[f],0);
+      lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
+      const n=document.getElementById('ta-wigan-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
+    }
+    lines.push('');
   }
   if(S.ta.sections.vivian){
-    lines.push('','[ VIVIAN BUILDING — INTERNAL CHECK ]','');
-    let occ=false;
-    TA_VIVIAN_FLOORS.forEach(f=>{const n=S.ta.vivianC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
-    const libN=S.ta.vivianC.library;if(libN>0){occ=true;anyOcc=true;}
-    lines.push('  '+pad('Library',14)+': '+fmtN(libN));
-    const tot=TA_VIVIAN_FLOORS.reduce((a,f)=>a+S.ta.vivianC[f],0)+libN;
-    lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
-    const n=document.getElementById('ta-vivian-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
-    lines.push(LINE);
+    lines.push('[ VIVIAN BUILDING ]');
+    if(S.ta.vivianSL){
+      lines.push('  10-0:10-6 — Building secure and locked');
+    } else {
+      lines.push('');
+      let occ=false;
+      TA_VIVIAN_FLOORS.forEach(f=>{const n=S.ta.vivianC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
+      const libN=S.ta.vivianC.library;if(libN>0){occ=true;anyOcc=true;}
+      lines.push('  '+pad('Library',14)+': '+fmtN(libN));
+      const tot=TA_VIVIAN_FLOORS.reduce((a,f)=>a+S.ta.vivianC[f],0)+libN;
+      lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
+      const n=document.getElementById('ta-vivian-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
+    }
+    lines.push('');
   }
-  if(!S.ta.sections.ext&&!S.ta.sections.wigan&&!S.ta.sections.vivian)lines.push('','NOTE     : No sections selected.',LINE);
+  if(!S.ta.sections.ext&&!S.ta.sections.wigan&&!S.ta.sections.vivian)lines.push('NOTE     : No sections selected.');
   if(anyOcc) lines.push('','OVERALL  : PERSONS ON SITE — review sections above');
   lines.push('END OF REPORT');
   document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
@@ -1086,7 +1169,7 @@ function generateTearoReport(){
 
 function generateKelburnReport(){
   const{date,time}=nowStr();
-  const lines=['VUW SECURITY — KELBURN CAMPUS REPORT',LINE,'Date     : '+date,'Time     : '+time,'Campus   : Kelburn',LINE];
+  const lines=['VUW SECURITY — KELBURN CAMPUS REPORT','','Date     : '+date,'Time     : '+time,'Campus   : Kelburn',''];
   let anyOcc=false;
 
   ['north','middle','south'].forEach(zone=>{
@@ -1117,13 +1200,32 @@ function generateKelburnReport(){
     }
 
     if(secInt){
-      const incB=zd.buildings.filter(b=>b.floors.length>0&&S.kb[zone].buildingC[b.id+'_inc']);
+      const incB=zd.buildings.filter(b=>S.kb[zone].buildingC[b.id+'_inc']);
       const csbInc=zone==='south'&&S.kb[zone].buildingC['csb_inc'];
       if(incB.length||csbInc){
         lines.push('','  — Internal Check:','');
         incB.forEach(b=>{
-          let bOcc=false;
           lines.push('    '+b.name+':');
+          // Secure & Locked shortcut
+          if(S.kb[zone].buildingC[b.id+'_sl']){
+            lines.push('      10-0:10-6 — Building secure and locked');
+            lines.push(''); return;
+          }
+          // Von Zedlitz internal extras
+          if(b.id==='vonz'){
+            KB.north.vonzInternal.forEach(e=>{
+              const v=S.kb.north.vonzInternal[e.key];
+              if(v&&v!=='Secure')lines.push('      '+e.label+': '+v);
+            });
+          }
+          // Marae single-level
+          if(b.isSingleLevel){
+            const n=S.kb[zone].buildingC[b.id][b.floors[0]];
+            if(n>0){anyOcc=true;lines.push('      Persons present: '+n);}
+            else{lines.push('      No persons present');}
+            lines.push(''); return;
+          }
+          let bOcc=false;
           b.floors.forEach(f=>{
             const n=S.kb[zone].buildingC[b.id][f];
             if(n>0){bOcc=true;anyOcc=true;}
@@ -1146,7 +1248,7 @@ function generateKelburnReport(){
       }
     }
 
-        lines.push(LINE);
+        lines.push('');
   });
 
   if(anyOcc) lines.push('','OVERALL  : PERSONS ON SITE — review zones above');
@@ -1155,7 +1257,7 @@ function generateKelburnReport(){
   showReport(lines.join('\n'));
 }
 
-function showReport(t){document.getElementById('report-text').textContent=t;resetAllUI();goTo('s4');}
+function showReport(t){const clean=t.replace(/\n{3,}/g,'\n\n').trim();document.getElementById('report-text').textContent=clean;resetAllUI();goTo('s4');}
 function copyReport(){
   navigator.clipboard.writeText(document.getElementById('report-text').textContent).then(()=>{
     const m=document.getElementById('copy-msg');m.style.display='block';setTimeout(()=>m.style.display='none',2500);
