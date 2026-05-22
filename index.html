@@ -1,474 +1,1261 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My 8-Week Master Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VUW Security — Patrol Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --cream: #FDFAF4;
-  --cream2: #F5F0E8;
-  --ink: #18140F;
-  --ink-soft: #3D3830;
-  --ink-muted: #7A7268;
-  --gold: #B8832A;
-  --gold-light: #F5E6C8;
-  --gold-pale: #FBF5E8;
-  --border: #DDD5C5;
-  --border-light: #EAE4D8;
-  --white: #FFFFFF;
-  --english: #154B78;
-  --english-bg: #E8F2FB;
-  --english-mid: #B8D5F0;
-  --ml: #1A6040;
-  --ml-bg: #E3F5EC;
-  --ml-mid: #A8DABC;
-  --writing: #52368A;
-  --writing-bg: #EEE8FB;
-  --writing-mid: #C4B4F0;
-  --youtube: #8A3E14;
-  --youtube-bg: #FBF0E6;
-  --youtube-mid: #F0C49A;
-  --break: #5A5550;
-  --break-bg: #EDEBE6;
-  --shadow-sm: 0 2px 12px rgba(24,20,15,0.07);
-  --shadow-md: 0 6px 28px rgba(24,20,15,0.1);
+:root{
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --surface2:#f7f8fa;
+  --surface3:#eef0f4;
+  --border:#e2e5ea;
+  --border2:#c8cdd6;
+  --text:#1a1f2e;
+  --text2:#5a6278;
+  --text3:#9ba3b8;
+  --accent:#1a56db;
+  --accent-dim:#e8effe;
+  --accent-mid:rgba(26,86,219,0.12);
+  --green:#0a7c42;
+  --green-dim:#e6f5ee;
+  --green-mid:rgba(10,124,66,0.12);
+  --amber:#92590a;
+  --amber-dim:#fef3e2;
+  --amber-mid:rgba(146,89,10,0.12);
+  --red:#c0182a;
+  --red-dim:#fde8eb;
+  --red-mid:rgba(192,24,42,0.12);
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.06),0 2px 6px rgba(0,0,0,0.04);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 18px; scroll-behavior: smooth; }
-body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; line-height: 1.65; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 0 80px;}
 
-/* HERO */
-.hero { background: var(--ink); color: var(--cream); padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
-.hero-deco { position: absolute; inset: 0; pointer-events: none; }
-.hero-deco span { position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,0.06); }
-.hero-deco span:nth-child(1) { width:420px;height:420px;top:-180px;left:-120px; }
-.hero-deco span:nth-child(2) { width:300px;height:300px;bottom:-130px;right:-60px; }
-.hero-deco span:nth-child(3) { width:180px;height:180px;top:40px;right:15%; border-color:rgba(184,131,42,0.18); }
-.hero-deco span:nth-child(4) { width:80px;height:80px;bottom:30px;left:20%; border-color:rgba(184,131,42,0.12); }
-.hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
-.hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1.4rem; display: flex; align-items: center; justify-content: center; gap: 14px; }
-.hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 40px; height: 1px; background: var(--gold); opacity: 0.5; }
-.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.08; margin-bottom: 1.2rem; letter-spacing: -0.01em; }
-.hero h1 em { font-style: italic; color: var(--gold); }
-.hero-sub { font-size: 1.05rem; color: rgba(253,250,244,0.52); max-width: 520px; margin: 0 auto 2.2rem; line-height: 1.7; font-weight: 300; }
-.hero-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.pill { font-size: 0.82rem; padding: 8px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.13); color: rgba(253,250,244,0.7); background: rgba(255,255,255,0.04); letter-spacing: 0.02em; }
+.header{width:100%;background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;height:56px;box-shadow:var(--shadow-sm);}
+.header-logo{display:flex;align-items:center;gap:12px;}
+.header-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 2px var(--green-dim);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 2px var(--green-dim)}50%{box-shadow:0 0 0 5px rgba(10,124,66,0.08)}}
+.header-title{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
+.header-time{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);background:var(--surface2);padding:4px 10px;border-radius:6px;border:1px solid var(--border);}
 
-/* STATS STRIP */
-.stats-strip { background: var(--gold); display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; }
-.strip-item { padding: 1.4rem 1rem; border-right: 1px solid rgba(255,255,255,0.2); }
-.strip-item:last-child { border-right: none; }
-.strip-num { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 4px; }
-.strip-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(24,20,15,0.65); font-weight: 500; }
+.breadcrumb{width:100%;max-width:1400px;padding:14px 28px 0;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;flex-wrap:wrap;}
+.breadcrumb span{color:var(--text2);cursor:pointer;transition:color .15s;}
+.breadcrumb span:hover{color:var(--accent);}
+.breadcrumb .sep{color:var(--text3);}
+.breadcrumb .current{color:var(--accent);cursor:default;font-weight:500;}
 
-/* NAV */
-.nav { background: var(--white); border-bottom: 1px solid var(--border); display: flex; justify-content: center; position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm); }
-.nav-btn { padding: 1.2rem 2rem; font-size: 0.95rem; font-weight: 500; font-family: 'Outfit', sans-serif; border: none; background: none; cursor: pointer; color: var(--ink-muted); border-bottom: 3px solid transparent; transition: all 0.2s; letter-spacing: 0.02em; }
-.nav-btn.active { color: var(--ink); border-bottom-color: var(--gold); }
-.nav-btn:hover:not(.active) { color: var(--ink-soft); background: var(--cream2); }
+.container{width:100%;max-width:1400px;padding:24px 28px;}
 
-/* MAIN */
-.main { max-width: 1300px; margin: 0 auto; padding: 3rem 2rem 6rem; }
-.section { display: none; }
-.section.active { display: block; }
+.screen{display:none;}
+.screen.active{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.screen-title{font-size:24px;font-weight:600;margin-bottom:4px;color:var(--text);}
+.screen-sub{font-size:13px;color:var(--text2);margin-bottom:24px;font-family:'DM Mono',monospace;}
 
-/* SECTION HEADER */
-.s-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
-.s-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.5rem; }
-.s-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
-.s-sub { font-size: 1rem; color: var(--ink-muted); max-width: 500px; line-height: 1.65; font-weight: 300; margin-top: 0.5rem; }
+/* Campus */
+.campus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:580px;}
+@media(max-width:480px){.campus-grid{grid-template-columns:1fr}}
+.campus-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 20px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .15s;text-align:left;box-shadow:var(--shadow-sm);}
+.campus-card:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-3px);}
+.campus-card .c-icon{font-size:30px;margin-bottom:14px;display:block;}
+.campus-card .c-name{font-size:16px;font-weight:600;margin-bottom:5px;color:var(--text);}
+.campus-card .c-desc{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace;}
 
-/* PRINT BTN */
-.print-btn { display: inline-flex; align-items: center; gap: 9px; padding: 14px 30px; background: var(--ink); color: var(--cream); font-size: 0.95rem; font-family: 'Outfit', sans-serif; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.15s; letter-spacing: 0.02em; }
-.print-btn:hover { opacity: 0.82; }
+/* Zone tabs */
+.zone-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px;width:fit-content;box-shadow:var(--shadow-sm);}
+.zone-tab{padding:7px 22px;border-radius:6px;border:none;background:transparent;color:var(--text2);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s;letter-spacing:.04em;text-transform:uppercase;font-weight:500;}
+.zone-tab:hover{background:var(--surface2);color:var(--text);}
+.zone-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(26,86,219,0.25);}
+.zone-panel{display:none;}
+.zone-panel.active{display:block;animation:fadeIn .15s ease;}
 
-/* PHASE TOGGLE */
-.phase-toggle { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; flex-wrap: wrap; }
-.phase-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); font-weight: 500; }
-.phase-btn { padding: 11px 26px; border-radius: 999px; border: 1.5px solid var(--border); background: var(--white); font-size: 0.95rem; font-family: 'Outfit', sans-serif; cursor: pointer; color: var(--ink-soft); transition: all 0.2s; }
-.phase-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); font-weight: 500; }
+/* Sub-tabs (External / Internal) */
+.sub-tabs{display:flex;gap:5px;margin-bottom:16px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px;width:fit-content;}
+.sub-tab{padding:6px 18px;border-radius:6px;border:none;background:transparent;color:var(--text2);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em;}
+.sub-tab:hover{background:var(--surface);color:var(--text);}
+.sub-tab.active{background:var(--surface);color:var(--accent);font-weight:500;box-shadow:var(--shadow-sm);}
+.sub-panel{display:none;}
+.sub-panel.active{display:block;animation:fadeIn .15s ease;}
 
-/* LEGEND */
-.legend { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 2rem; padding: 18px 26px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; }
-.leg { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--ink-soft); }
-.leg-dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+/* Clear bar */
+.clear-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 16px;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+.clear-bar-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-right:4px;white-space:nowrap;}
+.clear-btn{padding:4px 14px;border-radius:20px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.clear-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-dim);}
+.clear-btn.all{border-color:var(--red);color:var(--red);background:var(--red-dim);font-weight:500;}
+.clear-btn.all:hover{background:rgba(192,24,42,.16);}
 
-/* DAY GRID */
-.day-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 2.5rem; }
-.day-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm); break-inside: avoid; }
-.day-name-bar { padding: 16px 20px; border-bottom: 1px solid var(--border-light); background: var(--cream2); }
-.day-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); }
-.day-hours { font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
-.day-blocks { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-.block { border-radius: 10px; padding: 11px 14px; line-height: 1.45; border-left: 3px solid transparent; }
-.block-time { font-size: 0.75rem; opacity: 0.6; margin-bottom: 3px; letter-spacing: 0.04em; font-weight: 300; }
-.block-label { font-weight: 500; font-size: 0.9rem; }
-.bl-english  { background: var(--english-bg);  color: var(--english);  border-left-color: var(--english-mid); }
-.bl-ml       { background: var(--ml-bg);        color: var(--ml);       border-left-color: var(--ml-mid); }
-.bl-writing  { background: var(--writing-bg);   color: var(--writing);  border-left-color: var(--writing-mid); }
-.bl-youtube  { background: var(--youtube-bg);   color: var(--youtube);  border-left-color: var(--youtube-mid); }
-.bl-break    { background: var(--break-bg);     color: var(--break);    border-left-color: #C8C4BC; }
+/* Section card (with checkbox) */
+.section-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm);}
+.section-card.included{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-mid),var(--shadow-sm);}
+.section-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface2);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:background .15s;}
+.section-header:hover{background:var(--surface3);}
+.section-checkbox{width:16px;height:16px;flex-shrink:0;border:2px solid var(--border2);border-radius:4px;background:var(--surface);display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.section-checkbox.checked{background:var(--accent);border-color:var(--accent);}
+.section-checkbox.checked::after{content:'';width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block;}
+.section-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text);}
+.section-tag{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--text3);white-space:nowrap;background:var(--surface);}
+.section-tag.on{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.section-body{padding:12px;}
 
-.weekend-note { background: var(--gold-pale); border: 1px solid var(--gold-light); border-left: 4px solid var(--gold); border-radius: 0 14px 14px 0; padding: 20px 26px; font-size: 1rem; color: var(--ink-soft); line-height: 1.7; }
-.weekend-note strong { color: var(--ink); font-weight: 600; }
+/* Sub-label */
+.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:10px 0 6px;font-weight:500;}
+.sub-label:first-child{margin-top:0;}
 
-/* PROGRESS */
-.prog-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 2rem; }
-.prog-stat { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-align: center; box-shadow: var(--shadow-sm); }
-.prog-num { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 8px; }
-.prog-lbl { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); font-weight: 500; }
-.prog-track-wrap { background: var(--cream2); border-radius: 999px; height: 9px; margin-bottom: 2.5rem; overflow: hidden; }
-.prog-track-fill { height: 100%; background: var(--gold); border-radius: 999px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+/* Level rows */
+.level-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:7px 10px;margin-bottom:5px;transition:border-color .15s,background .15s;}
+.level-row.occupied{border-color:var(--amber);background:var(--amber-dim);}
+.lv-name{font-size:12px;font-weight:500;color:var(--text);}
+.lv-status{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px;}
+.lv-status.occ{color:var(--amber);}
+.counter{display:flex;align-items:center;gap:6px;}
+.cnt-btn{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);background:var(--surface);color:var(--text2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Mono',monospace;line-height:1;box-shadow:var(--shadow-sm);}
+.cnt-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.cnt-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;min-width:20px;text-align:center;color:var(--text);}
 
-.week-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; margin-bottom: 16px; box-shadow: var(--shadow-sm); break-inside: avoid; }
-.week-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 8px; }
-.week-num { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; color: var(--ink); }
-.week-dates { font-size: 0.85rem; color: var(--ink-muted); margin-left: 12px; }
-.week-badge-done { font-size: 0.8rem; padding: 6px 16px; background: var(--ml-bg); color: var(--ml); border-radius: 999px; font-weight: 500; }
-.goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
-.goal-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; color: var(--ink-soft); cursor: pointer; line-height: 1.5; padding: 9px 12px; border-radius: 9px; transition: background 0.15s; }
-.goal-item:hover { background: var(--cream2); }
-.goal-item input[type=checkbox] { width: 17px; height: 17px; margin-top: 2px; cursor: pointer; accent-color: var(--gold); flex-shrink: 0; }
-.goal-item.done { color: var(--ink-muted); text-decoration: line-through; }
+/* Status row */
+.status-row{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 11px;margin-bottom:6px;}
+.status-row-label{font-size:12px;font-weight:500;margin-bottom:8px;color:var(--text);}
+.status-btns{display:flex;gap:4px;}
+.status-btn{flex:1;padding:5px 4px;border-radius:6px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-size:10px;font-family:'DM Mono',monospace;cursor:pointer;text-align:center;transition:all .15s;font-weight:500;}
+.status-btn:hover{border-color:var(--border2);color:var(--text);background:var(--surface3);}
+.status-btn.active-green{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.status-btn.active-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+.status-btn.active-red{background:var(--red-dim);border-color:var(--red);color:var(--red);}
 
-/* TIPS */
-.tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
-.tip-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm); break-inside: avoid; }
-.tip-card-top { padding: 24px 26px 18px; display: flex; align-items: flex-start; gap: 18px; border-bottom: 1px solid var(--border-light); }
-.tip-icon-circle { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-.tip-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; line-height: 1.2; }
-.tip-card-subtitle { font-size: 0.82rem; color: var(--ink-muted); margin-top: 3px; font-weight: 300; }
-.tip-card-body { padding: 20px 26px; display: flex; flex-direction: column; gap: 15px; }
-.tip-item { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.65; padding-left: 16px; border-left: 2px solid var(--border); font-weight: 300; }
-.tip-item strong { color: var(--ink); font-weight: 600; }
+/* Notes */
+.notes-area{width:100%;min-height:60px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;line-height:1.5;transition:border-color .15s;}
+.notes-area:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-mid);}
+.notes-area::placeholder{color:var(--text3);}
 
-/* DIVIDER */
-.divider { display: flex; align-items: center; gap: 16px; margin: 2.5rem 0; color: var(--ink-muted); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
-.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+/* Info tag */
+.info-tag{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;padding:4px 12px;border-radius:20px;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(26,86,219,.2);margin-bottom:20px;font-weight:500;}
+.info-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);}
 
-/* PRINT */
-.print-only { display: none; }
-@media print {
-  .screen-only { display: none !important; }
-  .print-only { display: block !important; }
-  .nav, .stats-strip { display: none !important; }
-  .section { display: block !important; }
-  html { font-size: 11px; }
-  .hero { padding: 1.5rem; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .hero h1 { font-size: 2.5rem; }
-  .main { padding: 0.8rem; max-width: 100%; }
-  .day-grid { grid-template-columns: repeat(5,1fr); gap: 8px; }
-  .prog-stats { grid-template-columns: repeat(4,1fr); }
-  .tips-grid { grid-template-columns: repeat(2,1fr); }
-  .print-btn { display: none !important; }
-  .day-card,.week-card,.tip-card,.prog-stat { box-shadow: none !important; break-inside: avoid; }
-  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .bl-english { background:#E8F2FB !important; color:#154B78 !important; }
-  .bl-ml      { background:#E3F5EC !important; color:#1A6040 !important; }
-  .bl-writing { background:#EEE8FB !important; color:#52368A !important; }
-  .bl-youtube { background:#FBF0E6 !important; color:#8A3E14 !important; }
-  .bl-break   { background:#EDEBE6 !important; color:#5A5550 !important; }
-  .hero { background:#18140F !important; }
-}
-@media (max-width: 900px) {
-  .day-grid { grid-template-columns: repeat(2,1fr); }
-  .prog-stats { grid-template-columns: repeat(2,1fr); }
-  .stats-strip { grid-template-columns: repeat(2,1fr); }
-}
-@media (max-width: 540px) {
-  .day-grid { grid-template-columns: 1fr; }
-  .nav-btn { padding: 1rem; font-size: 0.85rem; }
-  html { font-size: 16px; }
-}
+/* Divider */
+.divider{border:none;border-top:1px solid var(--border);margin:16px 0;}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;border:1.5px solid var(--border2);background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.btn-generate{background:var(--accent);border-color:var(--accent);color:#fff;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:14px 24px;width:100%;justify-content:center;margin-top:20px;box-shadow:0 4px 14px rgba(26,86,219,0.3);}
+.btn-generate:hover{background:#1548c0;border-color:#1548c0;box-shadow:0 6px 20px rgba(26,86,219,0.4);}
+.btn-copy{background:var(--green-dim);border-color:var(--green);color:var(--green);font-family:'DM Mono',monospace;font-size:12px;}
+.btn-copy:hover{background:rgba(10,124,66,.16);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* Report */
+.report-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;font-family:'DM Mono',monospace;font-size:12px;white-space:pre-wrap;line-height:1.9;margin-bottom:18px;box-shadow:var(--shadow);color:var(--text);}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;padding:5px 14px;border-radius:20px;margin-bottom:18px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;}
+.status-pill::before{content:'';width:7px;height:7px;border-radius:50%;}
+.pill-clear{background:var(--green-dim);color:var(--green);border:1.5px solid var(--green);}
+.pill-clear::before{background:var(--green);}
+.pill-occupied{background:var(--amber-dim);color:var(--amber);border:1.5px solid var(--amber);}
+.pill-occupied::before{background:var(--amber);}
+.copy-msg{font-size:12px;color:var(--green);font-family:'DM Mono',monospace;margin-top:8px;display:none;}
+
+/* All Normal button */
+.all-normal-btn{width:100%;padding:9px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--green);background:var(--green-dim);color:var(--green);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;cursor:pointer;text-align:center;letter-spacing:.04em;margin-bottom:12px;transition:all .15s;box-shadow:var(--shadow-sm);}
+.all-normal-btn:hover{background:rgba(10,124,66,.16);box-shadow:0 2px 8px rgba(10,124,66,.2);}
+
+/* Responsive card grids */
+.grid-fp{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+.grid-bldg{display:grid;gap:10px;align-items:start;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));}
+
+/* Accordion building rows */
+.bldg-accordion{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm);}
+.bldg-accordion.open{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-mid);}
+.bldg-accordion-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;user-select:none;background:var(--surface2);transition:background .15s;}
+.bldg-accordion-hd:hover{background:var(--surface3);}
+.bldg-accordion-name{font-size:13px;font-weight:600;color:var(--text);}
+.bldg-accordion-meta{display:flex;align-items:center;gap:8px;}
+.bldg-accordion-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;background:var(--accent-dim);padding:2px 8px;border-radius:20px;display:none;}
+.bldg-accordion-count.visible{display:inline-block;}
+.bldg-accordion-chevron{font-size:10px;color:var(--text3);transition:transform .2s;}
+.bldg-accordion.open .bldg-accordion-chevron{transform:rotate(180deg);}
+.bldg-accordion-body{display:none;padding:10px;}
+.bldg-accordion.open .bldg-accordion-body{display:block;}
+
+/* Counter with text input */
+.counter{display:flex;align-items:center;gap:5px;}
+.cnt-input{width:38px;height:26px;border:1.5px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--text);font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-align:center;outline:none;transition:border-color .15s;-moz-appearance:textfield;}
+.cnt-input:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-mid);}
+.cnt-input::-webkit-inner-spin-button,.cnt-input::-webkit-outer-spin-button{-webkit-appearance:none;}
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-deco"><span></span><span></span><span></span><span></span></div>
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Your personal master plan · 2025</div>
-    <h1>Your Path to<br><em>Growth &amp; Mastery</em></h1>
-    <p class="hero-sub">A complete 8-week system — 8 focused hours a day, 5 days a week — to transform your English, Machine Learning, typing speed, and launch your Halal food channel.</p>
-    <div class="hero-pills">
-      <span class="pill">🌐 English Skills</span>
-      <span class="pill">🤖 Machine Learning</span>
-      <span class="pill">⌨️ Speed Writing</span>
-      <span class="pill">🍽️ Halal Food YouTube</span>
-    </div>
-  </div>
-</header>
-
-<div class="stats-strip">
-  <div class="strip-item"><div class="strip-num">8</div><div class="strip-lbl">Weeks</div></div>
-  <div class="strip-item"><div class="strip-num">40</div><div class="strip-lbl">Working days</div></div>
-  <div class="strip-item"><div class="strip-num">320</div><div class="strip-lbl">Hours focused</div></div>
-  <div class="strip-item"><div class="strip-num">5</div><div class="strip-lbl">Goals achieved</div></div>
+<div class="header">
+  <div class="header-logo"><div class="header-dot"></div><span class="header-title">VUW Security</span></div>
+  <span class="header-time" id="header-time"></span>
 </div>
+<div class="breadcrumb" id="breadcrumb"></div>
 
-<nav class="nav screen-only">
-  <button class="nav-btn active" onclick="showTab('schedule',this)">📅 Schedule</button>
-  <button class="nav-btn" onclick="showTab('progress',this)">📊 Progress</button>
-  <button class="nav-btn" onclick="showTab('tips',this)">💡 Tips &amp; Resources</button>
-</nav>
+<div class="container">
 
-<div class="main">
-
-<!-- SCHEDULE -->
-<div id="tab-schedule" class="section active">
-  <div class="s-header">
-    <div>
-      <div class="s-eyebrow">Daily routine</div>
-      <div class="s-title">Your Weekly Schedule</div>
-      <div class="s-sub">Every day is carefully divided across your four focus areas. Toggle between Phase 1 (foundations) and Phase 2 (deep work).</div>
-    </div>
-    <button class="print-btn screen-only" onclick="window.print()">🖨️ Print this plan</button>
-  </div>
-
-  <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:#154B78"></div> English — Listening, Speaking, Writing</div>
-    <div class="leg"><div class="leg-dot" style="background:#1A6040"></div> Machine Learning</div>
-    <div class="leg"><div class="leg-dot" style="background:#52368A"></div> Speed Writing &amp; Typing</div>
-    <div class="leg"><div class="leg-dot" style="background:#8A3E14"></div> YouTube — Halal Food Channel</div>
-    <div class="leg"><div class="leg-dot" style="background:#A8A49E"></div> Break / Lunch</div>
-  </div>
-
-  <div class="phase-toggle screen-only">
-    <span class="phase-lbl">Phase</span>
-    <button class="phase-btn active" onclick="setPhase(1,this)">Phase 1 — Weeks 1 to 4 (Foundations)</button>
-    <button class="phase-btn" onclick="setPhase(2,this)">Phase 2 — Weeks 5 to 8 (Deep Work)</button>
-  </div>
-
-  <div class="day-grid" id="day-grid"></div>
-
-  <div class="divider">Weekend rules</div>
-  <div class="weekend-note">
-    <strong>Saturday:</strong> Light review only — maximum 2 hours. Go over notes from the week. No new topics.<br><br>
-    <strong>Sunday:</strong> Complete rest. Your brain consolidates memory while you rest. This is part of the plan — not a break from it.
-  </div>
-
-  <div class="divider print-only">Phase 2 — Weeks 5 to 8</div>
-  <div id="day-grid-p2-print" class="day-grid print-only" style="display:none"></div>
-</div>
-
-<!-- PROGRESS -->
-<div id="tab-progress" class="section">
-  <div class="s-header">
-    <div>
-      <div class="s-eyebrow">Track your journey</div>
-      <div class="s-title">Weekly Milestones</div>
-      <div class="s-sub">Check off each goal as you complete it. Progress is saved in your browser automatically.</div>
+  <!-- ══ S1: Campus ══ -->
+  <div id="s1" class="screen active">
+    <div class="screen-title">Select campus</div>
+    <div class="screen-sub">// Which campus are you patrolling?</div>
+    <div class="campus-grid">
+      <button class="campus-card" onclick="selectCampus('Te Aro')"><span class="c-icon">🏙</span><div class="c-name">Te Aro</div><div class="c-desc">Design &amp; Creative Arts</div></button>
+      <button class="campus-card" onclick="selectCampus('Kelburn')"><span class="c-icon">🏛</span><div class="c-name">Kelburn</div><div class="c-desc">Main campus</div></button>
+      <button class="campus-card" onclick="selectCampus('Pipitea')"><span class="c-icon">⚖️</span><div class="c-name">Pipitea</div><div class="c-desc">Law &amp; Commerce</div></button>
     </div>
   </div>
 
-  <div class="prog-stats">
-    <div class="prog-stat"><div class="prog-num" id="s-done">0</div><div class="prog-lbl">Goals done</div></div>
-    <div class="prog-stat"><div class="prog-num" id="s-total">40</div><div class="prog-lbl">Total goals</div></div>
-    <div class="prog-stat"><div class="prog-num" id="s-pct">0%</div><div class="prog-lbl">Complete</div></div>
-    <div class="prog-stat"><div class="prog-num" id="s-weeks">0</div><div class="prog-lbl">Weeks done</div></div>
+  <!-- ══ Pipitea building list ══ -->
+  <div id="s2" class="screen">
+    <div class="screen-title" id="s2-title">Buildings</div>
+    <div class="screen-sub">// Select a building to inspect</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;" id="building-grid"></div>
   </div>
 
-  <div class="prog-track-wrap"><div class="prog-track-fill" id="prog-bar" style="width:0%"></div></div>
-
-  <div id="progress-grid"></div>
-</div>
-
-<!-- TIPS -->
-<div id="tab-tips" class="section">
-  <div class="s-header">
-    <div>
-      <div class="s-eyebrow">Strategies &amp; tools</div>
-      <div class="s-title">Tips &amp; Resources</div>
-      <div class="s-sub">Specific, proven techniques and free tools for each of your five goals.</div>
-    </div>
+  <!-- ══ Generic levels (Pipitea) ══ -->
+  <div id="s3" class="screen">
+    <div class="info-tag" id="s3-badge"></div>
+    <div class="screen-title" id="s3-title">Building levels</div>
+    <div class="screen-sub">// Enter number of people per level</div>
+    <div id="levels-list"></div>
+    <hr class="divider">
+    <button class="btn btn-generate" onclick="generateGenericReport()">⬡ Generate control room report</button>
   </div>
 
-  <div class="tips-grid">
-    <div class="tip-card">
-      <div class="tip-card-top">
-        <div class="tip-icon-circle" style="background:#E8F2FB;">🎧</div>
-        <div><div class="tip-card-title" style="color:#154B78;">English — Listening</div><div class="tip-card-subtitle">BBC, TED Talks, podcasts</div></div>
-      </div>
-      <div class="tip-card-body">
-        <div class="tip-item"><strong>Best resource:</strong> BBC 6 Minute English. Short, structured, transcripts available. Listen once, read the transcript, then listen again.</div>
-        <div class="tip-item"><strong>Shadowing technique:</strong> Play a sentence, pause, say it back with the same rhythm and tone. 20 minutes daily of this beats 2 hours of passive listening.</div>
-        <div class="tip-item"><strong>Speed trick:</strong> Start at 0.8× speed. Move to 1× by week 3. Try TED Talks for Curious Minds and The English We Speak (BBC).</div>
+  <!-- ══ Te Aro ══ -->
+  <div id="sta" class="screen">
+    <div class="info-tag">Te Aro Campus</div>
+    <div class="screen-title">Te Aro — Check</div>
+    <div class="screen-sub">// Select tab · tick checkbox to include in report</div>
+    <div class="clear-bar">
+      <span class="clear-bar-label">Clear:</span>
+      <button class="clear-btn all" onclick="clearTA('all')">All sections</button>
+      <button class="clear-btn" onclick="clearTA('ext')">External</button>
+      <button class="clear-btn" onclick="clearTA('wigan')">WiGAN</button>
+      <button class="clear-btn" onclick="clearTA('vivian')">VIVIAN</button>
+    </div>
+    <div class="sub-tabs" id="ta-sub-tabs">
+      <button class="sub-tab active" onclick="showTASub('ext',this)">External Check</button>
+      <button class="sub-tab" onclick="showTASub('wigan',this)">WiGAN</button>
+      <button class="sub-tab" onclick="showTASub('vivian',this)">VIVIAN</button>
+    </div>
+
+    <!-- External -->
+    <div id="ta-sub-ext" class="sub-panel active">
+      <div class="section-card" id="ta-card-ext">
+        <div class="section-header" onclick="toggleTA('ext')">
+          <div class="section-checkbox" id="ta-chk-ext"></div>
+          <span class="section-title">External Check</span>
+          <span class="section-tag" id="ta-tag-ext">off</span>
+        </div>
+        <div class="section-body">
+          <button class="all-normal-btn" onclick="setTAAllNormal()">✓ Nothing to Report</button>
+          <div class="sub-label">Roller Doors</div>
+          <div class="status-row"><div class="status-row-label">Car Park Door</div><div class="status-btns"><button class="status-btn" id="ta-ext-carpark-Secure" onclick="setTAStatus('carpark','Secure')">Secure</button><button class="status-btn" id="ta-ext-carpark-Open" onclick="setTAStatus('carpark','Open')">Open</button><button class="status-btn" id="ta-ext-carpark-Stuck" onclick="setTAStatus('carpark','Stuck')">Stuck</button></div></div>
+          <div class="status-row"><div class="status-row-label">Workshop Door</div><div class="status-btns"><button class="status-btn" id="ta-ext-workshop-Secure" onclick="setTAStatus('workshop','Secure')">Secure</button><button class="status-btn" id="ta-ext-workshop-Open" onclick="setTAStatus('workshop','Open')">Open</button><button class="status-btn" id="ta-ext-workshop-Stuck" onclick="setTAStatus('workshop','Stuck')">Stuck</button></div></div>
+          <div class="sub-label" style="margin-top:10px;">Fire Panel</div>
+          <div class="status-row"><div class="status-row-label">Fire Panel Status</div><div class="status-btns"><button class="status-btn" id="ta-ext-firepanel-Normal" onclick="setTAStatus('firepanel','Normal')">Normal</button><button class="status-btn" id="ta-ext-firepanel-Detector" onclick="setTAStatus('firepanel','Detector')">Detector</button><button class="status-btn" id="ta-ext-firepanel-Emergency" onclick="setTAStatus('firepanel','Emergency')">Emergency</button></div></div>
+          <div class="sub-label" style="margin-top:10px;">Notes</div>
+          <textarea class="notes-area" id="ta-ext-notes" placeholder="Any additional comments…"></textarea>
+        </div>
       </div>
     </div>
 
-    <div class="tip-card">
-      <div class="tip-card-top">
-        <div class="tip-icon-circle" style="background:#E8F2FB;">✍️</div>
-        <div><div class="tip-card-title" style="color:#154B78;">English — Writing &amp; Speaking</div><div class="tip-card-subtitle">Journal, Grammarly, self-recording</div></div>
-      </div>
-      <div class="tip-card-body">
-        <div class="tip-item"><strong>Daily journal:</strong> Write 200 words every day on any topic. Use Grammarly (free version) to check. Review your top 3 mistakes each Friday.</div>
-        <div class="tip-item"><strong>Speaking practice:</strong> Record yourself for 2 minutes on a topic. Listen back. Notice pronunciation and grammar. Improve the next day.</div>
-        <div class="tip-item"><strong>Double goal trick:</strong> Write and present your YouTube scripts in English — one activity, two goals at once.</div>
-      </div>
-    </div>
-
-    <div class="tip-card">
-      <div class="tip-card-top">
-        <div class="tip-icon-circle" style="background:#E3F5EC;">🤖</div>
-        <div><div class="tip-card-title" style="color:#1A6040;">Machine Learning</div><div class="tip-card-subtitle">fast.ai, Andrew Ng, Google Colab</div></div>
-      </div>
-      <div class="tip-card-body">
-        <div class="tip-item"><strong>Weeks 1–4:</strong> Math foundations + Python. Khan Academy for linear algebra and statistics. fast.ai Part 1 for practical, code-first ML learning.</div>
-        <div class="tip-item"><strong>Weeks 5–8:</strong> Andrew Ng's ML Specialization on Coursera — free to audit. Covers regression, classification, and neural networks step by step.</div>
-        <div class="tip-item"><strong>Daily coding:</strong> One small exercise in Google Colab (free). Doing beats reading — always. Code every single day, even 30 minutes counts.</div>
-        <div class="tip-item"><strong>For your master's:</strong> Keep a learning log. Write each new concept in your own words. This becomes your study material for applications later.</div>
+    <!-- WiGAN -->
+    <div id="ta-sub-wigan" class="sub-panel">
+      <div class="section-card" id="ta-card-wigan">
+        <div class="section-header" onclick="toggleTA('wigan')">
+          <div class="section-checkbox" id="ta-chk-wigan"></div>
+          <span class="section-title">WiGAN Building</span>
+          <span class="section-tag" id="ta-tag-wigan">off</span>
+        </div>
+        <div class="section-body">
+          <button class="all-normal-btn" id="ta-wigan-sl-btn" onclick="toggleTASL('wigan')" style="border-color:var(--green);background:var(--green-dim);color:var(--green);">10-0:10-6  —  Building Secure &amp; Locked</button>
+          <div id="ta-wigan-detail">
+          <div class="sub-label">Internal Check — Levels</div>
+          <div id="ta-wigan-levels"></div>
+          <div class="sub-label" style="margin-top:6px;">Notes</div>
+          <textarea class="notes-area" id="ta-wigan-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="tip-card">
-      <div class="tip-card-top">
-        <div class="tip-icon-circle" style="background:#EEE8FB;">⌨️</div>
-        <div><div class="tip-card-title" style="color:#52368A;">Speed Writing &amp; Typing</div><div class="tip-card-subtitle">keybr.com, typing.com</div></div>
-      </div>
-      <div class="tip-card-body">
-        <div class="tip-item"><strong>Best tool:</strong> keybr.com — adapts to your weakest keys automatically. 20 focused minutes per day is enough. Do not do more; quality beats quantity.</div>
-        <div class="tip-item"><strong>Targets:</strong> Baseline → 30 WPM (week 2) → 40 WPM (week 4) → 48 WPM (week 6) → 55+ WPM (week 8). Test every Friday.</div>
-        <div class="tip-item"><strong>Most important rule:</strong> Do not look at your hands. This single habit separates slow and fast typists. Trust your muscle memory.</div>
-      </div>
-    </div>
-
-    <div class="tip-card">
-      <div class="tip-card-top">
-        <div class="tip-icon-circle" style="background:#FBF0E6;">🍽️</div>
-        <div><div class="tip-card-title" style="color:#8A3E14;">YouTube — Halal Food Channel</div><div class="tip-card-subtitle">CapCut, Canva, YouTube Shorts</div></div>
-      </div>
-      <div class="tip-card-body">
-        <div class="tip-item"><strong>Weeks 1–2:</strong> Research 10 video ideas. Choose a channel name. Create account and logo using Canva (completely free and beautiful).</div>
-        <div class="tip-item"><strong>Weeks 3–4:</strong> Film first 2 videos with your phone. Edit with CapCut (free and very easy). Use natural window light — it looks great.</div>
-        <div class="tip-item"><strong>Weeks 5–8:</strong> Publish 1 video per week. YouTube Shorts (60–90 seconds) grow the fastest. Add captions — they double your views.</div>
-        <div class="tip-item"><strong>Video ideas to start:</strong> "5 easy halal dinners in 30 minutes" · "Halal swaps for popular recipes" · "Street food made halal at home".</div>
+    <!-- VIVIAN -->
+    <div id="ta-sub-vivian" class="sub-panel">
+      <div class="section-card" id="ta-card-vivian">
+        <div class="section-header" onclick="toggleTA('vivian')">
+          <div class="section-checkbox" id="ta-chk-vivian"></div>
+          <span class="section-title">VIVIAN Building</span>
+          <span class="section-tag" id="ta-tag-vivian">off</span>
+        </div>
+        <div class="section-body">
+          <button class="all-normal-btn" id="ta-vivian-sl-btn" onclick="toggleTASL('vivian')" style="border-color:var(--green);background:var(--green-dim);color:var(--green);">10-0:10-6  —  Building Secure &amp; Locked</button>
+          <div id="ta-vivian-detail">
+          <div class="sub-label">Internal Check — Levels</div>
+          <div id="ta-vivian-levels"></div>
+          <div class="sub-label" style="margin-top:6px;">Library</div>
+          <div class="level-row" id="ta-row-library"><div><div class="lv-name">Library</div><div class="lv-status" id="ta-lib-status">0</div></div><div class="counter"><button class="cnt-btn" onclick="taLibChange(-1)">−</button><input class="cnt-input" type="number" id="ta-val-library" value="0" min="0" oninput="taLibSet(this.value)" onclick="this.select()"><button class="cnt-btn" onclick="taLibChange(1)">+</button></div></div>
+          <div class="sub-label" style="margin-top:6px;">Notes</div>
+          <textarea class="notes-area" id="ta-vivian-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="tip-card">
-      <div class="tip-card-top">
-        <div class="tip-icon-circle" style="background:#F5E6C8;">⚡</div>
-        <div><div class="tip-card-title" style="color:#7A5018;">Staying on Track</div><div class="tip-card-subtitle">Consistency always beats perfection</div></div>
-      </div>
-      <div class="tip-card-body">
-        <div class="tip-item"><strong>Friday review ritual:</strong> Every Friday, spend 30 minutes reviewing the week. What went well? What needs fixing? Set 3 clear intentions for next week.</div>
-        <div class="tip-item"><strong>Breaks are non-negotiable:</strong> The 15-minute breaks in your schedule are mandatory. Your focus will be noticeably better after a real break.</div>
-        <div class="tip-item"><strong>Missed a day?</strong> Never try to catch up by doubling work. Just continue normally the next day. Consistency over perfection — always.</div>
-        <div class="tip-item"><strong>Same environment:</strong> Same chair, same time, same desk every day. Your brain learns to focus faster when the setting is consistent.</div>
-      </div>
-    </div>
+    <button class="btn btn-generate" onclick="generateTearoReport()">⬡ Generate control room report</button>
   </div>
-</div>
+
+  <!-- ══ Kelburn ══ -->
+  <div id="skb" class="screen">
+    <div class="info-tag">Kelburn Campus</div>
+    <div class="screen-title">Kelburn — Check</div>
+    <div class="screen-sub">// Select zone · use External / Internal tabs · tick checkbox to include in report</div>
+
+    <div class="zone-tabs">
+      <button class="zone-tab active" onclick="showZone('north',this)">North</button>
+      <button class="zone-tab" onclick="showZone('middle',this)">Middle</button>
+      <button class="zone-tab" onclick="showZone('south',this)">South</button>
+    </div>
+
+    <!-- ── NORTH ── -->
+    <div id="zone-north" class="zone-panel active">
+      <div class="clear-bar">
+        <span class="clear-bar-label">Clear North:</span>
+        <button class="clear-btn all"  onclick="clearKB('north','all')">All</button>
+        <button class="clear-btn" onclick="clearKB('north','ext')">External</button>
+        <button class="clear-btn" onclick="clearKB('north','int')">Internal</button>
+      </div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="showSub('north','ext',this)">External Check</button>
+        <button class="sub-tab"        onclick="showSub('north','int',this)">Internal Check</button>
+      </div>
+      <!-- North External -->
+      <div id="kb-north-sub-ext" class="sub-panel active">
+        <div class="section-card" id="kb-north-card-ext">
+          <div class="section-header" onclick="toggleKBSection('north','ext')">
+            <div class="section-checkbox" id="kb-north-chk-ext"></div>
+            <span class="section-title">External Check — North</span>
+            <span class="section-tag" id="kb-north-tag-ext">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Fire Panels</div>
+            <div id="kb-north-fp-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-north-ext-notes" placeholder="Any additional comments…"></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- North Internal -->
+      <div id="kb-north-sub-int" class="sub-panel">
+        <div class="section-card" id="kb-north-card-int">
+          <div class="section-header" onclick="toggleKBSection('north','int')">
+            <div class="section-checkbox" id="kb-north-chk-int"></div>
+            <span class="section-title">Internal Check — North</span>
+            <span class="section-tag" id="kb-north-tag-int">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Buildings — People per level</div>
+            <div class="grid-bldg" id="kb-north-bldg-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-north-int-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MIDDLE ── -->
+    <div id="zone-middle" class="zone-panel">
+      <div class="clear-bar">
+        <span class="clear-bar-label">Clear Middle:</span>
+        <button class="clear-btn all"  onclick="clearKB('middle','all')">All</button>
+        <button class="clear-btn" onclick="clearKB('middle','ext')">External</button>
+        <button class="clear-btn" onclick="clearKB('middle','int')">Internal</button>
+      </div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="showSub('middle','ext',this)">External Check</button>
+        <button class="sub-tab"        onclick="showSub('middle','int',this)">Internal Check</button>
+      </div>
+      <!-- Middle External -->
+      <div id="kb-middle-sub-ext" class="sub-panel active">
+        <div class="section-card" id="kb-middle-card-ext">
+          <div class="section-header" onclick="toggleKBSection('middle','ext')">
+            <div class="section-checkbox" id="kb-middle-chk-ext"></div>
+            <span class="section-title">External Check — Middle</span>
+            <span class="section-tag" id="kb-middle-tag-ext">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Fire Panels</div>
+            <div id="kb-middle-fp-grid"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Middle Internal -->
+      <div id="kb-middle-sub-int" class="sub-panel">
+        <div class="section-card" id="kb-middle-card-int">
+          <div class="section-header" onclick="toggleKBSection('middle','int')">
+            <div class="section-checkbox" id="kb-middle-chk-int"></div>
+            <span class="section-title">Internal Check — Middle</span>
+            <span class="section-tag" id="kb-middle-tag-int">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Buildings — People per level</div>
+            <div class="grid-bldg" id="kb-middle-bldg-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SOUTH ── -->
+    <div id="zone-south" class="zone-panel">
+      <div class="clear-bar">
+        <span class="clear-bar-label">Clear South:</span>
+        <button class="clear-btn all"  onclick="clearKB('south','all')">All</button>
+        <button class="clear-btn" onclick="clearKB('south','ext')">External</button>
+        <button class="clear-btn" onclick="clearKB('south','int')">Internal</button>
+      </div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="showSub('south','ext',this)">External Check</button>
+        <button class="sub-tab"        onclick="showSub('south','int',this)">Internal Check</button>
+      </div>
+      <!-- South External -->
+      <div id="kb-south-sub-ext" class="sub-panel active">
+        <div class="section-card" id="kb-south-card-ext">
+          <div class="section-header" onclick="toggleKBSection('south','ext')">
+            <div class="section-checkbox" id="kb-south-chk-ext"></div>
+            <span class="section-title">External Check — South</span>
+            <span class="section-tag" id="kb-south-tag-ext">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Fire Panels</div>
+            <div id="kb-south-fp-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Garage &amp; Roller Doors</div>
+            <div id="kb-south-extras-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-south-ext-notes" placeholder="Any additional comments…"></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- South Internal -->
+      <div id="kb-south-sub-int" class="sub-panel">
+        <div class="section-card" id="kb-south-card-int">
+          <div class="section-header" onclick="toggleKBSection('south','int')">
+            <div class="section-checkbox" id="kb-south-chk-int"></div>
+            <span class="section-title">Internal Check — South</span>
+            <span class="section-tag" id="kb-south-tag-int">off</span>
+          </div>
+          <div class="section-body">
+            <div class="sub-label">Buildings — People per level</div>
+            <div class="grid-bldg" id="kb-south-bldg-grid"></div>
+            <div class="sub-label" style="margin-top:10px;">Notes</div>
+            <textarea class="notes-area" id="kb-south-int-notes" placeholder="Notes for internal check…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-generate" onclick="generateKelburnReport()">⬡ Generate control room report</button>
+  </div>
+
+  <!-- ══ Report ══ -->
+  <div id="s4" class="screen">
+    <div class="screen-title">Control room report</div>
+    <div class="screen-sub">// Ready to send — copy and transmit</div>
+    <div id="report-status"></div>
+    <div class="report-box" id="report-text"></div>
+    <div class="btn-row">
+      <button class="btn btn-copy" onclick="copyReport()">⎘ Copy report</button>
+      <button class="btn" onclick="newPatrol()">New check</button>
+    </div>
+    <div class="copy-msg" id="copy-msg">✓ Copied to clipboard</div>
+  </div>
 
 </div>
 
 <script>
-const p1=[
-  {day:"Monday",blocks:[{t:"8:00–9:30",l:"English — listening practice",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"Machine Learning — theory",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:00",l:"English — writing journal",c:"bl-english"},{t:"2:00–3:30",l:"ML — coding practice",c:"bl-ml"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing drills",c:"bl-writing"}]},
-  {day:"Tuesday",blocks:[{t:"8:00–9:30",l:"English — speaking & shadowing",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — theory video",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:00",l:"YouTube — channel planning",c:"bl-youtube"},{t:"2:00–3:30",l:"English — writing",c:"bl-english"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing drills",c:"bl-writing"}]},
-  {day:"Wednesday",blocks:[{t:"8:00–9:30",l:"English — listening",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — coding practice",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:30",l:"YouTube — script + filming",c:"bl-youtube"},{t:"2:30–3:30",l:"English — speaking",c:"bl-english"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing drills",c:"bl-writing"}]},
-  {day:"Thursday",blocks:[{t:"8:00–9:30",l:"English — writing",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — theory video",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:00",l:"YouTube — video editing",c:"bl-youtube"},{t:"2:00–3:30",l:"English — listening",c:"bl-english"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing test",c:"bl-writing"}]},
-  {day:"Friday",blocks:[{t:"8:00–9:30",l:"English — speaking",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:30",l:"ML — weekly review",c:"bl-ml"},{t:"11:30–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:00",l:"YouTube — publish + review",c:"bl-youtube"},{t:"2:00–3:30",l:"English — weekly review",c:"bl-english"},{t:"3:30–4:00",l:"Week reflection & next goals",c:"bl-break"}]},
-];
-const p2=[
-  {day:"Monday",blocks:[{t:"8:00–9:30",l:"English — advanced listening",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — algorithms deep dive",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:00",l:"English — essay writing",c:"bl-english"},{t:"2:00–3:30",l:"ML — mini-project",c:"bl-ml"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing (timed)",c:"bl-writing"}]},
-  {day:"Tuesday",blocks:[{t:"8:00–9:30",l:"English — podcast + notes",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — build a model",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:30",l:"YouTube — script in English",c:"bl-youtube"},{t:"2:30–3:30",l:"English — speaking",c:"bl-english"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing drills",c:"bl-writing"}]},
-  {day:"Wednesday",blocks:[{t:"8:00–9:30",l:"English — TED Talk study",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — train and evaluate",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:30",l:"YouTube — filming",c:"bl-youtube"},{t:"2:30–3:30",l:"English — pronunciation",c:"bl-english"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing (long text)",c:"bl-writing"}]},
-  {day:"Thursday",blocks:[{t:"8:00–9:30",l:"English — formal writing",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:45",l:"ML — research papers",c:"bl-ml"},{t:"11:45–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:30",l:"YouTube — edit + publish",c:"bl-youtube"},{t:"2:30–3:30",l:"English — record yourself",c:"bl-english"},{t:"3:30–3:45",l:"Break",c:"bl-break"},{t:"3:45–4:45",l:"Speed writing test",c:"bl-writing"}]},
-  {day:"Friday",blocks:[{t:"8:00–9:30",l:"English — full skills review",c:"bl-english"},{t:"9:30–9:45",l:"Break",c:"bl-break"},{t:"9:45–11:30",l:"ML — weekly quiz + review",c:"bl-ml"},{t:"11:30–12:30",l:"Lunch break",c:"bl-break"},{t:"12:30–2:30",l:"YouTube — analytics review",c:"bl-youtube"},{t:"2:30–3:30",l:"Speed writing — final test",c:"bl-writing"},{t:"3:30–4:00",l:"8-week master plan review",c:"bl-break"}]},
-];
-const weeks=[
-  {wk:1,dates:"Days 1–5",goals:["Set up study space and all tools","Start English listening 30 min/day","Install Python and Jupyter Notebook","Create YouTube channel account","Take baseline typing speed test"]},
-  {wk:2,dates:"Days 6–10",goals:["English: 200-word daily journal started","ML: Python basics completed","Record first YouTube test video","Typing: reach 30 WPM","Speaking: 1 shadowing session/day"]},
-  {wk:3,dates:"Days 11–15",goals:["English: identify top 5 grammar errors","ML: linear algebra review done","Film 1st real YouTube video","Typing: reach 35 WPM","Speaking: self-recording habit set"]},
-  {wk:4,dates:"Days 16–20",goals:["English: Phase 1 writing review done","ML: fast.ai Part 1 complete","Publish video #1 on YouTube","Typing: reach 40 WPM","Phase 1 complete self-assessment"]},
-  {wk:5,dates:"Days 21–25",goals:["English: advanced listening (TED)","ML: regression models complete","Publish video #2 on YouTube","Typing: reach 44 WPM","Write 1 formal English essay"]},
-  {wk:6,dates:"Days 26–30",goals:["English: pronunciation drill routine","ML: classification models done","Publish video #3 on YouTube","Typing: reach 48 WPM","ML mini-project started"]},
-  {wk:7,dates:"Days 31–35",goals:["English: formal writing practice","ML: neural networks intro done","Publish video #4 on YouTube","Typing: reach 52 WPM","Record one video fully in English"]},
-  {wk:8,dates:"Days 36–40",goals:["English: final writing assessment","ML: mini-project complete","Publish video #5 on YouTube","Typing: 55+ WPM achieved","Master plan final review and celebrate 🎉"]},
-];
+/* ════════════════════════════════════
+   HELPERS
+════════════════════════════════════ */
+function floors(hi, lo, asc) {
+  const a = [];
+  if (asc) { for (let i = lo; i <= hi; i++) a.push('Level ' + i); }
+  else      { for (let i = hi; i >= lo; i--) a.push('Level ' + i); }
+  return a;
+}
+function flist(...ns) { return ns.map(n => 'Level ' + n); }
+function fpKey(s) { return s.replace(/[\s&]/g, '-'); }
 
-let checks={};
-try{checks=JSON.parse(localStorage.getItem('sp2_checks')||'{}');}catch(e){}
+/* ════════════════════════════════════
+   DATA
+════════════════════════════════════ */
+const KB = {
+  north: {
+    buildings: [
+      { id:'hunter',  name:'Hunter',          floors: floors(4,0)      },
+      { id:'robst',   name:'Robert Stout',     floors: floors(4,0)      },
+      { id:'adamart', name:'Adam Art Gallery', floors: floors(3,0)      },
+      { id:'oldkirk', name:'Old Kirk',         floors: flist(5,4,3)     },
+      { id:'newkirk', name:'New Kirk',         floors: floors(8,0,true) },
+      { id:'vonz',    name:'Von Zedlitz',      floors: floors(9,0)      },
+      { id:'hugmac',  name:'Hugh Mackenzie',   floors: floors(3,0)      },
+      { id:'murphy',  name:'Murphy',           floors: floors(11,1)     },
+      { id:'moko',    name:'Mokopuna',         floors: floors(3,0)      },
+      { id:'marae',   name:'Marae',            floors: ['Marae'], isSingleLevel:true },
+      { id:'stunion', name:'Student Union',    floors: floors(5,0)      },
+      { id:'rankinen',name:'Rankine Brown',    floors: floors(9,0)      },
+    ],
+    firePanels: ['Hunter','Robert Stout','Adam Art Gallery','Old Kirk','New Kirk','Von Zedlitz','Hugh Mackenzie','Murphy','Mokopuna','Marae','Student Union','Rankine Brown'],
+    vonzExtras: [],
+    vonzInternal: [
+      { key:'win-l0',   label:'Window — Level 0', opts:['Secure','Open','Broken'] },
+      { key:'win-l1',   label:'Window — Level 1', opts:['Secure','Open','Broken'] },
+      { key:'door-001', label:'Door 001',          opts:['Secure','Faulty','Broken'] },
+    ]
+  },
+  middle: {
+    buildings: [
+      { id:'oldkirk2', name:'Old Kirk',        floors: flist(5,4,3)       },
+      { id:'newkirk2', name:'New Kirk',        floors: floors(8,0,true)   },
+      { id:'stunion2', name:'Student Union',   floors: floors(5,0)        },
+      { id:'rankine',  name:'Rankine Brown',   floors: floors(9,0)        },
+      { id:'maclau',   name:'Maclaurin',       floors: floors(2,0,true)   },
+      { id:'easter',   name:'Easterfield',     floors: floors(6,0,true)   },
+      { id:'adamart2', name:'Adam Art Gallery', floors: floors(3,0)        },
+    ],
+    firePanels: ['Old Kirk','New Kirk','Student Union','Rankine Brown','Maclaurin','Easterfield','Adam Art Gallery']
+  },
+  south: {
+    buildings: [
+      { id:'rankines', name:'Rankine Brown',    floors: floors(9,0)                   },
+      { id:'easters',  name:'Easterfield',      floors: floors(6,0,true)              },
+      { id:'maclaus',  name:'Maclaurin',        floors: floors(2,0,true)              },
+      { id:'cottons',  name:'Cotton',           floors: floors(5,0)                   },
+      { id:'amd',      name:'Alan MacDiarmid',  floors: floors(4,0)                   },
+      { id:'labys',    name:'Laby',             floors: floors(5,0)                   },
+      { id:'maru',     name:'Maru',             floors: flist(2,1)                    },
+      { id:'rec',      name:'Recreation Centre',floors: flist(6,5,4,3,1)              },
+      { id:'ttr',      name:'TTR',              floors: floors(4,0)                   },
+      { id:'csb',      name:'CSB',              floors: []                            },
+    ],
+    firePanels: ['Rankine Brown','Easterfield','Maclaurin','Cotton','Alan MacDiarmid','Laby','Maru','Recreation Centre','TTR','CSB'],
+    southExtras: [
+      { key:'amd-garage',  label:'Alan MacDiarmid — Garage', opts:['Secure','Not Secure'] },
+      { key:'csb-door1',   label:'CSB — Roller Door 1',      opts:['Secure','Open','Stuck'] },
+      { key:'csb-door2',   label:'CSB — Roller Door 2',      opts:['Secure','Open','Stuck'] },
+      { key:'laby-door1',  label:'Laby — Roller Door 1',     opts:['Secure','Open','Stuck'] },
+      { key:'laby-door2',  label:'Laby — Roller Door 2',     opts:['Secure','Open','Stuck'] },
+      { key:'laby-door3',  label:'Laby — Roller Door 3',     opts:['Secure','Open','Stuck'] },
+    ]
+  }
+};
 
-function buildGrid(data,id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  el.innerHTML='';
-  data.forEach(d=>{
-    const c=document.createElement('div');
-    c.className='day-card';
-    c.innerHTML=`<div class="day-name-bar"><div class="day-name">${d.day}</div><div class="day-hours">8 hours · 5 sessions</div></div><div class="day-blocks">${d.blocks.map(b=>`<div class="block ${b.c}"><div class="block-time">${b.t}</div><div class="block-label">${b.l}</div></div>`).join('')}</div>`;
-    el.appendChild(c);
+const TA_WIGAN_FLOORS  = floors(6,0);
+const TA_VIVIAN_FLOORS = floors(3,0);
+const TA_STATUS_OPTS   = { carpark:['Secure','Open','Stuck'], workshop:['Secure','Open','Stuck'], firepanel:['Normal','Detector','Emergency'] };
+const FP_OPTS   = ['Normal','Defective','Emergency'];
+const DOOR_OPTS = ['Secure','Faulty','Broken'];
+const STATUS_COLOR = {
+  Secure:'active-green', Normal:'active-green',
+  Open:'active-amber',   Detector:'active-amber', Defective:'active-amber', Faulty:'active-amber',
+  Stuck:'active-red',    Emergency:'active-red',  Broken:'active-red',
+  'Not Secure':'active-red'
+};
+
+/* ════════════════════════════════════
+   STATE
+════════════════════════════════════ */
+let S = makeState();
+function makeState() {
+  const s = {
+    campus:'', building:null, counts:{},
+    ta: { sections:{ext:false,wigan:false,vivian:false}, ext:{carpark:null,workshop:null,firepanel:null}, wiganC:{}, vivianC:{}, wiganSL:false, vivianSL:false },
+    kb: {
+      north:  { sections:{ext:false,int:false}, firePanels:{}, vonzExtras:{}, vonzInternal:{}, buildingC:{} },
+      middle: { sections:{ext:false,int:false}, firePanels:{}, buildingC:{} },
+      south:  { sections:{ext:false,int:false}, firePanels:{}, southExtras:{}, buildingC:{} }
+    }
+  };
+  TA_WIGAN_FLOORS.forEach(f  => s.ta.wiganC[f]  = 0);
+  TA_VIVIAN_FLOORS.forEach(f => s.ta.vivianC[f] = 0);
+  s.ta.vivianC.library = 0;
+  ['north','middle','south'].forEach(z => {
+    KB[z].buildings.forEach(b => { s.kb[z].buildingC[b.id] = {}; b.floors.forEach(f => s.kb[z].buildingC[b.id][f] = 0); s.kb[z].buildingC[b.id+'_inc'] = false; s.kb[z].buildingC[b.id+'_sl'] = false; });
+    KB[z].firePanels.forEach(fp => s.kb[z].firePanels[fp] = null);
+  });
+  KB.north.vonzExtras.forEach(e => s.kb.north.vonzExtras[e.key] = null);
+  KB.north.vonzInternal.forEach(e => s.kb.north.vonzInternal[e.key] = null);
+  KB.north.vonzInternal.forEach(e => s.kb.north.vonzInternal[e.key] = null);
+  KB.south.southExtras.forEach(e => s.kb.south.southExtras[e.key] = null);
+  return s;
+}
+
+/* ════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════ */
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  updateBreadcrumb(id);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function updateBreadcrumb(id) {
+  const bc=document.getElementById('breadcrumb');
+  const cr=(l,f)=>`<span onclick="${f}">${l}</span>`;
+  const cu=l=>`<span class="current">${l}</span>`;
+  const sp='<span class="sep"> / </span>';
+  if      (id==='s1')  bc.innerHTML=cu('Campuses');
+  else if (id==='s2')  bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu(S.campus);
+  else if (id==='s3')  bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cr(S.campus,"goTo('s2')")+sp+cu(S.building?S.building.name:'');
+  else if (id==='sta') bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu('Te Aro');
+  else if (id==='skb') bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu('Kelburn');
+  else if (id==='s4')  bc.innerHTML=cr('Campuses',"goTo('s1')")+sp+cu('Report');
+}
+function newPatrol() { S=makeState(); resetAllUI(); goTo('s1'); }
+
+/* ════════════════════════════════════
+   CAMPUS SELECT
+════════════════════════════════════ */
+function selectCampus(c) {
+  S.campus = c;
+  if (c==='Te Aro')  { goTo('sta'); return; }
+  if (c==='Kelburn') { goTo('skb'); return; }
+  document.getElementById('s2-title').textContent = c+' — Buildings';
+  const grid=document.getElementById('building-grid'); grid.innerHTML='';
+  const PIP=[
+    {name:'Rutherford House', floors:floors(8,0)},
+    {name:'Weir House',       floors:floors(4,0)},
+    {name:'Railway Building', floors:floors(3,0)},
+    {name:'Commerce Building',floors:floors(4,0)},
+  ];
+  PIP.forEach(b => {
+    const btn=document.createElement('button');
+    btn.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;text-align:left;width:100%;transition:border-color .15s,background .15s,transform .1s;';
+    btn.innerHTML=`<span style="font-size:20px;display:block;margin-bottom:10px;">🏢</span><div style="font-size:14px;font-weight:500;margin-bottom:3px;">${b.name}</div><div style="font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;">${b.floors.length} levels</div>`;
+    btn.onmouseover=()=>{btn.style.borderColor='var(--accent)';btn.style.background='var(--surface2)';btn.style.transform='translateY(-1px)';};
+    btn.onmouseout=()=>{btn.style.borderColor='var(--border)';btn.style.background='var(--surface)';btn.style.transform='none';};
+    btn.onclick=()=>selectBuilding(b);
+    grid.appendChild(btn);
+  });
+  goTo('s2');
+}
+function selectBuilding(b) {
+  S.building=b; S.counts={};
+  b.floors.forEach(f=>S.counts[f]=0);
+  document.getElementById('s3-badge').textContent=S.campus+'  ·  '+b.name;
+  document.getElementById('s3-title').textContent=b.name+' — Levels';
+  renderGenericLevels(); goTo('s3');
+}
+
+/* ════════════════════════════════════
+   GENERIC LEVELS (Pipitea)
+════════════════════════════════════ */
+function renderGenericLevels() {
+  const list=document.getElementById('levels-list'); list.innerHTML='';
+  S.building.floors.forEach(f => {
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:6px;transition:border-color .15s;';
+    const left=document.createElement('div');
+    const nm=document.createElement('div'); nm.style.cssText='font-size:14px;font-weight:500;'; nm.textContent=f;
+    const st=document.createElement('div'); st.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px;"; st.textContent='0';
+    left.appendChild(nm); left.appendChild(st);
+    const right=document.createElement('div'); right.style.cssText='display:flex;align-items:center;gap:10px;';
+    const val=document.createElement('span'); val.style.cssText="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;min-width:22px;text-align:center;"; val.textContent='0';
+    const mk=(lbl,d)=>{ const b=document.createElement('button'); b.style.cssText="width:24px;height:24px;border-radius:50%;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;"; b.textContent=lbl; b.onclick=()=>{ S.counts[f]=Math.max(0,S.counts[f]+d); val.textContent=S.counts[f]; if(S.counts[f]===0){row.style.borderColor='var(--border)';st.style.color='var(--text3)';st.textContent='0';}else{row.style.borderColor='var(--amber)';st.style.color='var(--amber)';st.textContent=S.counts[f]+' person'+(S.counts[f]>1?'s':'')+' present';} }; return b; };
+    right.appendChild(mk('−',-1)); right.appendChild(val); right.appendChild(mk('+',1));
+    row.appendChild(left); row.appendChild(right); list.appendChild(row);
   });
 }
 
-function setPhase(p,btn){
-  buildGrid(p===1?p1:p2,'day-grid');
-  document.querySelectorAll('.phase-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+/* ════════════════════════════════════
+   TE ARO
+════════════════════════════════════ */
+function toggleTA(id) {
+  const inc=!S.ta.sections[id]; S.ta.sections[id]=inc;
+  document.getElementById('ta-chk-'+id).classList.toggle('checked',inc);
+  const tag=document.getElementById('ta-tag-'+id); tag.textContent=inc?'included':'off'; tag.classList.toggle('on',inc);
+  document.getElementById('ta-card-'+id).classList.toggle('included',inc);
+}
+function showTASub(id, tabEl) {
+  document.querySelectorAll('#ta-sub-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#sta .sub-panel').forEach(p=>p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('ta-sub-'+id).classList.add('active');
+}
+function setTAStatus(item,value) {
+  S.ta.ext[item]=value;
+  TA_STATUS_OPTS[item].forEach(v=>{const el=document.getElementById('ta-ext-'+item+'-'+v);if(el)el.className='status-btn';});
+  const el=document.getElementById('ta-ext-'+item+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  // Auto-include external section
+  if(!S.ta.sections.ext) toggleTA('ext');
+}
+function setTAAllNormal() {
+  setTAStatus('carpark','Secure');
+  setTAStatus('workshop','Secure');
+  setTAStatus('firepanel','Normal');
+  if(!S.ta.sections.ext) toggleTA('ext');
+}
+function clearTA(which) {
+  if(which==='all'||which==='ext'){
+    S.ta.ext={carpark:null,workshop:null,firepanel:null};
+    document.querySelectorAll('[id^="ta-ext-"]').forEach(b=>{if(b.classList.contains('status-btn'))b.className='status-btn';});
+    document.getElementById('ta-ext-notes').value='';
+  }
+  if(which==='all'||which==='wigan'){
+    S.ta.wiganSL=false;
+    const wb=document.getElementById('ta-wigan-sl-btn');
+    if(wb){wb.style.background='var(--green-dim)';wb.style.color='var(--green)';wb.style.borderColor='var(--green)';wb.textContent='10-0:10-6 — Building Secure & Locked';}
+    const wd=document.getElementById('ta-wigan-detail'); if(wd)wd.style.opacity='1';
+    TA_WIGAN_FLOORS.forEach(f=>S.ta.wiganC[f]=0);document.getElementById('ta-wigan-notes').value='';renderTAWigan();
+  }
+  if(which==='all'||which==='vivian'){
+    S.ta.vivianSL=false;
+    const vb=document.getElementById('ta-vivian-sl-btn');
+    if(vb){vb.style.background='var(--green-dim)';vb.style.color='var(--green)';vb.style.borderColor='var(--green)';vb.textContent='10-0:10-6 — Building Secure & Locked';}
+    const vd=document.getElementById('ta-vivian-detail'); if(vd)vd.style.opacity='1';
+    TA_VIVIAN_FLOORS.forEach(f=>S.ta.vivianC[f]=0);S.ta.vivianC.library=0;
+    document.getElementById('ta-vivian-notes').value='';renderTAVivian();
+    const libInp=document.getElementById('ta-val-library');if(libInp)libInp.value='0';
+    document.getElementById('ta-lib-status').textContent='0';
+    document.getElementById('ta-lib-status').className='lv-status';document.getElementById('ta-row-library').classList.remove('occupied');
+  }
+}
+function toggleTASL(bldg){
+  const active=!S.ta[bldg+'SL']; S.ta[bldg+'SL']=active;
+  const btn=document.getElementById('ta-'+bldg+'-sl-btn');
+  const det=document.getElementById('ta-'+bldg+'-detail');
+  if(active){
+    btn.style.background='var(--green)'; btn.style.color='#fff'; btn.style.borderColor='var(--green)';
+    btn.textContent='✓ 10-0:10-6  —  Building Secure & Locked';
+    if(det)det.style.opacity='0.35';
+    if(!S.ta.sections[bldg])toggleTA(bldg);
+  } else {
+    btn.style.background='var(--green-dim)'; btn.style.color='var(--green)'; btn.style.borderColor='var(--green)';
+    btn.textContent='10-0:10-6  —  Building Secure & Locked';
+    if(det)det.style.opacity='1';
+  }
+}
+function renderTAWigan()  {const c=document.getElementById('ta-wigan-levels');c.innerHTML='';TA_WIGAN_FLOORS.forEach(f=>buildLvRow(c,f,S.ta.wiganC,()=>{if(!S.ta.sections.wigan)toggleTA('wigan');}));}
+function renderTAVivian() {const c=document.getElementById('ta-vivian-levels');c.innerHTML='';TA_VIVIAN_FLOORS.forEach(f=>buildLvRow(c,f,S.ta.vivianC,()=>{if(!S.ta.sections.vivian)toggleTA('vivian');}));}
+function taLibChange(d) {
+  S.ta.vivianC.library=Math.max(0,S.ta.vivianC.library+d);
+  const n=S.ta.vivianC.library;
+  const inp=document.getElementById('ta-val-library'); if(inp) inp.value=n;
+  const row=document.getElementById('ta-row-library');const st=document.getElementById('ta-lib-status');
+  if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}
+  else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
+  if(d>0&&!S.ta.sections.vivian) toggleTA('vivian');
+}
+function taLibSet(val) {
+  const n=Math.max(0,parseInt(val)||0);
+  S.ta.vivianC.library=n;
+  const inp=document.getElementById('ta-val-library'); if(inp) inp.value=n;
+  const row=document.getElementById('ta-row-library');const st=document.getElementById('ta-lib-status');
+  if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}
+  else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
+  if(n>0&&!S.ta.sections.vivian) toggleTA('vivian');
 }
 
-function buildProgress(){
-  const pg=document.getElementById('progress-grid');
-  pg.innerHTML='';
-  weeks.forEach((w,wi)=>{
-    const allDone=w.goals.every((_,gi)=>checks[`w${wi}g${gi}`]);
-    const c=document.createElement('div');
-    c.className='week-card';
-    const badge=allDone?'<span class="week-badge-done">✓ Complete</span>':'';
-    const goals=w.goals.map((g,gi)=>{
-      const key=`w${wi}g${gi}`;
-      return `<label class="goal-item${checks[key]?' done':''}"><input type="checkbox" ${checks[key]?'checked':''} onchange="toggle('${key}',this)"> ${g}</label>`;
-    }).join('');
-    c.innerHTML=`<div class="week-header"><div><span class="week-num">Week ${w.wk}</span><span class="week-dates">${w.dates}</span></div>${badge}</div><div class="goals-grid">${goals}</div>`;
-    pg.appendChild(c);
+/* ════════════════════════════════════
+   KELBURN ZONES / SUB-TABS
+════════════════════════════════════ */
+function showZone(zone, tabEl) {
+  document.querySelectorAll('.zone-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.zone-panel').forEach(p=>p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('zone-'+zone).classList.add('active');
+}
+
+function showSub(zone, sub, tabEl) {
+  /* scope siblings within same zone panel */
+  const panel=document.getElementById('zone-'+zone);
+  panel.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  panel.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('kb-'+zone+'-sub-'+sub).classList.add('active');
+}
+
+function toggleKBSection(zone, sub) {
+  const inc=!S.kb[zone].sections[sub]; S.kb[zone].sections[sub]=inc;
+  document.getElementById('kb-'+zone+'-chk-'+sub).classList.toggle('checked',inc);
+  const tag=document.getElementById('kb-'+zone+'-tag-'+sub); tag.textContent=inc?'included':'off'; tag.classList.toggle('on',inc);
+  document.getElementById('kb-'+zone+'-card-'+sub).classList.toggle('included',inc);
+}
+
+/* ════════════════════════════════════
+   BUILD KB ZONE UI
+════════════════════════════════════ */
+function setKBExtAllNormal(zone) {
+  KB[zone].firePanels.forEach(fp=>setKBFP(zone,fp,'Normal'));
+  if(zone==='north') KB.north.vonzExtras.forEach(e=>setKBVZ(e.key,'Secure'));
+  if(zone==='south') KB.south.southExtras.forEach(e=>setKBSE(e.key,e.opts[0]==='Secure'?'Secure':'Normal'));
+  if(!S.kb[zone].sections.ext) toggleKBSection(zone,'ext');
+}
+
+function buildKBZone(zone) {
+  const zd=KB[zone];
+
+  /* ── Fire panels ── */
+  const fpGrid=document.getElementById('kb-'+zone+'-fp-grid');
+  if(fpGrid){
+    fpGrid.style.cssText='display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));';
+    fpGrid.innerHTML='';
+    // Nothing to Report button spanning full width
+    const ntrWrap=document.createElement('div');
+    ntrWrap.style.cssText='grid-column:1/-1;';
+    const ntrBtn=document.createElement('button');
+    ntrBtn.className='all-normal-btn';
+    ntrBtn.textContent='✓ Nothing to Report';
+    ntrBtn.onclick=()=>setKBExtAllNormal(zone);
+    ntrWrap.appendChild(ntrBtn);
+    fpGrid.appendChild(ntrWrap);
+    zd.firePanels.forEach(fp=>{
+      const sr=document.createElement('div'); sr.className='status-row';
+      const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent='Fire Panel — '+fp;
+      const btns=document.createElement('div'); btns.className='status-btns';
+      FP_OPTS.forEach(o=>{
+        const b=document.createElement('button'); b.className='status-btn';
+        b.id='kb-'+zone+'-fp-'+fpKey(fp)+'-'+o; b.textContent=o;
+        b.onclick=()=>setKBFP(zone,fp,o);
+        btns.appendChild(b);
+      });
+      sr.appendChild(lbl); sr.appendChild(btns); fpGrid.appendChild(sr);
+    });
+  }
+
+  /* ── South: Garage & Roller Door extras ── */
+  if(zone==='south'){
+    const seGrid=document.getElementById('kb-south-extras-grid');
+    if(seGrid){
+      seGrid.innerHTML='';
+      KB.south.southExtras.forEach(e=>{
+        const sr=document.createElement('div'); sr.className='status-row';
+        const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent=e.label;
+        const btns=document.createElement('div'); btns.className='status-btns';
+        e.opts.forEach(o=>{
+          const b=document.createElement('button'); b.className='status-btn';
+          b.id='kb-south-se-'+e.key+'-'+o; b.textContent=o;
+          b.onclick=()=>setKBSE(e.key,o);
+          btns.appendChild(b);
+        });
+        sr.appendChild(lbl); sr.appendChild(btns); seGrid.appendChild(sr);
+      });
+    }
+  }
+
+  /* ── Buildings ── */
+  const bldgGrid=document.getElementById('kb-'+zone+'-bldg-grid');
+  if(bldgGrid){
+    bldgGrid.innerHTML='';
+    bldgGrid.style.cssText='display:flex;flex-direction:column;gap:0;';
+    zd.buildings.forEach(b=>{
+      const acc=document.createElement('div'); acc.className='bldg-accordion'; acc.id='kb-'+zone+'-bcard-'+b.id;
+      // Header
+      const hd=document.createElement('div'); hd.className='bldg-accordion-hd';
+      hd.onclick=()=>{
+        const isOpen=acc.classList.contains('open');
+        acc.classList.toggle('open',!isOpen);
+        if(!isOpen&&!S.kb[zone].buildingC[b.id+'_inc']) toggleKBBldg(zone,b.id,acc);
+      };
+      const nameEl=document.createElement('span'); nameEl.className='bldg-accordion-name'; nameEl.textContent=b.name;
+      const meta=document.createElement('div'); meta.className='bldg-accordion-meta';
+      const countBadge=document.createElement('span'); countBadge.className='bldg-accordion-count'; countBadge.id='kb-'+zone+'-bcount-'+b.id;
+      const chev=document.createElement('span'); chev.className='bldg-accordion-chevron'; chev.textContent='▼';
+      meta.appendChild(countBadge); meta.appendChild(chev);
+      hd.appendChild(nameEl); hd.appendChild(meta);
+      // Body
+      const body=document.createElement('div'); body.className='bldg-accordion-body';
+      // 10-0:10-6 Secure & Locked button
+      const slBtn=document.createElement('button');
+      slBtn.style.cssText='width:100%;padding:8px 10px;border-radius:6px;border:1.5px solid var(--green);background:var(--green-dim);color:var(--green);font-family:\'DM Mono\',monospace;font-size:11px;font-weight:600;cursor:pointer;text-align:center;letter-spacing:.04em;margin-bottom:8px;transition:all .15s;';
+      slBtn.id='kb-'+zone+'-slbtn-'+b.id;
+      slBtn.textContent='10-0:10-6  \u2014  Building Secure & Locked';
+      slBtn.onclick=(ev)=>{
+        ev.stopPropagation();
+        const active=!S.kb[zone].buildingC[b.id+'_sl'];
+        S.kb[zone].buildingC[b.id+'_sl']=active;
+        if(active){
+          slBtn.style.background='var(--green)'; slBtn.style.color='#fff';
+          slBtn.textContent='\u2713 10-0:10-6  \u2014  Building Secure & Locked';
+          b.floors.forEach(f=>{
+            S.kb[zone].buildingC[b.id][f]=0;
+            const r2=document.getElementById('kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_'));
+            const s2=document.getElementById('kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'));
+            const i2=r2?r2.querySelector('.cnt-input'):null;
+            if(r2)r2.classList.remove('occupied'); if(s2){s2.className='lv-status';s2.textContent='0';} if(i2)i2.value='0';
+          });
+          countBadge.classList.remove('visible');
+          if(!S.kb[zone].buildingC[b.id+'_inc'])toggleKBBldg(zone,b.id,acc);
+          if(!S.kb[zone].sections.int)toggleKBSection(zone,'int');
+        } else {
+          slBtn.style.background='var(--green-dim)'; slBtn.style.color='var(--green)';
+          slBtn.textContent='10-0:10-6  \u2014  Building Secure & Locked';
+        }
+      };
+      body.appendChild(slBtn);
+
+      if(b.floors.length===0){
+        const note=document.createElement('div');
+        note.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);padding:4px;";
+        note.textContent='External access only — no internal levels';
+        body.appendChild(note);
+      } else {
+        // Von Zedlitz internal extras (windows + door)
+        if(b.id==='vonz'){
+          const vzIntLabel=document.createElement('div'); vzIntLabel.className='sub-label'; vzIntLabel.style.marginBottom='6px'; vzIntLabel.textContent='Doors & Windows';
+          body.appendChild(vzIntLabel);
+          KB.north.vonzInternal.forEach(e=>{
+            const sr=document.createElement('div'); sr.className='status-row'; sr.style.marginBottom='6px';
+            const lbl=document.createElement('div'); lbl.className='status-row-label'; lbl.textContent=e.label;
+            const btns=document.createElement('div'); btns.className='status-btns';
+            e.opts.forEach(o=>{
+              const vb=document.createElement('button'); vb.className='status-btn';
+              vb.id='kb-north-vz-'+e.key+'-'+o; vb.textContent=o;
+              vb.onclick=(ev)=>{
+                ev.stopPropagation();
+                S.kb.north.vonzInternal[e.key]=o;
+                e.opts.forEach(o2=>{const el2=document.getElementById('kb-north-vz-'+e.key+'-'+o2);if(el2)el2.className='status-btn';});
+                vb.classList.add(STATUS_COLOR[o]);
+                if(!S.kb.north.sections.int)toggleKBSection('north','int');
+                if(!S.kb.north.buildingC['vonz_inc'])toggleKBBldg('north','vonz',acc);
+              };
+              btns.appendChild(vb);
+            });
+            sr.appendChild(lbl); sr.appendChild(btns); body.appendChild(sr);
+          });
+          const vzLvLabel=document.createElement('div'); vzLvLabel.className='sub-label'; vzLvLabel.style.cssText='margin-top:10px;margin-bottom:6px;'; vzLvLabel.textContent='Levels';
+          body.appendChild(vzLvLabel);
+        }
+        b.floors.forEach(f=>{
+          const isSingle=b.isSingleLevel;
+          const row=document.createElement('div'); row.className='level-row'; row.id='kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_');
+          const left=document.createElement('div');
+          const nm=document.createElement('div'); nm.className='lv-name'; nm.textContent=isSingle?'':f;
+          const st=document.createElement('div'); st.className='lv-status'; st.id='kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'); st.textContent=isSingle?'No persons present':'0';
+          left.appendChild(nm); left.appendChild(st);
+          const right=document.createElement('div'); right.className='counter';
+          const inp=document.createElement('input'); inp.type='number'; inp.className='cnt-input'; inp.value='0'; inp.min='0';
+          inp.addEventListener('click',()=>inp.select());
+          const updateRow=(n)=>{
+            S.kb[zone].buildingC[b.id][f]=n; inp.value=n;
+            if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent=isSingle?'No persons present':'0';}
+            else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}
+            const tot=b.floors.reduce((a,fl)=>a+(S.kb[zone].buildingC[b.id][fl]||0),0);
+            if(tot>0){countBadge.textContent=tot+' person'+(tot>1?'s':'');countBadge.classList.add('visible');}
+            else{countBadge.classList.remove('visible');}
+          };
+          inp.addEventListener('input',(ev)=>{ev.stopPropagation();const n=Math.max(0,parseInt(inp.value)||0);updateRow(n);if(n>0){if(!S.kb[zone].buildingC[b.id+'_inc'])toggleKBBldg(zone,b.id,acc);if(!S.kb[zone].sections.int)toggleKBSection(zone,'int');}});
+          const mkb=(lbl,d)=>{
+            const btn=document.createElement('button'); btn.className='cnt-btn'; btn.textContent=lbl;
+            btn.onclick=(ev)=>{ev.stopPropagation();const n=Math.max(0,(S.kb[zone].buildingC[b.id][f]||0)+d);updateRow(n);if(n>0){if(!S.kb[zone].buildingC[b.id+'_inc'])toggleKBBldg(zone,b.id,acc);if(!S.kb[zone].sections.int)toggleKBSection(zone,'int');}};
+            return btn;
+          };
+          right.appendChild(mkb('−',-1)); right.appendChild(inp); right.appendChild(mkb('+',1));
+          row.appendChild(left); row.appendChild(right); body.appendChild(row);
+        });
+      }
+      acc.appendChild(hd); acc.appendChild(body); bldgGrid.appendChild(acc);
+    });
+  }
+}
+
+function setKBFP(zone,fp,value) {
+  S.kb[zone].firePanels[fp]=value;
+  FP_OPTS.forEach(v=>{const el=document.getElementById('kb-'+zone+'-fp-'+fpKey(fp)+'-'+v);if(el)el.className='status-btn';});
+  const el=document.getElementById('kb-'+zone+'-fp-'+fpKey(fp)+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  // Auto-include external section
+  if(!S.kb[zone].sections.ext) toggleKBSection(zone,'ext');
+}
+function setKBVZ(key,value) {
+  S.kb.north.vonzExtras[key]=value;
+  KB.north.vonzExtras.find(e=>e.key===key).opts.forEach(o=>{const el=document.getElementById('kb-north-vz-'+key+'-'+o);if(el)el.className='status-btn';});
+  const el=document.getElementById('kb-north-vz-'+key+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  if(!S.kb.north.sections.ext) toggleKBSection('north','ext');
+}
+function setKBSE(key,value) {
+  S.kb.south.southExtras[key]=value;
+  KB.south.southExtras.find(e=>e.key===key).opts.forEach(o=>{const el=document.getElementById('kb-south-se-'+key+'-'+o);if(el)el.className='status-btn';});
+  const el=document.getElementById('kb-south-se-'+key+'-'+value); if(el) el.classList.add(STATUS_COLOR[value]);
+  if(!S.kb.south.sections.ext) toggleKBSection('south','ext');
+}
+
+function toggleKBBldg(zone,bid,card){
+  const inc=!S.kb[zone].buildingC[bid+'_inc'];
+  S.kb[zone].buildingC[bid+'_inc']=inc;
+  // accordion style - just track state, visual handled by open class
+}
+
+function clearKB(zone,which) {
+  if(which==='all'||which==='ext'){
+    KB[zone].firePanels.forEach(fp=>{
+      S.kb[zone].firePanels[fp]=null;
+      FP_OPTS.forEach(v=>{const el=document.getElementById('kb-'+zone+'-fp-'+fpKey(fp)+'-'+v);if(el)el.className='status-btn';});
+    });
+    if(zone==='north'){
+      KB.north.vonzExtras.forEach(e=>{
+        S.kb.north.vonzExtras[e.key]=null;
+        e.opts.forEach(o=>{const el=document.getElementById('kb-north-vz-'+e.key+'-'+o);if(el)el.className='status-btn';});
+      });
+    }
+    if(zone==='south'){
+      KB.south.southExtras.forEach(e=>{
+        S.kb.south.southExtras[e.key]=null;
+        e.opts.forEach(o=>{const el=document.getElementById('kb-south-se-'+e.key+'-'+o);if(el)el.className='status-btn';});
+      });
+    }
+  }
+  if(which==='all'||which==='int'){
+    KB[zone].buildings.forEach(b=>{
+      b.floors.forEach(f=>{
+        S.kb[zone].buildingC[b.id][f]=0;
+        const row=document.getElementById('kb-'+zone+'-'+b.id+'-row-'+f.replace(/\s/g,'_'));
+        const st=document.getElementById('kb-'+zone+'-'+b.id+'-st-'+f.replace(/\s/g,'_'));
+        const inp=row?row.querySelector('.cnt-input'):null;
+        if(row)row.classList.remove('occupied');
+        if(st){st.className='lv-status';st.textContent='0';}
+        if(inp)inp.value='0';
+      });
+      S.kb[zone].buildingC[b.id+'_inc']=false;
+      S.kb[zone].buildingC[b.id+'_sl']=false;
+      const slEl=document.getElementById('kb-'+zone+'-slbtn-'+b.id);
+      if(slEl){slEl.style.background='var(--green-dim)';slEl.style.color='var(--green)';slEl.textContent='10-0:10-6 — Building Secure & Locked';}
+      // clear vonz internal
+      if(zone==='north'&&b.id==='vonz'){KB.north.vonzInternal.forEach(e=>{S.kb.north.vonzInternal[e.key]=null;e.opts.forEach(o=>{const el=document.getElementById('kb-north-vz-'+e.key+'-'+o);if(el)el.className='status-btn';});});}
+      const acc=document.getElementById('kb-'+zone+'-bcard-'+b.id);
+      const badge=document.getElementById('kb-'+zone+'-bcount-'+b.id);
+      if(acc)acc.classList.remove('open');
+      if(badge)badge.classList.remove('visible');
+    });
+  }
+}
+
+/* ════════════════════════════════════
+   SHARED LEVEL ROW BUILDER
+════════════════════════════════════ */
+function buildLvRow(container,floor,countsObj,onIncrement) {
+  const row=document.createElement('div'); row.className='level-row';
+  const left=document.createElement('div');
+  const nm=document.createElement('div'); nm.className='lv-name'; nm.textContent=floor;
+  const st=document.createElement('div'); st.className='lv-status'; st.textContent='0';
+  left.appendChild(nm); left.appendChild(st);
+  const right=document.createElement('div'); right.className='counter';
+  const inp=document.createElement('input'); inp.type='number'; inp.className='cnt-input'; inp.value='0'; inp.min='0';
+  inp.addEventListener('click',()=>inp.select());
+  const upd=(n)=>{countsObj[floor]=n;inp.value=n;if(n===0){row.classList.remove('occupied');st.className='lv-status';st.textContent='0';}else{row.classList.add('occupied');st.className='lv-status occ';st.textContent=n+' person'+(n>1?'s':'')+' present';}};
+  inp.addEventListener('input',()=>{const n=Math.max(0,parseInt(inp.value)||0);upd(n);if(n>0&&onIncrement)onIncrement();});
+  const minus=document.createElement('button'); minus.className='cnt-btn'; minus.textContent='−'; minus.onclick=()=>{const n=Math.max(0,countsObj[floor]-1);upd(n);};
+  const plus=document.createElement('button'); plus.className='cnt-btn'; plus.textContent='+'; plus.onclick=()=>{const n=(countsObj[floor]||0)+1;upd(n);if(onIncrement)onIncrement();};
+  right.appendChild(minus); right.appendChild(inp); right.appendChild(plus);
+  row.appendChild(left); row.appendChild(right); container.appendChild(row);
+}
+
+/* ════════════════════════════════════
+   RESET UI
+════════════════════════════════════ */
+function resetAllUI() {
+  // Te Aro
+  ['ext','wigan','vivian'].forEach(k=>{
+    document.getElementById('ta-chk-'+k).classList.remove('checked');
+    const tag=document.getElementById('ta-tag-'+k); tag.textContent='off'; tag.classList.remove('on');
+    document.getElementById('ta-card-'+k).classList.remove('included');
   });
-  updateStats();
+  document.querySelectorAll('[id^="ta-ext-"]').forEach(b=>{if(b.classList.contains('status-btn'))b.className='status-btn';});
+  ['ta-ext-notes','ta-wigan-notes','ta-vivian-notes'].forEach(id=>document.getElementById(id).value='');
+  renderTAWigan(); renderTAVivian();
+  document.getElementById('ta-val-library').textContent='0'; document.getElementById('ta-lib-status').textContent='0';
+  document.getElementById('ta-lib-status').className='lv-status'; document.getElementById('ta-row-library').classList.remove('occupied');
+  // Kelburn
+  ['north','middle','south'].forEach(z=>{
+    clearKB(z,'all');
+    ['ext','int'].forEach(sub=>{
+      const chk=document.getElementById('kb-'+z+'-chk-'+sub);
+      const tag=document.getElementById('kb-'+z+'-tag-'+sub);
+      const card=document.getElementById('kb-'+z+'-card-'+sub);
+      if(chk)chk.classList.remove('checked');
+      if(tag){tag.textContent='off';tag.classList.remove('on');}
+      if(card)card.classList.remove('included');
+    });
+    ['ext','int'].forEach(sub=>{
+      const ta=document.getElementById('kb-'+z+'-'+sub+'-notes');
+      if(ta) ta.value='';
+    });
+  });
 }
 
-function toggle(key,el){
-  checks[key]=el.checked;
-  try{localStorage.setItem('sp2_checks',JSON.stringify(checks));}catch(e){}
-  el.parentElement.className='goal-item'+(el.checked?' done':'');
-  updateStats();
-  buildProgress();
+/* ════════════════════════════════════
+   REPORT
+════════════════════════════════════ */
+const LINE='';
+function pad(s,l){return String(s).padEnd(l);}
+function nowStr(){const n=new Date();return{date:n.toLocaleDateString('en-NZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'})};}
+function abbrFloor(f){return f.replace(/^Level\s+/,'L');}
+function fmtN(n){return n===0?'—':String(n);}
+
+function generateGenericReport(){
+  const{date}=nowStr();const b=S.building;
+  const lines=['Campus: '+S.campus+' — '+b.name,'Date: '+date,''];
+  let hasOcc=false;
+  b.floors.forEach(f=>{const n=S.counts[f];if(n>0){hasOcc=true;lines.push('  '+pad(abbrFloor(f),6)+n);}});
+  if(!hasOcc) lines.push('  All clear — no persons present');
+  document.getElementById('report-status').innerHTML=hasOcc?'<div class="status-pill pill-occupied">⚠ Occupied</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
+  showReport(lines.join('\n'));
 }
 
-function updateStats(){
-  const total=weeks.reduce((s,w)=>s+w.goals.length,0);
-  const done=Object.values(checks).filter(Boolean).length;
-  const pct=Math.round(done/total*100);
-  document.getElementById('s-done').textContent=done;
-  document.getElementById('s-total').textContent=total;
-  document.getElementById('s-pct').textContent=pct+'%';
-  const wc=weeks.filter((w,wi)=>w.goals.every((_,gi)=>checks[`w${wi}g${gi}`])).length;
-  document.getElementById('s-weeks').textContent=wc;
-  const bar=document.getElementById('prog-bar');
-  if(bar)bar.style.width=pct+'%';
+function generateTearoReport(){
+  const{date}=nowStr();
+  const parts=[];
+  let anyOcc=false;
+
+  if(S.ta.sections.ext){
+    if(!S.ta.ext.carpark)   setTAStatus('carpark','Secure');
+    if(!S.ta.ext.workshop)  setTAStatus('workshop','Secure');
+    if(!S.ta.ext.firepanel) setTAStatus('firepanel','Normal');
+    const issues=[];
+    if(S.ta.ext.carpark!=='Secure')   issues.push('  Car Park Door: '+S.ta.ext.carpark);
+    if(S.ta.ext.workshop!=='Secure')  issues.push('  Workshop Door: '+S.ta.ext.workshop);
+    if(S.ta.ext.firepanel!=='Normal') issues.push('  Fire Panel: '+S.ta.ext.firepanel);
+    const extNote=document.getElementById('ta-ext-notes').value.trim();
+    const block=['Campus: Te Aro — External Check','Date: '+date,''];
+    if(issues.length===0&&!extNote){
+      block.push('  All secure. Fire panels normal.');
+    } else {
+      issues.forEach(i=>block.push(i));
+      block.push('  All others secure.');
+      if(extNote) block.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
+    }
+    parts.push(block.join('\n'));
+  }
+
+  if(S.ta.sections.wigan){
+    const block=['Campus: Te Aro — WiGAN Internal Check','Date: '+date,''];
+    if(S.ta.wiganSL){
+      block.push('  10-0:10-6 — Building secure and locked');
+    } else {
+      let hasP=false;
+      TA_WIGAN_FLOORS.forEach(f=>{const n=S.ta.wiganC[f];if(n>0){hasP=true;anyOcc=true;block.push('  '+pad(abbrFloor(f),6)+n);}});
+      if(!hasP) block.push('  All clear — no persons present');
+      const n=document.getElementById('ta-wigan-notes').value.trim();
+      if(n) block.push('','  Notes: '+n.replace(/\n/g,'\n  '));
+    }
+    parts.push(block.join('\n'));
+  }
+
+  if(S.ta.sections.vivian){
+    const block=['Campus: Te Aro — VIVIAN Internal Check','Date: '+date,''];
+    if(S.ta.vivianSL){
+      block.push('  10-0:10-6 — Building secure and locked');
+    } else {
+      let hasP=false;
+      TA_VIVIAN_FLOORS.forEach(f=>{const n=S.ta.vivianC[f];if(n>0){hasP=true;anyOcc=true;block.push('  '+pad(abbrFloor(f),6)+n);}});
+      const libN=S.ta.vivianC.library;
+      if(libN>0){hasP=true;anyOcc=true;block.push('  '+pad('Library',8)+libN);}
+      if(!hasP) block.push('  All clear — no persons present');
+      const n=document.getElementById('ta-vivian-notes').value.trim();
+      if(n) block.push('','  Notes: '+n.replace(/\n/g,'\n  '));
+    }
+    parts.push(block.join('\n'));
+  }
+
+  if(parts.length===0) parts.push('Campus: Te Aro\nDate: '+date+'\n\n  No sections selected.');
+  document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
+  showReport(parts.join('\n\n---\n\n'));
 }
 
-function showTab(id,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
+function generateKelburnReport(){
+  const{date}=nowStr();
+  const parts=[];
+  let anyOcc=false;
+
+  ['north','middle','south'].forEach(zone=>{
+    const zd=KB[zone];
+    const secExt=S.kb[zone].sections.ext;
+    const secInt=S.kb[zone].sections.int;
+    if(!secExt&&!secInt) return;
+    const zoneName=zone.charAt(0).toUpperCase()+zone.slice(1);
+
+    if(secExt){
+      KB[zone].firePanels.forEach(fp=>{ if(!S.kb[zone].firePanels[fp]) setKBFP(zone,fp,'Normal'); });
+      if(zone==='south') KB.south.southExtras.forEach(e=>{ if(!S.kb.south.southExtras[e.key]) setKBSE(e.key,e.opts[0]==='Secure'?'Secure':'Normal'); });
+      const issues=[];
+      KB[zone].firePanels.forEach(fp=>{ if(S.kb[zone].firePanels[fp]!=='Normal') issues.push('  Fire Panel — '+fp+': '+S.kb[zone].firePanels[fp]); });
+      if(zone==='south') KB.south.southExtras.forEach(e=>{ const def=e.opts[0]==='Secure'?'Secure':'Normal'; if(S.kb.south.southExtras[e.key]!==def) issues.push('  '+e.label+': '+S.kb.south.southExtras[e.key]); });
+      const extNote=zone==='north'?document.getElementById('kb-north-ext-notes').value.trim():zone==='south'?document.getElementById('kb-south-ext-notes').value.trim():'';
+      const block=['Campus: Kelburn — '+zoneName+' External Check','Date: '+date,''];
+      if(issues.length===0&&!extNote){
+        block.push('  All secure. Fire panels normal.');
+      } else {
+        issues.forEach(i=>block.push(i));
+        block.push('  All others secure.');
+        if(extNote) block.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
+      }
+      parts.push(block.join('\n'));
+    }
+
+    if(secInt){
+      const incB=zd.buildings.filter(b=>S.kb[zone].buildingC[b.id+'_inc']);
+      const block=['Campus: Kelburn — '+zoneName+' Internal Check','Date: '+date,''];
+      if(incB.length===0){
+        block.push('  No buildings selected.');
+      } else {
+        incB.forEach(b=>{
+          block.push(b.name+':');
+          if(S.kb[zone].buildingC[b.id+'_sl']){
+            block.push('  10-0:10-6 — Building secure and locked');
+            block.push(''); return;
+          }
+          // Von Zedlitz internal extras
+          if(b.id==='vonz'){
+            KB.north.vonzInternal.forEach(e=>{
+              const v=S.kb.north.vonzInternal[e.key];
+              if(v&&v!=='Secure') block.push('  '+e.label+': '+v);
+            });
+          }
+          if(b.isSingleLevel){
+            const n=S.kb[zone].buildingC[b.id][b.floors[0]];
+            if(n>0){anyOcc=true;block.push('  '+n+' person'+(n>1?'s':'')+' present');}
+            else block.push('  All clear');
+            block.push(''); return;
+          }
+          let hasP=false;
+          b.floors.forEach(f=>{
+            const n=S.kb[zone].buildingC[b.id][f];
+            if(n>0){hasP=true;anyOcc=true;block.push('  '+pad(abbrFloor(f),6)+n);}
+          });
+          if(!hasP) block.push('  All clear');
+          block.push('');
+        });
+        const intNotesEl=document.getElementById('kb-'+zone+'-int-notes');
+        if(intNotesEl){const n=intNotesEl.value.trim();if(n)block.push('Notes: '+n.replace(/\n/g,'\n  '));}
+      }
+      parts.push(block.join('\n'));
+    }
+  });
+
+  if(parts.length===0) parts.push('Campus: Kelburn\nDate: '+date+'\n\n  No sections selected.');
+  document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
+  showReport(parts.join('\n\n---\n\n'));
 }
 
-buildGrid(p1,'day-grid');
-buildProgress();
+function showReport(t){const clean=t.replace(/\n{3,}/g,'\n\n').trim();document.getElementById('report-text').textContent=clean;resetAllUI();goTo('s4');}
+function copyReport(){
+  navigator.clipboard.writeText(document.getElementById('report-text').textContent).then(()=>{
+    const m=document.getElementById('copy-msg');m.style.display='block';setTimeout(()=>m.style.display='none',2500);
+  });
+}
 
-window.addEventListener('beforeprint',()=>{
-  buildGrid(p1,'day-grid');
-  buildGrid(p2,'day-grid-p2-print');
-  document.getElementById('day-grid-p2-print').style.display='grid';
-});
-window.addEventListener('afterprint',()=>{
-  document.getElementById('day-grid-p2-print').style.display='none';
-});
+/* ════════════════════════════════════
+   INIT
+════════════════════════════════════ */
+renderTAWigan();
+renderTAVivian();
+['north','middle','south'].forEach(z=>buildKBZone(z));
+
+(function clock(){const n=new Date();document.getElementById('header-time').textContent=n.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});setTimeout(clock,1000);})();
+updateBreadcrumb('s1');
 </script>
 </body>
 </html>
