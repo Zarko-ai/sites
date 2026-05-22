@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1091,26 +1090,25 @@ function resetAllUI() {
 ════════════════════════════════════ */
 const LINE='';
 function pad(s,l){return String(s).padEnd(l);}
-function nowStr(){const n=new Date();return{date:n.toLocaleDateString('en-NZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),time:n.toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit',hour12:false})};}
-function fmtN(n){return n===0?'Clear (0)':n+' person'+(n>1?'s':'')+' present';}
+function nowStr(){const n=new Date();return{date:n.toLocaleDateString('en-NZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'})};}
+function abbrFloor(f){return f.replace(/^Level\s+/,'L');}
+function fmtN(n){return n===0?'—':String(n);}
 
 function generateGenericReport(){
-  const{date,time}=nowStr();const b=S.building;
-  const lines=['VUW SECURITY — BUILDING CHECK REPORT','','Date     : '+date,'Time     : '+time,'Campus   : '+S.campus,'Building : '+b.name,'','LEVEL SUMMARY:',''];
+  const{date}=nowStr();const b=S.building;
+  const lines=['Campus: '+S.campus+' — '+b.name,'Date: '+date,''];
   let hasOcc=false;
-  b.floors.forEach(f=>{const n=S.counts[f];if(n>0)hasOcc=true;lines.push('  '+pad(f,16)+': '+fmtN(n));});
-  const tot=Object.values(S.counts).reduce((a,v)=>a+v,0);
-  lines.push('');
-  if(hasOcc) lines.push('STATUS   : OCCUPIED — '+tot+' person'+(tot>1?'s':'')+' in building');
-  lines.push('END OF REPORT');
+  b.floors.forEach(f=>{const n=S.counts[f];if(n>0){hasOcc=true;lines.push('  '+pad(abbrFloor(f),6)+n);}});
+  if(!hasOcc) lines.push('  All clear — no persons present');
   document.getElementById('report-status').innerHTML=hasOcc?'<div class="status-pill pill-occupied">⚠ Occupied</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
   showReport(lines.join('\n'));
 }
 
 function generateTearoReport(){
-  const{date,time}=nowStr();
-  const lines=['VUW SECURITY — TE ARO CAMPUS REPORT','','Date     : '+date,'Time     : '+time,'Campus   : Te Aro',''];
+  const{date}=nowStr();
+  const parts=[];
   let anyOcc=false;
+
   if(S.ta.sections.ext){
     if(!S.ta.ext.carpark)   setTAStatus('carpark','Secure');
     if(!S.ta.ext.workshop)  setTAStatus('workshop','Secure');
@@ -1120,56 +1118,55 @@ function generateTearoReport(){
     if(S.ta.ext.workshop!=='Secure')  issues.push('  Workshop Door: '+S.ta.ext.workshop);
     if(S.ta.ext.firepanel!=='Normal') issues.push('  Fire Panel: '+S.ta.ext.firepanel);
     const extNote=document.getElementById('ta-ext-notes').value.trim();
-    lines.push('','[ EXTERNAL CHECK ]');
+    const block=['Campus: Te Aro — External Check','Date: '+date,''];
     if(issues.length===0&&!extNote){
-      lines.push('  External check completed — all secure, fire panels normal.');
+      block.push('  All secure. Fire panels normal.');
     } else {
-      issues.forEach(i=>lines.push(i));
-      lines.push('  All others secure.');
-      if(extNote) lines.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
+      issues.forEach(i=>block.push(i));
+      block.push('  All others secure.');
+      if(extNote) block.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
     }
-    lines.push('');
+    parts.push(block.join('\n'));
   }
+
   if(S.ta.sections.wigan){
-    lines.push('[ WiGAN BUILDING ]');
+    const block=['Campus: Te Aro — WiGAN Internal Check','Date: '+date,''];
     if(S.ta.wiganSL){
-      lines.push('  10-0:10-6 — Building secure and locked');
+      block.push('  10-0:10-6 — Building secure and locked');
     } else {
-      lines.push('');
-      let occ=false;
-      TA_WIGAN_FLOORS.forEach(f=>{const n=S.ta.wiganC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
-      const tot=TA_WIGAN_FLOORS.reduce((a,f)=>a+S.ta.wiganC[f],0);
-      lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
-      const n=document.getElementById('ta-wigan-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
+      let hasP=false;
+      TA_WIGAN_FLOORS.forEach(f=>{const n=S.ta.wiganC[f];if(n>0){hasP=true;anyOcc=true;block.push('  '+pad(abbrFloor(f),6)+n);}});
+      if(!hasP) block.push('  All clear — no persons present');
+      const n=document.getElementById('ta-wigan-notes').value.trim();
+      if(n) block.push('','  Notes: '+n.replace(/\n/g,'\n  '));
     }
-    lines.push('');
+    parts.push(block.join('\n'));
   }
+
   if(S.ta.sections.vivian){
-    lines.push('[ VIVIAN BUILDING ]');
+    const block=['Campus: Te Aro — VIVIAN Internal Check','Date: '+date,''];
     if(S.ta.vivianSL){
-      lines.push('  10-0:10-6 — Building secure and locked');
+      block.push('  10-0:10-6 — Building secure and locked');
     } else {
-      lines.push('');
-      let occ=false;
-      TA_VIVIAN_FLOORS.forEach(f=>{const n=S.ta.vivianC[f];if(n>0){occ=true;anyOcc=true;}lines.push('  '+pad(f,14)+': '+fmtN(n));});
-      const libN=S.ta.vivianC.library;if(libN>0){occ=true;anyOcc=true;}
-      lines.push('  '+pad('Library',14)+': '+fmtN(libN));
-      const tot=TA_VIVIAN_FLOORS.reduce((a,f)=>a+S.ta.vivianC[f],0)+libN;
-      lines.push('','  Building Status : '+(occ?'OCCUPIED — '+tot+' person'+(tot>1?'s':''):'ALL CLEAR'));
-      const n=document.getElementById('ta-vivian-notes').value.trim();if(n)lines.push('','  Internal Notes:','    '+n.replace(/\n/g,'\n    '));
+      let hasP=false;
+      TA_VIVIAN_FLOORS.forEach(f=>{const n=S.ta.vivianC[f];if(n>0){hasP=true;anyOcc=true;block.push('  '+pad(abbrFloor(f),6)+n);}});
+      const libN=S.ta.vivianC.library;
+      if(libN>0){hasP=true;anyOcc=true;block.push('  '+pad('Library',8)+libN);}
+      if(!hasP) block.push('  All clear — no persons present');
+      const n=document.getElementById('ta-vivian-notes').value.trim();
+      if(n) block.push('','  Notes: '+n.replace(/\n/g,'\n  '));
     }
-    lines.push('');
+    parts.push(block.join('\n'));
   }
-  if(!S.ta.sections.ext&&!S.ta.sections.wigan&&!S.ta.sections.vivian)lines.push('NOTE     : No sections selected.');
-  if(anyOcc) lines.push('','OVERALL  : PERSONS ON SITE — review sections above');
-  lines.push('END OF REPORT');
+
+  if(parts.length===0) parts.push('Campus: Te Aro\nDate: '+date+'\n\n  No sections selected.');
   document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
-  showReport(lines.join('\n'));
+  showReport(parts.join('\n\n---\n\n'));
 }
 
 function generateKelburnReport(){
-  const{date,time}=nowStr();
-  const lines=['VUW SECURITY — KELBURN CAMPUS REPORT','','Date     : '+date,'Time     : '+time,'Campus   : Kelburn',''];
+  const{date}=nowStr();
+  const parts=[];
   let anyOcc=false;
 
   ['north','middle','south'].forEach(zone=>{
@@ -1177,84 +1174,69 @@ function generateKelburnReport(){
     const secExt=S.kb[zone].sections.ext;
     const secInt=S.kb[zone].sections.int;
     if(!secExt&&!secInt) return;
-
-    lines.push('','[ '+zone.toUpperCase()+' ZONE ]');
+    const zoneName=zone.charAt(0).toUpperCase()+zone.slice(1);
 
     if(secExt){
       KB[zone].firePanels.forEach(fp=>{ if(!S.kb[zone].firePanels[fp]) setKBFP(zone,fp,'Normal'); });
-      if(zone==='north') KB.north.vonzExtras.forEach(e=>{ if(!S.kb.north.vonzExtras[e.key]) setKBVZ(e.key,'Secure'); });
       if(zone==='south') KB.south.southExtras.forEach(e=>{ if(!S.kb.south.southExtras[e.key]) setKBSE(e.key,e.opts[0]==='Secure'?'Secure':'Normal'); });
       const issues=[];
       KB[zone].firePanels.forEach(fp=>{ if(S.kb[zone].firePanels[fp]!=='Normal') issues.push('  Fire Panel — '+fp+': '+S.kb[zone].firePanels[fp]); });
-      if(zone==='north') KB.north.vonzExtras.forEach(e=>{ if(S.kb.north.vonzExtras[e.key]!=='Secure') issues.push('  '+e.label+': '+S.kb.north.vonzExtras[e.key]); });
       if(zone==='south') KB.south.southExtras.forEach(e=>{ const def=e.opts[0]==='Secure'?'Secure':'Normal'; if(S.kb.south.southExtras[e.key]!==def) issues.push('  '+e.label+': '+S.kb.south.southExtras[e.key]); });
       const extNote=zone==='north'?document.getElementById('kb-north-ext-notes').value.trim():zone==='south'?document.getElementById('kb-south-ext-notes').value.trim():'';
-      lines.push('','  — External Check:');
+      const block=['Campus: Kelburn — '+zoneName+' External Check','Date: '+date,''];
       if(issues.length===0&&!extNote){
-        lines.push('    External check completed — all secure, fire panels normal.');
+        block.push('  All secure. Fire panels normal.');
       } else {
-        issues.forEach(i=>lines.push('    '+i));
-        lines.push('    All others secure.');
-        if(extNote) lines.push('    Notes: '+extNote.replace(/\n/g,'\n    '));
+        issues.forEach(i=>block.push(i));
+        block.push('  All others secure.');
+        if(extNote) block.push('','  Notes: '+extNote.replace(/\n/g,'\n  '));
       }
+      parts.push(block.join('\n'));
     }
 
     if(secInt){
       const incB=zd.buildings.filter(b=>S.kb[zone].buildingC[b.id+'_inc']);
-      const csbInc=zone==='south'&&S.kb[zone].buildingC['csb_inc'];
-      if(incB.length||csbInc){
-        lines.push('','  — Internal Check:','');
+      const block=['Campus: Kelburn — '+zoneName+' Internal Check','Date: '+date,''];
+      if(incB.length===0){
+        block.push('  No buildings selected.');
+      } else {
         incB.forEach(b=>{
-          lines.push('    '+b.name+':');
-          // Secure & Locked shortcut
+          block.push(b.name+':');
           if(S.kb[zone].buildingC[b.id+'_sl']){
-            lines.push('      10-0:10-6 — Building secure and locked');
-            lines.push(''); return;
+            block.push('  10-0:10-6 — Building secure and locked');
+            block.push(''); return;
           }
           // Von Zedlitz internal extras
           if(b.id==='vonz'){
             KB.north.vonzInternal.forEach(e=>{
               const v=S.kb.north.vonzInternal[e.key];
-              if(v&&v!=='Secure')lines.push('      '+e.label+': '+v);
+              if(v&&v!=='Secure') block.push('  '+e.label+': '+v);
             });
           }
-          // Marae single-level
           if(b.isSingleLevel){
             const n=S.kb[zone].buildingC[b.id][b.floors[0]];
-            if(n>0){anyOcc=true;lines.push('      Persons present: '+n);}
-            else{lines.push('      No persons present');}
-            lines.push(''); return;
+            if(n>0){anyOcc=true;block.push('  '+n+' person'+(n>1?'s':'')+' present');}
+            else block.push('  All clear');
+            block.push(''); return;
           }
-          let bOcc=false;
+          let hasP=false;
           b.floors.forEach(f=>{
             const n=S.kb[zone].buildingC[b.id][f];
-            if(n>0){bOcc=true;anyOcc=true;}
-            lines.push('      '+pad(f,14)+': '+fmtN(n));
+            if(n>0){hasP=true;anyOcc=true;block.push('  '+pad(abbrFloor(f),6)+n);}
           });
-          const tot=b.floors.reduce((a,f)=>a+S.kb[zone].buildingC[b.id][f],0);
-          lines.push('      '+pad('Status',14)+': '+(bOcc?'OCCUPIED — '+tot+' person'+(tot>1?'s':'')+' present':'ALL CLEAR'));
-          lines.push('');
+          if(!hasP) block.push('  All clear');
+          block.push('');
         });
-        if(csbInc){
-          lines.push('    CSB:');
-          lines.push('      '+pad('Access',14)+': External access only');
-          lines.push('      '+pad('Status',14)+': N/A — External only');
-          lines.push('');
-        }
         const intNotesEl=document.getElementById('kb-'+zone+'-int-notes');
-        if(intNotesEl){const n=intNotesEl.value.trim();if(n)lines.push('    Notes:','      '+n.replace(/\n/g,'\n      '),'');}
-      } else {
-        lines.push('','  — Internal Check: No buildings selected.');
+        if(intNotesEl){const n=intNotesEl.value.trim();if(n)block.push('Notes: '+n.replace(/\n/g,'\n  '));}
       }
+      parts.push(block.join('\n'));
     }
-
-        lines.push('');
   });
 
-  if(anyOcc) lines.push('','OVERALL  : PERSONS ON SITE — review zones above');
-  lines.push('END OF REPORT');
+  if(parts.length===0) parts.push('Campus: Kelburn\nDate: '+date+'\n\n  No sections selected.');
   document.getElementById('report-status').innerHTML=anyOcc?'<div class="status-pill pill-occupied">⚠ Persons on site</div>':'<div class="status-pill pill-clear">✓ All clear</div>';
-  showReport(lines.join('\n'));
+  showReport(parts.join('\n\n---\n\n'));
 }
 
 function showReport(t){const clean=t.replace(/\n{3,}/g,'\n\n').trim();document.getElementById('report-text').textContent=clean;resetAllUI();goTo('s4');}
