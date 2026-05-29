@@ -35,7 +35,7 @@ body{
   padding-bottom:60px;
   background-color:#e8ede6;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='none'/%3E%3Cg stroke='%23005b39' stroke-width='1.2' fill='none' opacity='0.13'%3E%3Cpath d='M0 20h80M0 40h80M0 60h80'/%3E%3Cpath d='M20 0v80M40 0v80M60 0v80'/%3E%3Cpath d='M0 0l20 20M20 0l20 20M40 0l20 20M60 0l20 20M0 20l20 20M0 40l20 20M0 60l20 20'/%3E%3Cpath d='M80 0L60 20M80 20L60 40M80 40L60 60M80 60L60 80M20 0L0 20M40 0L20 20M60 0L40 20'/%3E%3C/g%3E%3Cg fill='%23005b39' opacity='0.07'%3E%3Crect x='18' y='18' width='4' height='4' rx='1'/%3E%3Crect x='38' y='38' width='4' height='4' rx='1'/%3E%3Crect x='58' y='18' width='4' height='4' rx='1'/%3E%3Crect x='18' y='58' width='4' height='4' rx='1'/%3E%3Crect x='58' y='58' width='4' height='4' rx='1'/%3E%3Crect x='38' y='0' width='4' height='4' rx='1'/%3E%3Crect x='0' y='38' width='4' height='4' rx='1'/%3E%3Crect x='76' y='38' width='4' height='4' rx='1'/%3E%3Crect x='38' y='76' width='4' height='4' rx='1'/%3E%3C/g%3E%3Cpath d='M40 28 Q52 28 52 40 Q52 48 46 50 Q40 52 36 48 Q32 44 34 40 Q36 36 40 37 Q43 38 43 40 Q43 42 41 42' stroke='%23c8a84b' stroke-width='1.4' fill='none' opacity='0.22' stroke-linecap='round'/%3E%3Cpath d='M0 8 Q12 8 12 20 Q12 28 6 30 Q0 32 -4 28' stroke='%23c8a84b' stroke-width='1.4' fill='none' opacity='0.18' stroke-linecap='round'/%3E%3Cpath d='M68 48 Q80 48 80 60 Q80 68 74 70' stroke='%23c8a84b' stroke-width='1.4' fill='none' opacity='0.18' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='none'/%3E%3Cg stroke='%23005b39' stroke-width='1.2' fill='none' opacity='0.13'%3E%3Cpath d='M0 20h80M0 40h80M0 60h80'/%3E%3Cpath d='M20 0v80M40 0v80M60 0v80'/%3E%3Cpath d='M0 0l20 20M20 0l20 20M40 0l20 20M60 0l20 20M0 20l20 20M0 40l20 20M0 60l20 20'/%3E%3Cpath d='M80 0L60 20M80 20L60 40M80 40L60 60M80 60L60 80M20 0L0 20M40 0L20 20M60 0L40 20'/%3E%3C/g%3E%3Cg fill='%23005b39' opacity='0.07'%3E%3Crect x='18' y='18' width='4' height='4' rx='1'/%3E%3Crect x='38' y='38' width='4' height='4' rx='1'/%3E%3Crect x='58' y='18' width='4' height='4' rx='1'/%3E%3Crect x='18' y='58' width='4' height='4' rx='1'/%3E%3Crect x='58' y='58' width='4' height='4' rx='1'/%3E%3Crect x='38' y='0' width='4' height='4' rx='1'/%3E%3Crect x='0' y='38' width='4' height='4' rx='1'/%3E%3Crect x='76' y='38' width='4' height='4' rx='1'/%3E%3Crect x='38' y='76' width='4' height='4' rx='1'/%3E%3C/g%3E%3Cpath d='M40 28 Q52 28 52 40 Q52 48 46 50 Q40 52 36 48 Q32 44 34 40 Q36 36 40 37 Q43 38 43 40 Q43 42 41 42' stroke='%23c8a84b' stroke-width='1.4' fill='none' opacity='0.22' stroke-linecap='round'/%3E%3C/svg%3E"),
     linear-gradient(135deg, #edf2e9 0%, #e8ede4 30%, #eff0e8 60%, #e5ece3 100%);
 }
 
@@ -49,22 +49,9 @@ body{
 
 /* ── Wrap ── */
 .wrap{max-width:680px;margin:0 auto;padding:20px 16px;}
+.wrap::before{content:'';display:block;height:4px;margin-bottom:20px;border-radius:2px;background:linear-gradient(90deg,#005b39 0%,#2d7a4f 20%,#c8a84b 40%,#8b4513 55%,#2d7a4f 70%,#005b39 100%);opacity:.7;}
 
-/* Decorative NZ fern/koru strip under header */
-.wrap::before{
-  content:'';display:block;height:4px;margin-bottom:20px;border-radius:2px;
-  background:linear-gradient(90deg,
-    #005b39 0%,
-    #2d7a4f 20%,
-    #c8a84b 40%,
-    #8b4513 55%,
-    #2d7a4f 70%,
-    #005b39 100%
-  );
-  opacity:.7;
-}
-
-/* ── Global clear ── */
+/* ── Global bar ── */
 .global-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .global-title{font-size:18px;font-weight:700;color:#049b4f;letter-spacing:.01em;}
 .global-clear{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:500;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em;}
@@ -87,7 +74,7 @@ body{
 .campus-body{display:none;border-top:1px solid var(--border);background:#fafbfc;}
 .campus.open .campus-body{display:block;}
 
-/* ── Section label inside campus ── */
+/* ── Section label ── */
 .sec-label{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--faint);text-transform:uppercase;letter-spacing:.12em;font-weight:600;padding:12px 16px 6px;}
 
 /* ── Building accordion ── */
@@ -125,7 +112,7 @@ body{
 .cinput::-webkit-inner-spin-button,.cinput::-webkit-outer-spin-button{-webkit-appearance:none;}
 .cinput:focus{border-color:var(--vuw);}
 
-/* ── Status buttons (doors, fire panel) ── */
+/* ── Status buttons ── */
 .srow{background:#f8fafc;border:1px solid var(--border);border-radius:var(--r-xs);padding:8px 10px;margin-bottom:4px;}
 .srow-lbl{font-size:11px;font-weight:600;margin-bottom:6px;color:var(--text);}
 .srow-btns{display:flex;gap:3px;}
@@ -134,6 +121,22 @@ body{
 .sbtn.g{background:var(--ok-lt);border-color:var(--ok);color:var(--ok);}
 .sbtn.a{background:var(--warn-lt);border-color:var(--warn);color:var(--warn);}
 .sbtn.r{background:#fee2e2;border-color:#ef4444;color:#dc2626;}
+
+/* ── Status button with mini note (10:6 / 10:0 style) ── */
+.srow-with-note{background:#f8fafc;border:1px solid var(--border);border-radius:var(--r-xs);padding:8px 10px;margin-bottom:4px;}
+.srow-with-note .srow-lbl{font-size:11px;font-weight:600;margin-bottom:6px;color:var(--text);}
+.srow-with-note .srow-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.srow-with-note .sbtn{flex:0 0 auto;padding:5px 10px;}
+.mini-note{flex:1;min-width:100px;height:26px;background:var(--card);border:1.5px solid var(--border2);border-radius:5px;padding:0 7px;font-family:'Inter',sans-serif;font-size:11px;color:var(--text);outline:none;transition:border-color .12s;}
+.mini-note:focus{border-color:var(--vuw);}
+.mini-note::placeholder{color:var(--faint);}
+
+/* ── Reception name field ── */
+.reception-row{background:#f8fafc;border:1px solid var(--border);border-radius:var(--r-xs);padding:8px 10px;margin-bottom:4px;}
+.reception-row label{font-size:11px;font-weight:600;color:var(--text);display:block;margin-bottom:5px;}
+.reception-input{width:100%;height:32px;background:var(--card);border:1.5px solid var(--border2);border-radius:5px;padding:0 9px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);outline:none;transition:border-color .12s;}
+.reception-input:focus{border-color:var(--vuw);}
+.reception-input::placeholder{color:var(--faint);}
 
 /* ── Cleaner checkbox ── */
 .cln{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:var(--r-xs);border:1.5px solid var(--border);background:#f8fafc;cursor:pointer;margin-top:6px;transition:all .12s;user-select:none;}
@@ -159,7 +162,7 @@ body{
 .note::placeholder{color:var(--faint);}
 
 /* ── Generate button ── */
-.gen-wrap{padding:16px;}
+.gen-wrap{padding:16px 0 0;}
 .gen-btn{width:100%;padding:13px;background:var(--vuw);border:none;border-radius:var(--r-sm);color:#fff;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .12s;}
 .gen-btn:hover{background:#006b44;}
 
@@ -181,7 +184,26 @@ body{
 .rpill-occ{background:var(--warn-lt);color:var(--warn);border:1.5px solid var(--warn);}
 .rpill-occ::before{background:var(--warn);}
 
-.rbox{width:100%;min-height:480px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9;color:var(--text);resize:vertical;outline:none;box-shadow:var(--sh-sm);}
+/* Fix: prevent textarea from moving content when typing */
+.rbox{
+  width:100%;
+  min-height:480px;
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--r);
+  padding:18px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  line-height:1.9;
+  color:var(--text);
+  resize:vertical;
+  outline:none;
+  box-shadow:var(--sh-sm);
+  overflow-y:auto;
+  /* prevent layout shift when typing */
+  display:block;
+  vertical-align:top;
+}
 .rbox:focus{border-color:var(--vuw);}
 
 .rpt-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
@@ -204,20 +226,17 @@ body{
 </div>
 
 <div class="wrap">
-
-  <!-- MAIN -->
   <div class="main-page" id="main-page">
     <div class="global-bar">
       <div class="global-title">Campuses</div>
       <button class="global-clear" onclick="clearAll()">↺ Clear All</button>
     </div>
     <div id="campus-list"></div>
-    <div class="gen-wrap" style="padding:16px 0 0;">
+    <div class="gen-wrap">
       <button class="gen-btn" onclick="generateReport()">Generate Report</button>
     </div>
   </div>
 
-  <!-- REPORT -->
   <div class="report-page" id="report-page">
     <div class="rpt-hdr">
       <div class="rpt-title">Report</div>
@@ -231,15 +250,24 @@ body{
     </div>
     <div class="copy-ok" id="copy-ok">✓ Copied to clipboard</div>
   </div>
-
 </div>
 
 <script>
 /* ══════════════════════════════
-   DATA
+   HELPERS
 ══════════════════════════════ */
-function fl(hi,lo,asc){const a=[];if(asc)for(let i=lo;i<=hi;i++)a.push('Level '+i);else for(let i=hi;i>=lo;i--)a.push('Level '+i);return a;}
+function fl(hi,lo,asc){
+  const a=[];
+  if(asc) for(let i=lo;i<=hi;i++) a.push('Level '+i);
+  else for(let i=hi;i>=lo;i--) a.push('Level '+i);
+  return a;
+}
 
+const SC={Secure:'g',Normal:'g',Open:'a',Faulty:'a',Stuck:'a',Broken:'r','Not Secure':'r','10:6':'g','10:0':'g','Opened':'a'};
+
+/* ══════════════════════════════
+   CAMPUS / BUILDING DATA
+══════════════════════════════ */
 const CAMPUSES=[
   {
     id:'tearo', name:'Te Aro', icon:'🏙', desc:'Design & Creative Arts',
@@ -267,8 +295,8 @@ const CAMPUSES=[
       {id:'hunter',  name:'Hunter',          floors:fl(4,0)},
       {id:'robst',   name:'Robert Stout',     floors:fl(4,0)},
       {id:'adamart', name:'Adam Art Gallery', floors:fl(3,0)},
-      {id:'oldkirk', name:'Old Kirk',         floors:[3,4,5].map(n=>'Level '+n)},
-      {id:'newkirk', name:'New Kirk',         floors:fl(8,0,true)},
+      {id:'oldkirk', name:'Old Kirk',         floors:['Level 5','Level 4','Level 3']},
+      {id:'newkirk', name:'New Kirk',         floors:fl(8,0)},
       {
         id:'vonz', name:'Von Zedlitz', floors:fl(9,0), vonz:true,
         vonzWindows:[
@@ -283,42 +311,105 @@ const CAMPUSES=[
       {id:'marae',   name:'Marae',            floors:['Marae'],single:true},
       {id:'stunion', name:'Student Union',    floors:fl(5,0)},
       {id:'rankine', name:'Rankine Brown',    floors:fl(9,0)},
-      {id:'maclau',  name:'Maclaurin',        floors:fl(2,0,true)},
-      {id:'easter',  name:'Easterfield',      floors:fl(6,0,true)},
-      {id:'cotton',  name:'Cotton',           floors:fl(5,0)},
-      {id:'amd',     name:'Alan MacDiarmid',  floors:fl(4,0)},
-      {id:'laby',    name:'Laby',             floors:fl(5,0)},
-      {id:'maru',    name:'Maru',             floors:[1,2].map(n=>'Level '+n)},
-      {id:'rec',     name:'Recreation Centre',floors:[1,3,4,5,6].map(n=>'Level '+n)},
-      {id:'ttr',     name:'TTR',              floors:fl(4,0)},
-      {id:'csb',     name:'CSB',              floors:[]},
+      {id:'maclau',  name:'Maclaurin',        floors:fl(2,0)},
+      {id:'easter',  name:'Easterfield',      floors:fl(6,0)},
+      {
+        id:'cotton', name:'Cotton',           floors:fl(5,0),
+        preFloorItems:[
+          {type:'srow-with-note', key:'cotton-roof', label:'Roof Doors', btnOpts:['10:6'], notePlaceholder:'Notes…'}
+        ]
+      },
+      {
+        id:'amd', name:'Alan MacDiarmid',     floors:fl(4,0),
+        postFloorItems:[
+          {type:'srow-with-note', key:'amd-keywatcher', label:'Keywatcher', btnOpts:['10:6'], notePlaceholder:'Notes…'},
+          {type:'srow-with-note', key:'amd-carparks',   label:'Car Parks',  btnOpts:['10:0'], notePlaceholder:'Notes…'},
+          {type:'srow',           key:'amd-kitchen',    label:'Kitchen',    opts:['Secure','Open']},
+        ]
+      },
+      {
+        id:'laby', name:'Laby',               floors:fl(5,0),
+        postFloorItems:[
+          {type:'srow-with-note', key:'laby-roof',   label:'Roof Doors',  btnOpts:['10:6'], notePlaceholder:'Notes…'},
+          {type:'srow-with-note', key:'laby-roller', label:'Roller Doors', btnOpts:['10:6'], notePlaceholder:'Notes…'},
+        ]
+      },
+      {id:'maru',   name:'Maru',              floors:['Level 2','Level 1']},
+      {
+        id:'rec', name:'Recreation Centre',   floors:['Level 6','Level 5','Level 4','Level 3','Level 1'],
+        hasReception:true
+      },
+      {id:'ttr',    name:'TTR',               floors:fl(4,0)},
+      {
+        id:'csb', name:'CSB',                 floors:[],
+        csbRollerDoors:[
+          {key:'csb-roller1', label:'Roller Door 1', opts:['Secure','Open']},
+          {key:'csb-roller2', label:'Roller Door 2', opts:['Secure','Open']},
+        ]
+      },
     ]
   },
   {
     id:'pipitea', name:'Pipitea', icon:'⚖️', desc:'Law & Commerce',
     buildings:[
-      {id:'rh',  name:'Rutherford House', floors:['Level 12','Level 11','Level 10','Level 9','Level 8','Level 7','Level 6','Level 5','Level 4','Level 3','Level 2','Level 1','Level M','Level G','Level 0']},
-      {id:'ogb', name:'OGB',              floors:fl(3,0)},
+      {
+        id:'rh',  name:'Rutherford House',
+        floors:['Level 12','Level 11','Level 10','Level 9','Level 8','Level 7','Level 6','Level 5','Level 4','Level 3','Level 2','Level 1','Level M','Level G','Level 0'],
+        postFloorItems:[
+          {type:'srow', key:'rh-kitchen', label:'Kitchen', opts:['Secure','Opened']},
+        ]
+      },
+      {
+        id:'ogb', name:'OGB',
+        floors:fl(3,0),
+        postFloorItems:[
+          {type:'srow', key:'ogb-roller', label:'Roller Doors', opts:['Secure','Opened']},
+        ]
+      },
+      {
+        id:'lecblock', name:'Lecture Block',
+        lectureBlock:true,
+        lectureRooms:[
+          {key:'lb1', label:'Lecture Block 1'},
+          {key:'lb2', label:'Lecture Block 2'},
+        ],
+        kitchenOpts:['Secure','Open'],
+        floors:[]
+      },
     ]
   }
 ];
 
-const SC={Secure:'g',Normal:'g',Open:'a',Faulty:'a',Stuck:'a',Broken:'r','Not Secure':'r'};
-
 /* ══════════════════════════════
    STATE
 ══════════════════════════════ */
-// S[campusId][buildingId] = { _inc, _sl, _cleaners, [floor]: n, [doorKey]: val, [vzKey]: val, _note, _extraLevels:{key:n} }
 let S={};
+
 function mkBldgState(b){
-  const o={_inc:false,_sl:false,_cleaners:false,_note:''};
+  const o={_inc:false,_sl:false,_cleaners:false,_note:'',_reception:''};
   (b.floors||[]).forEach(f=>o[f]=0);
   (b.doors||[]).forEach(d=>o[d.key]=null);
   (b.vonzWindows||[]).forEach(v=>o[v.key]=null);
+  (b.csbRollerDoors||[]).forEach(d=>o[d.key]=null);
   if(b.extraLevels) o._extra={};
   (b.extraLevels||[]).forEach(e=>o._extra[e.key]=0);
+  // pre/post floor items
+  (b.preFloorItems||[]).forEach(item=>{
+    o[item.key]=null;
+    o[item.key+'_note']='';
+  });
+  (b.postFloorItems||[]).forEach(item=>{
+    o[item.key]=null;
+    o[item.key+'_note']='';
+  });
+  if(b.kitchenOnly) o._kitchen=null;
+  if(b.lectureBlock){
+    (b.lectureRooms||[]).forEach(r=>o[r.key]=0);
+    o._lbKitchen=null;
+  }
   return o;
 }
+
 function initState(){
   S={};
   CAMPUSES.forEach(c=>{
@@ -329,7 +420,7 @@ function initState(){
 initState();
 
 /* ══════════════════════════════
-   HELPERS
+   TEXT HELPERS
 ══════════════════════════════ */
 function lfl(f){return f.replace(/^Level\s+/,'L');}
 function pad(s,n){return String(s).padEnd(n);}
@@ -346,7 +437,6 @@ function buildUI(){
 
 function buildCampus(c){
   const el=document.createElement('div'); el.className='campus'; el.id='campus-'+c.id;
-  // Header
   const hd=document.createElement('div'); hd.className='campus-hd';
   hd.innerHTML=`<span class="campus-icon">${c.icon}</span>
     <div class="campus-info"><div class="campus-name">${c.name}</div><div class="campus-desc">${c.desc}</div></div>
@@ -355,7 +445,6 @@ function buildCampus(c){
       <span class="campus-chev">▼</span>
     </div>`;
   hd.onclick=()=>el.classList.toggle('open');
-  // Body
   const body=document.createElement('div'); body.className='campus-body';
   const lbl=document.createElement('div'); lbl.className='sec-label'; lbl.textContent='Buildings';
   body.appendChild(lbl);
@@ -379,7 +468,7 @@ function buildBldg(cid,b){
   hd.onclick=()=>{
     const opening=!wrap.classList.contains('open');
     wrap.classList.toggle('open',opening);
-    bs._inc=opening;
+    bs._inc=true; // always mark included when opened
     refreshPill(cid,b.id,b);
     refreshCampusCount(cid);
   };
@@ -404,17 +493,37 @@ function buildBldg(cid,b){
   };
   body.appendChild(sl);
 
-  if(b.floors.length===0){
+  // Lecture Block special: lecture rooms (person counters) + kitchen status
+  if(b.lectureBlock){
+    const llbl=document.createElement('div'); llbl.className='glbl'; llbl.textContent='Lecture Rooms'; body.appendChild(llbl);
+    (b.lectureRooms||[]).forEach(r=>{
+      body.appendChild(mkLvRow(cid,b.id,r.key,bs,r.label,()=>{refreshPill(cid,b.id,b);refreshCampusCount(cid);}));
+    });
+    const klbl=document.createElement('div'); klbl.className='glbl'; klbl.style.marginTop='8px'; klbl.textContent='Kitchen'; body.appendChild(klbl);
+    body.appendChild(mkSrow(cid,b.id,'_lbKitchen','Kitchen',b.kitchenOpts,bs));
+  } else if(b.kitchenOnly){
+    const klbl=document.createElement('div'); klbl.className='glbl'; klbl.textContent='Kitchen'; body.appendChild(klbl);
+    body.appendChild(mkSrow(cid,b.id,'_kitchen','Kitchen Status',b.kitchenOpts,bs));
+  } else if(b.csbRollerDoors&&b.csbRollerDoors.length){
+    const dlbl=document.createElement('div'); dlbl.className='glbl'; dlbl.textContent='Roller Doors'; body.appendChild(dlbl);
+    b.csbRollerDoors.forEach(d=>body.appendChild(mkSrow(cid,b.id,d.key,d.label,d.opts,bs)));
+  } else if(b.floors.length===0){
     const n=document.createElement('div'); n.style.cssText='font-size:11px;color:var(--muted);padding:4px 0;';
     n.textContent='External access only — no internal levels'; body.appendChild(n);
   } else {
+    // Pre-floor items (e.g. Cotton Roof Doors above Level 5)
+    if(b.preFloorItems&&b.preFloorItems.length){
+      const plbl=document.createElement('div'); plbl.className='glbl'; plbl.textContent='Roof'; body.appendChild(plbl);
+      b.preFloorItems.forEach(item=>body.appendChild(mkSpecialItem(cid,b.id,item,bs)));
+    }
+
     // Level rows
     if(!b.single){
-      const lbl=document.createElement('div'); lbl.className='glbl'; lbl.textContent='Levels'; body.appendChild(lbl);
+      const lbl2=document.createElement('div'); lbl2.className='glbl'; lbl2.textContent='Levels'; body.appendChild(lbl2);
     }
     b.floors.forEach(f=>body.appendChild(mkLvRow(cid,b.id,f,bs,b.single?b.name:f,()=>{refreshPill(cid,b.id,b);refreshCampusCount(cid);})));
 
-    // Extra levels (e.g. Library under VIVIAN)
+    // Extra levels
     if(b.extraLevels){
       b.extraLevels.forEach(e=>{
         const elbl=document.createElement('div'); elbl.className='glbl'; elbl.style.marginTop='8px'; elbl.textContent=e.label; body.appendChild(elbl);
@@ -422,7 +531,7 @@ function buildBldg(cid,b){
       });
     }
 
-    // Doors (status buttons) — after levels
+    // Doors
     if(b.doors&&b.doors.length){
       const dlbl=document.createElement('div'); dlbl.className='glbl'; dlbl.style.marginTop='8px'; dlbl.textContent='Doors'; body.appendChild(dlbl);
       b.doors.forEach(d=>body.appendChild(mkSrow(cid,b.id,d.key,d.label,d.opts,bs)));
@@ -433,6 +542,24 @@ function buildBldg(cid,b){
       const vlbl=document.createElement('div'); vlbl.className='glbl'; vlbl.style.marginTop='8px'; vlbl.textContent='Doors & Windows'; body.appendChild(vlbl);
       b.vonzWindows.forEach(v=>body.appendChild(mkSrow(cid,b.id,v.key,v.label,v.opts,bs)));
     }
+
+    // Post-floor items (Kitchen, Keywatcher, Roller Doors, etc.)
+    if(b.postFloorItems&&b.postFloorItems.length){
+      const pflbl=document.createElement('div'); pflbl.className='glbl'; pflbl.style.marginTop='8px'; pflbl.textContent='Additional'; body.appendChild(pflbl);
+      b.postFloorItems.forEach(item=>body.appendChild(mkSpecialItem(cid,b.id,item,bs)));
+    }
+  }
+
+  // Reception Name field (Recreation Centre)
+  if(b.hasReception){
+    const rrow=document.createElement('div'); rrow.className='reception-row'; rrow.style.marginTop='8px';
+    const rlbl=document.createElement('label'); rlbl.textContent='Reception Name';
+    const rinp=document.createElement('input'); rinp.type='text'; rinp.className='reception-input';
+    rinp.placeholder='Officer / staff name at reception…';
+    rinp.value=bs._reception||'';
+    rinp.addEventListener('input',()=>bs._reception=rinp.value);
+    rrow.appendChild(rlbl); rrow.appendChild(rinp);
+    body.appendChild(rrow);
   }
 
   // Cleaners checkbox
@@ -456,6 +583,37 @@ function buildBldg(cid,b){
   return wrap;
 }
 
+/* ── mkSpecialItem: handles srow and srow-with-note ── */
+function mkSpecialItem(cid,bid,item,bs){
+  if(item.type==='srow'){
+    return mkSrow(cid,bid,item.key,item.label,item.opts,bs);
+  }
+  if(item.type==='srow-with-note'){
+    const sr=document.createElement('div'); sr.className='srow-with-note';
+    const lbl=document.createElement('div'); lbl.className='srow-lbl'; lbl.textContent=item.label;
+    const row=document.createElement('div'); row.className='srow-row';
+    item.btnOpts.forEach(o=>{
+      const btn=document.createElement('button'); btn.className='sbtn'; btn.id=`sb-${cid}-${bid}-${item.key}-${o}`; btn.textContent=o;
+      if(bs[item.key]===o) btn.classList.add(SC[o]||'g');
+      btn.onclick=()=>{
+        bs[item.key]=o;
+        item.btnOpts.forEach(o2=>{const b2=document.getElementById(`sb-${cid}-${bid}-${item.key}-${o2}`);if(b2)b2.className='sbtn';});
+        btn.classList.add(SC[o]||'g');
+      };
+      row.appendChild(btn);
+    });
+    const mini=document.createElement('input'); mini.type='text'; mini.className='mini-note';
+    mini.placeholder=item.notePlaceholder||'Notes…';
+    mini.value=bs[item.key+'_note']||'';
+    mini.addEventListener('input',()=>bs[item.key+'_note']=mini.value);
+    row.appendChild(mini);
+    sr.appendChild(lbl); sr.appendChild(row);
+    return sr;
+  }
+  return document.createElement('div');
+}
+
+/* ── mkLvRow ── */
 function mkLvRow(cid,bid,key,obj,label,onChange){
   const row=document.createElement('div'); row.className='lv'; row.id=`lv-${cid}-${bid}-${key.replace(/\s/g,'_')}`;
   const lft=document.createElement('div'); lft.className='lv-left';
@@ -483,8 +641,9 @@ function mkLvRow(cid,bid,key,obj,label,onChange){
 function resetLvRow(cid,bid,key){
   const row=document.getElementById(`lv-${cid}-${bid}-${key.replace(/\s/g,'_')}`);
   const st=document.getElementById(`st-${cid}-${bid}-${key.replace(/\s/g,'_')}`);
-  if(row)row.classList.remove('occ'); if(st){st.className='lv-st';st.textContent='clear';}
-  const inp=row?row.querySelector('.cinput'):null; if(inp)inp.value='0';
+  if(row) row.classList.remove('occ');
+  if(st){st.className='lv-st';st.textContent='clear';}
+  const inp=row?row.querySelector('.cinput'):null; if(inp) inp.value='0';
 }
 
 function mkSrow(cid,bid,key,label,opts,bs){
@@ -505,7 +664,7 @@ function mkSrow(cid,bid,key,label,opts,bs){
 }
 
 /* ══════════════════════════════
-   REFRESH HELPERS
+   REFRESH
 ══════════════════════════════ */
 function refreshPill(cid,bid,b){
   const bs=S[cid][bid];
@@ -514,7 +673,8 @@ function refreshPill(cid,bid,b){
   if(!bs._inc){pill.className='bldg-pill';return;}
   if(bs._sl){pill.className='bldg-pill ok';pill.textContent='secured';return;}
   const tot=(b.floors||[]).reduce((a,f)=>a+(bs[f]||0),0)
-    +(b.extraLevels||[]).reduce((a,e)=>a+(bs._extra?bs._extra[e.key]||0:0),0);
+    +(b.extraLevels||[]).reduce((a,e)=>a+(bs._extra?bs._extra[e.key]||0:0),0)
+    +(b.lectureBlock?(b.lectureRooms||[]).reduce((a,r)=>a+(bs[r.key]||0),0):0);
   if(tot>0){pill.className='bldg-pill occ';pill.textContent=tot+' person'+(tot!==1?'s':'');}
   else{pill.className='bldg-pill ok';pill.textContent='all clear';}
 }
@@ -533,22 +693,34 @@ function refreshCampusCount(cid){
 ══════════════════════════════ */
 function clearBldg(cid,b){
   const bs=S[cid][b.id];
-  bs._sl=false; bs._cleaners=false; bs._note=''; bs._inc=false;
+  bs._sl=false; bs._cleaners=false; bs._note=''; bs._inc=false; bs._reception='';
   (b.floors||[]).forEach(f=>{bs[f]=0; resetLvRow(cid,b.id,f);});
   (b.extraLevels||[]).forEach(e=>{bs._extra[e.key]=0; resetLvRow(cid,b.id,e.key);});
   (b.doors||[]).forEach(d=>{bs[d.key]=null; d.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${d.key}-${o}`);if(el)el.className='sbtn';});});
   (b.vonzWindows||[]).forEach(v=>{bs[v.key]=null; v.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${v.key}-${o}`);if(el)el.className='sbtn';});});
-  // reset SL btn
+  (b.csbRollerDoors||[]).forEach(d=>{bs[d.key]=null; d.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${d.key}-${o}`);if(el)el.className='sbtn';});});
+  if(b.kitchenOnly){bs._kitchen=null;(b.kitchenOpts||[]).forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-_kitchen-${o}`);if(el)el.className='sbtn';});}
+  if(b.lectureBlock){
+    (b.lectureRooms||[]).forEach(r=>{bs[r.key]=0; resetLvRow(cid,b.id,r.key);});
+    bs._lbKitchen=null;
+    (b.kitchenOpts||[]).forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-_lbKitchen-${o}`);if(el)el.className='sbtn';});
+  }
+  [...(b.preFloorItems||[]),...(b.postFloorItems||[])].forEach(item=>{
+    bs[item.key]=null; bs[item.key+'_note']='';
+    if(item.btnOpts) item.btnOpts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${item.key}-${o}`);if(el)el.className='sbtn';});
+    if(item.opts) item.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${item.key}-${o}`);if(el)el.className='sbtn';});
+  });
   const slEl=document.getElementById(`sl-${cid}-${b.id}`);
   if(slEl){slEl.classList.remove('active');slEl.textContent='10-0:10-6 — Building Secure & Locked';}
-  // reset cleaner
   const clnEl=document.getElementById(`cln-${cid}-${b.id}`);
   if(clnEl) clnEl.classList.remove('on');
-  // reset note
   const wrap=document.getElementById(`bldg-${cid}-${b.id}`);
-  if(wrap){const ta=wrap.querySelector('textarea');if(ta)ta.value='';}
-  // close accordion + update badges
-  if(wrap) wrap.classList.remove('open');
+  if(wrap){
+    const ta=wrap.querySelector('textarea.note'); if(ta) ta.value='';
+    const ri=wrap.querySelector('.reception-input'); if(ri) ri.value='';
+    const minis=wrap.querySelectorAll('.mini-note'); minis.forEach(m=>m.value='');
+    wrap.classList.remove('open');
+  }
   refreshPill(cid,b.id,b);
   refreshCampusCount(cid);
 }
@@ -559,12 +731,13 @@ function clearAll(){
 }
 
 /* ══════════════════════════════
-   REPORT
+   REPORT GENERATION
 ══════════════════════════════ */
 function generateReport(){
   const lines=[]; let anyOcc=false;
 
   CAMPUSES.forEach(c=>{
+    // Include ALL opened buildings (those with _inc=true)
     const incBldgs=c.buildings.filter(b=>S[c.id][b.id]._inc);
     if(!incBldgs.length) return;
 
@@ -589,24 +762,73 @@ function generateReport(){
         });
       }
 
+      // Lecture Block
+      if(b.lectureBlock){
+        (b.lectureRooms||[]).forEach(r=>{
+          const n=bs[r.key]||0;
+          if(n>0){anyOcc=true;lines.push(`  ${r.label}: ${n} person${n!==1?'s':''} present`);}
+          else lines.push(`  ${r.label}: All clear`);
+        });
+        lines.push(`  Kitchen: ${bs._lbKitchen||'—'}`);
+      }
+
+      // CSB roller doors
+      if(b.csbRollerDoors&&b.csbRollerDoors.length){
+        b.csbRollerDoors.forEach(d=>{
+          if(bs[d.key]) lines.push(`  ${d.label}: ${bs[d.key]}`);
+          else lines.push(`  ${d.label}: —`);
+        });
+      }
+
+      // Kitchen only (OGB Kitchen)
+      if(b.kitchenOnly){
+        lines.push(`  Kitchen: ${bs._kitchen||'—'}`);
+      }
+
+      // Pre-floor items (Cotton Roof Doors)
+      if(b.preFloorItems&&b.preFloorItems.length){
+        b.preFloorItems.forEach(item=>{
+          let line=`  ${item.label}`;
+          if(bs[item.key]) line+=`: ${bs[item.key]}`;
+          if(bs[item.key+'_note']&&bs[item.key+'_note'].trim()) line+=` — ${bs[item.key+'_note'].trim()}`;
+          if(bs[item.key]||bs[item.key+'_note']) lines.push(line);
+        });
+      }
+
       // Floors
-      if(b.single){
-        const n=bs[b.floors[0]]||0;
-        if(n>0){anyOcc=true;lines.push(`  ${n} person${n!==1?'s':''} present`);}
-        else lines.push('  All clear — no persons present');
-      } else if(b.floors.length===0){
-        lines.push('  External access only');
-      } else {
-        let hasP=false;
-        b.floors.forEach(f=>{const n=bs[f]||0;if(n>0){hasP=true;anyOcc=true;lines.push('  '+pad(lfl(f)+':',8)+n);}});
-        // Extra levels (Library etc)
-        (b.extraLevels||[]).forEach(e=>{const n=bs._extra?bs._extra[e.key]||0:0;if(n>0){hasP=true;anyOcc=true;lines.push('  '+pad(e.label+':',10)+n);}});
-        if(!hasP) lines.push('  All clear — no persons present');
+      if(!b.csbRollerDoors||!b.csbRollerDoors.length){
+        if(!b.kitchenOnly && !b.lectureBlock){
+        if(b.single){
+          const n=bs[b.floors[0]]||0;
+          if(n>0){anyOcc=true;lines.push(`  ${n} person${n!==1?'s':''} present`);}
+          else lines.push('  All clear — no persons present');
+        } else if(b.floors.length>0){
+          let hasP=false;
+          b.floors.forEach(f=>{const n=bs[f]||0;if(n>0){hasP=true;anyOcc=true;lines.push('  '+pad(lfl(f)+':',8)+n);}});
+          (b.extraLevels||[]).forEach(e=>{const n=bs._extra?bs._extra[e.key]||0:0;if(n>0){hasP=true;anyOcc=true;lines.push('  '+pad(e.label+':',10)+n);}});
+          if(!hasP) lines.push('  All clear — no persons present');
+        }
+        }
       }
 
       // Doors
       if(b.doors&&b.doors.length){
         b.doors.forEach(d=>{if(bs[d.key]) lines.push(`  ${d.label}: ${bs[d.key]}`);});
+      }
+
+      // Post-floor items (Kitchen, Keywatcher, Car Parks, Roller Doors)
+      if(b.postFloorItems&&b.postFloorItems.length){
+        b.postFloorItems.forEach(item=>{
+          let line=`  ${item.label}`;
+          if(bs[item.key]) line+=`: ${bs[item.key]}`;
+          if(bs[item.key+'_note']&&bs[item.key+'_note'].trim()) line+=` — ${bs[item.key+'_note'].trim()}`;
+          if(bs[item.key]||bs[item.key+'_note']) lines.push(line);
+        });
+      }
+
+      // Reception
+      if(b.hasReception&&bs._reception&&bs._reception.trim()){
+        lines.push(`  Reception: ${bs._reception.trim()}`);
       }
 
       // Cleaners
