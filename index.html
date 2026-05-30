@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -923,38 +924,11 @@ function showMain(){
 
 function copyReport(){
   const ta=document.getElementById('r-text');
-  const showOk=()=>{const m=document.getElementById('copy-ok');m.style.display='block';setTimeout(()=>m.style.display='none',2500);};
-
-  // Try modern clipboard API first (works on https)
-  if(navigator.clipboard&&window.isSecureContext){
-    navigator.clipboard.writeText(ta.value).then(showOk).catch(()=>legacyCopy(ta,showOk));
-    return;
-  }
-  legacyCopy(ta,showOk);
-}
-function legacyCopy(ta,cb){
-  // Save scroll position so page doesn't jump
-  const scrollY=window.scrollY;
-  const prev=document.activeElement;
   ta.removeAttribute('readonly');
   ta.focus();
   ta.select();
   ta.setSelectionRange(0,99999);
-  let ok=false;
-  try{ok=document.execCommand('copy');}catch(e){}
-  // Deselect and restore
-  ta.setSelectionRange(0,0);
   ta.setAttribute('readonly','');
-  if(prev&&prev.focus) prev.focus();
-  window.scrollTo(0,scrollY);
-  if(ok&&cb) cb();
-  else{
-    // Last resort: show select hint
-    const m=document.getElementById('copy-ok');
-    m.textContent='Tap the text above, select all, then copy';
-    m.style.display='block';
-    setTimeout(()=>{m.style.display='none';m.textContent='✓ Copied to clipboard';},4000);
-  }
 }
 
 /* ══════════════════════════════
