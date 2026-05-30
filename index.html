@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,13 +200,14 @@ body{
   font-size:12px;
   line-height:1.9;
   color:#000;
-  resize:vertical;
+  white-space:pre-wrap;
+  word-break:break-word;
   outline:none;
   box-shadow:var(--sh-sm);
-  overflow-y:auto;
-  /* prevent layout shift when typing */
   display:block;
-  vertical-align:top;
+  cursor:text;
+  user-select:text;
+  -webkit-user-select:text;
 }
 .rbox:focus{border-color:var(--vuw);}
 
@@ -248,9 +248,9 @@ body{
       <button class="back-btn" onclick="showMain()">← Back</button>
     </div>
     <div id="r-pill"></div>
-    <textarea class="rbox" id="r-text" spellcheck="false" onclick="this.select()" readonly></textarea>
+    <pre class="rbox" id="r-text" onclick="selectReport()"></pre>
     <div class="rpt-actions">
-      <button class="rpt-btn rpt-btn-copy" onclick="copyReport()">⎘ Copy</button>
+      <button class="rpt-btn rpt-btn-copy" onclick="selectReport()">⎘ Copy</button>
       <button class="rpt-btn" onclick="clearAll();showMain()">New Check</button>
     </div>
     <div class="copy-ok" id="copy-ok">✓ Copied to clipboard</div>
@@ -906,7 +906,7 @@ function generateReport(){
   }
 
   const text=lines.join('\n').replace(/\n{3,}/g,'\n\n').trim();
-  document.getElementById('r-text').value=text;
+  document.getElementById('r-text').textContent=text;
   document.getElementById('r-pill').innerHTML=anyOcc
     ?'<div class="rpill rpill-occ">⚠ Persons on site</div>'
     :'<div class="rpill rpill-ok">✓ All clear</div>';
@@ -922,13 +922,15 @@ function showMain(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function copyReport(){
-  const ta=document.getElementById('r-text');
-  ta.removeAttribute('readonly');
-  ta.focus();
-  ta.select();
-  ta.setSelectionRange(0,99999);
-  ta.setAttribute('readonly','');
+function selectReport(){
+  const el=document.getElementById('r-text');
+  const sel=window.getSelection();
+  const range=document.createRange();
+  range.selectNodeContents(el);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  // Try to copy silently
+  try{document.execCommand('copy');}catch(e){}
 }
 
 /* ══════════════════════════════
