@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>VUW Security</title>
+<title>VUW Security — Patrol</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -247,9 +247,9 @@ body{
       <button class="back-btn" onclick="showMain()">← Back</button>
     </div>
     <div id="r-pill"></div>
-    <textarea class="rbox" id="r-text" spellcheck="false"></textarea>
+    <textarea class="rbox" id="r-text" spellcheck="false" onclick="this.select()" readonly></textarea>
     <div class="rpt-actions">
-      <button class="rpt-btn rpt-btn-copy" onclick="copyReport()">⎘ Copy</button>
+      <button class="rpt-btn rpt-btn-copy" onclick="copyReport()">⎘ Select & Copy</button>
       <button class="rpt-btn" onclick="clearAll();showMain()">New Check</button>
     </div>
     <div class="copy-ok" id="copy-ok">✓ Copied to clipboard</div>
@@ -925,29 +925,20 @@ function showMain(){
 }
 
 function copyReport(){
-  const text=document.getElementById('r-text').value;
-  const showOk=()=>{const m=document.getElementById('copy-ok');m.style.display='block';setTimeout(()=>m.style.display='none',2500);};
-  // Use ClipboardItem with explicit text/plain type to prevent Outlook treating it as a URL
-  if(navigator.clipboard&&window.ClipboardItem&&window.isSecureContext){
-    try{
-      const item=new ClipboardItem({'text/plain':new Blob([text],{type:'text/plain'})});
-      navigator.clipboard.write([item]).then(showOk).catch(()=>fallbackCopy(text,showOk));
-    }catch(e){fallbackCopy(text,showOk);}
-  } else {
-    fallbackCopy(text,showOk);
-  }
-}
-function fallbackCopy(text,cb){
-  // Create a detached textarea, copy from it, then remove it
-  const ta=document.createElement('textarea');
-  ta.value=text;
-  ta.style.cssText='position:fixed;top:0;left:0;opacity:0;white-space:pre;';
-  document.body.appendChild(ta);
+  const ta=document.getElementById('r-text');
   ta.focus();
   ta.select();
   ta.setSelectionRange(0,99999);
-  try{document.execCommand('copy');if(cb)cb();}catch(e){}
-  document.body.removeChild(ta);
+  const showOk=()=>{const m=document.getElementById('copy-ok');m.style.display='block';setTimeout(()=>m.style.display='none',2500);};
+  try{
+    const ok=document.execCommand('copy');
+    if(ok){showOk();return;}
+  }catch(e){}
+  // If execCommand failed, text is still selected — show hint
+  const m=document.getElementById('copy-ok');
+  m.textContent='✓ Text selected — press Ctrl+C / Cmd+C to copy';
+  m.style.display='block';
+  setTimeout(()=>{m.style.display='none';m.textContent='✓ Copied to clipboard';},4000);
 }
 
 /* ══════════════════════════════
