@@ -784,7 +784,7 @@ function generateReport(){
     const incBldgs=c.buildings.filter(b=>S[c.id][b.id]._inc&&hasBldgData(b,S[c.id][b.id]));
     if(!incBldgs.length) return;
 
-    lines.push(`Campus: ${c.name} — Internal Check`);
+    lines.push(`Campus: ${c.name} - Internal Check`);
     lines.push(`Date: ${today()}`);
     lines.push('');
 
@@ -793,7 +793,7 @@ function generateReport(){
       lines.push(`${b.name}:`);
 
       if(bs._sl){
-        lines.push('  10-0:10-6 — Building secure and locked');
+        lines.push('  10-0:10-6 - Building secure and locked');
         lines.push('');
         return;
       }
@@ -834,7 +834,7 @@ function generateReport(){
         b.preFloorItems.forEach(item=>{
           let line=`  ${item.label}`;
           if(bs[item.key]) line+=`: ${bs[item.key]}`;
-          if(bs[item.key+'_note']&&bs[item.key+'_note'].trim()) line+=` — ${bs[item.key+'_note'].trim()}`;
+          if(bs[item.key+'_note']&&bs[item.key+'_note'].trim()) line+=` - ${bs[item.key+'_note'].trim()}`;
           if(bs[item.key]||bs[item.key+'_note']) lines.push(line);
         });
       }
@@ -862,7 +862,7 @@ function generateReport(){
         b.postFloorItems.forEach(item=>{
           let line=`  ${item.label}`;
           if(bs[item.key]) line+=`: ${bs[item.key]}`;
-          if(bs[item.key+'_note']&&bs[item.key+'_note'].trim()) line+=` — ${bs[item.key+'_note'].trim()}`;
+          if(bs[item.key+'_note']&&bs[item.key+'_note'].trim()) line+=` - ${bs[item.key+'_note'].trim()}`;
           if(bs[item.key]||bs[item.key+'_note']) lines.push(line);
         });
       }
@@ -924,14 +924,15 @@ function showMain(){
 }
 
 function selectReport(){
-  const el=document.getElementById('r-text');
-  const sel=window.getSelection();
-  const range=document.createRange();
-  range.selectNodeContents(el);
-  sel.removeAllRanges();
-  sel.addRange(range);
-  // Try to copy silently
+  const text=document.getElementById('r-text').textContent;
+  const ta=document.createElement('textarea');
+  ta.value=text;
+  ta.style.cssText='position:fixed;left:-9999px;top:0;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
   try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
 }
 
 /* ══════════════════════════════
