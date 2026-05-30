@@ -249,7 +249,7 @@ body{
     <div id="r-pill"></div>
     <textarea class="rbox" id="r-text" spellcheck="false" onclick="this.select()" readonly></textarea>
     <div class="rpt-actions">
-      <button class="rpt-btn rpt-btn-copy" onclick="copyReport()">⎘ Select & Copy</button>
+      <button class="rpt-btn rpt-btn-copy" onclick="copyReport()">⎘ Copy</button>
       <button class="rpt-btn" onclick="clearAll();showMain()">New Check</button>
     </div>
     <div class="copy-ok" id="copy-ok">✓ Copied to clipboard</div>
@@ -809,7 +809,7 @@ function generateReport(){
         if(lbHasData){
           (b.lectureRooms||[]).forEach(r=>{
             const n=bs[r.key]||0;
-            if(n>0){anyOcc=true;lines.push(`  ${r.label}: ${n} person${n!==1?'s':''} present`);}
+            if(n>0){anyOcc=true;lines.push(`  ${r.label}: ${n}`);}
           });
           if(bs._lbKitchen) lines.push(`  Kitchen: ${bs._lbKitchen}`);
         }
@@ -839,16 +839,13 @@ function generateReport(){
 
       // Floors
       if(!b.csbRollerDoors||!b.csbRollerDoors.length){
-        if(!b.kitchenOnly && !b.lectureBlock){
+        if(!b.kitchenOnly){
         if(b.single){
           const n=bs[b.floors[0]]||0;
-          if(n>0){anyOcc=true;lines.push(`  ${n} person${n!==1?'s':''} present`);}
-          else lines.push('  All clear — no persons present');
+          if(n>0){anyOcc=true;lines.push(`  ${lfl(b.floors[0])}: ${n}`);}
         } else if(b.floors.length>0){
-          let hasP=false;
-          b.floors.forEach(f=>{const n=bs[f]||0;if(n>0){hasP=true;anyOcc=true;lines.push('  '+pad(lfl(f)+':',8)+n);}});
-          (b.extraLevels||[]).forEach(e=>{const n=bs._extra?bs._extra[e.key]||0:0;if(n>0){hasP=true;anyOcc=true;lines.push('  '+pad(e.label+':',10)+n);}});
-          if(!hasP) lines.push('  All clear — no persons present');
+          b.floors.forEach(f=>{const n=bs[f]||0;if(n>0){anyOcc=true;lines.push(`  ${lfl(f)}: ${n}`);}});
+          (b.extraLevels||[]).forEach(e=>{const n=bs._extra?bs._extra[e.key]||0:0;if(n>0){anyOcc=true;lines.push(`  ${e.label}: ${n}`);}});
         }
         }
       }
@@ -882,7 +879,7 @@ function generateReport(){
           lines.push(`  Lecture Block:`);
           (b.lectureRooms||[]).forEach(r=>{
             const n=bs[r.key]||0;
-            if(n>0){anyOcc=true;lines.push(`    ${r.label}: ${n} person${n!==1?'s':''} present`);}
+            if(n>0){anyOcc=true;lines.push(`    ${r.label}: ${n}`);}
           });
           if(bs._lbKitchen) lines.push(`    Kitchen: ${bs._lbKitchen}`);
         }
@@ -926,19 +923,38 @@ function showMain(){
 
 function copyReport(){
   const ta=document.getElementById('r-text');
+  const showOk=()=>{const m=document.getElementById('copy-ok');m.style.display='block';setTimeout(()=>m.style.display='none',2500);};
+
+  // Try modern clipboard API first (works on https)
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(ta.value).then(showOk).catch(()=>legacyCopy(ta,showOk));
+    return;
+  }
+  legacyCopy(ta,showOk);
+}
+function legacyCopy(ta,cb){
+  // Save scroll position so page doesn't jump
+  const scrollY=window.scrollY;
+  const prev=document.activeElement;
+  ta.removeAttribute('readonly');
   ta.focus();
   ta.select();
   ta.setSelectionRange(0,99999);
-  const showOk=()=>{const m=document.getElementById('copy-ok');m.style.display='block';setTimeout(()=>m.style.display='none',2500);};
-  try{
-    const ok=document.execCommand('copy');
-    if(ok){showOk();return;}
-  }catch(e){}
-  // If execCommand failed, text is still selected — show hint
-  const m=document.getElementById('copy-ok');
-  m.textContent='✓ Text selected — press Ctrl+C / Cmd+C to copy';
-  m.style.display='block';
-  setTimeout(()=>{m.style.display='none';m.textContent='✓ Copied to clipboard';},4000);
+  let ok=false;
+  try{ok=document.execCommand('copy');}catch(e){}
+  // Deselect and restore
+  ta.setSelectionRange(0,0);
+  ta.setAttribute('readonly','');
+  if(prev&&prev.focus) prev.focus();
+  window.scrollTo(0,scrollY);
+  if(ok&&cb) cb();
+  else{
+    // Last resort: show select hint
+    const m=document.getElementById('copy-ok');
+    m.textContent='Tap the text above, select all, then copy';
+    m.style.display='block';
+    setTimeout(()=>{m.style.display='none';m.textContent='✓ Copied to clipboard';},4000);
+  }
 }
 
 /* ══════════════════════════════
