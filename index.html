@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -264,12 +263,13 @@ body{
 ══════════════════════════════ */
 function fl(hi,lo,asc){
   const a=[];
-  if(asc) for(let i=lo;i<=hi;i++) a.push('Level '+i);
-  else for(let i=hi;i>=lo;i--) a.push('Level '+i);
+  const lbl=i=>i===0?'Level G':'Level '+i;
+  if(asc) for(let i=lo;i<=hi;i++) a.push(lbl(i));
+  else for(let i=hi;i>=lo;i--) a.push(lbl(i));
   return a;
 }
 
-const SC={Secure:'g',Normal:'g',Open:'a',Faulty:'a',Stuck:'a',Broken:'r','Not Secure':'r','10:6':'g','10:0':'g','Opened':'a'};
+const SC={Secure:'g',Normal:'g',Open:'a',Faulty:'a',Stuck:'a',Broken:'r','Not Secure':'r','10:6':'g','10:0':'g','10-6':'g','10-0':'g','Opened':'a'};
 
 /* ══════════════════════════════
    CAMPUS / BUILDING DATA
@@ -345,7 +345,13 @@ const CAMPUSES=[
         id:'rec', name:'Recreation Centre',   floors:['Level 6','Level 5','Level 4','Level 3','Level 1'],
         hasReception:true
       },
-      {id:'ttr',    name:'TTR',               floors:fl(4,0)},
+      {
+        id:'ttr', name:'TTR', floors:[],
+        sections:[
+          {key:'north', label:'North', levels:fl(4,1)},
+          {key:'south', label:'South', levels:fl(3,1)},
+        ]
+      },
       {
         id:'csb', name:'CSB',                 floors:[],
         csbRollerDoors:[
@@ -367,20 +373,15 @@ const CAMPUSES=[
       },
       {
         id:'ogb', name:'OGB',
-        floors:fl(3,0),
-        postFloorItems:[
-          {type:'srow', key:'ogb-roller', label:'Roller Doors', opts:['Secure','Opened']},
+        floors:[],
+        sections:[
+          {key:'north', label:'North', levels:['Level 3','Level 2','Level 1','Level G']},
+          {key:'south', label:'South', levels:['Level 3','Level 2','Level 1','Level G']},
         ],
-        ogbLionDoors:[
-          {key:'ogb-lion1', label:'Lion Door 1', opts:['Secure','Open']},
-          {key:'ogb-lion2', label:'Lion Door 2', opts:['Secure','Open']},
-        ],
+        ogbRollerLibrary:{key:'ogb-roller-lib', label:'Roller Door — South Library (Level G)', opts:['10:6']},
         lectureBlock:true,
-        lectureRooms:[
-          {key:'lb1', label:'Lecture Block 1'},
-          {key:'lb2', label:'Lecture Block 2'},
-        ],
-        kitchenOpts:['Secure','Open'],
+        lectureStatusOpts:['10-0','10-6'],
+        ogbLionGate:{key:'ogb-liongate', label:'Lion Gates', opts:['10-6']},
       },
     ]
   }
@@ -397,7 +398,6 @@ function mkBldgState(b){
   (b.doors||[]).forEach(d=>o[d.key]=null);
   (b.vonzWindows||[]).forEach(v=>o[v.key]=null);
   (b.csbRollerDoors||[]).forEach(d=>o[d.key]=null);
-  (b.ogbLionDoors||[]).forEach(d=>o[d.key]=null);
   if(b.extraLevels) o._extra={};
   (b.extraLevels||[]).forEach(e=>o._extra[e.key]=0);
   // pre/post floor items
@@ -410,9 +410,21 @@ function mkBldgState(b){
     o[item.key+'_note']='';
   });
   if(b.kitchenOnly) o._kitchen=null;
+  if(b.sections){
+    b.sections.forEach(sec=>{
+      sec.levels.forEach(lv=>{o[sec.key+'-'+lv]=0;});
+    });
+  }
+  if(b.ogbRollerLibrary) o[b.ogbRollerLibrary.key]=null;
+  if(b.ogbLionGate) o[b.ogbLionGate.key]=null;
   if(b.lectureBlock){
-    (b.lectureRooms||[]).forEach(r=>o[r.key]=0);
-    o._lbKitchen=null;
+    if(b.lectureStatusOpts){
+      o._lbStatus=null;
+      o._lbCount=0;
+    } else {
+      (b.lectureRooms||[]).forEach(r=>o[r.key]=0);
+      o._lbKitchen=null;
+    }
   }
   return o;
 }
@@ -494,14 +506,40 @@ function buildBldg(cid,b){
     if(bs._sl){
       (b.floors||[]).forEach(f=>{bs[f]=0; resetLvRow(cid,b.id,f);});
       if(b.extraLevels) b.extraLevels.forEach(e=>{bs._extra[e.key]=0; resetLvRow(cid,b.id,e.key);});
+      if(b.sections) b.sections.forEach(sec=>sec.levels.forEach(lv=>{bs[sec.key+'-'+lv]=0; resetLvRow(cid,b.id,sec.key+'-'+lv);}));
+      if(b.lectureBlock && b.lectureStatusOpts){bs._lbCount=0; resetLvRow(cid,b.id,'_lbCount');}
     }
     refreshPill(cid,b.id,b);
     refreshCampusCount(cid);
   };
   body.appendChild(sl);
 
+  // OGB special sections (North/South levels, roller library, lecture block status, lion gates)
+  if(b.sections){
+    b.sections.forEach(sec=>{
+      const slbl=document.createElement('div'); slbl.className='glbl'; slbl.textContent=sec.label; body.appendChild(slbl);
+      sec.levels.forEach(lv=>{
+        body.appendChild(mkLvRow(cid,b.id,sec.key+'-'+lv,bs,lv,()=>{refreshPill(cid,b.id,b);refreshCampusCount(cid);}));
+      });
+    });
+    if(b.ogbRollerLibrary){
+      const rlbl=document.createElement('div'); rlbl.className='glbl'; rlbl.style.marginTop='8px'; rlbl.textContent='Roller Door'; body.appendChild(rlbl);
+      body.appendChild(mkSrow(cid,b.id,b.ogbRollerLibrary.key,b.ogbRollerLibrary.label,b.ogbRollerLibrary.opts,bs));
+    }
+    if(b.lectureBlock && b.lectureStatusOpts){
+      const hr=document.createElement('hr'); hr.className='sub-divider'; body.appendChild(hr);
+      const lbh=document.createElement('div'); lbh.className='sub-header'; lbh.textContent='Lecture Block'; body.appendChild(lbh);
+      body.appendChild(mkLvRow(cid,b.id,'_lbCount',bs,'Lecture Block',()=>{refreshPill(cid,b.id,b);refreshCampusCount(cid);}));
+      const stlbl=document.createElement('div'); stlbl.className='glbl'; stlbl.style.marginTop='6px'; stlbl.textContent='Status'; body.appendChild(stlbl);
+      body.appendChild(mkSrow(cid,b.id,'_lbStatus','Status',b.lectureStatusOpts,bs));
+    }
+    if(b.ogbLionGate){
+      const llbl=document.createElement('div'); llbl.className='glbl'; llbl.style.marginTop='8px'; llbl.textContent='Lion Gates'; body.appendChild(llbl);
+      body.appendChild(mkSrow(cid,b.id,b.ogbLionGate.key,b.ogbLionGate.label,b.ogbLionGate.opts,bs));
+    }
+  }
   // Lecture Block special: lecture rooms (person counters) + kitchen status
-  if(b.lectureBlock && b.floors.length===0 && !b.postFloorItems){
+  else if(b.lectureBlock && b.floors.length===0 && !b.postFloorItems){
     const llbl=document.createElement('div'); llbl.className='glbl'; llbl.textContent='Lecture Rooms'; body.appendChild(llbl);
     (b.lectureRooms||[]).forEach(r=>{
       body.appendChild(mkLvRow(cid,b.id,r.key,bs,r.label,()=>{refreshPill(cid,b.id,b);refreshCampusCount(cid);}));
@@ -556,23 +594,6 @@ function buildBldg(cid,b){
       b.postFloorItems.forEach(item=>body.appendChild(mkSpecialItem(cid,b.id,item,bs)));
     }
 
-    // Lion Doors (OGB) — after floors/additional, before Lecture Block
-    if(b.ogbLionDoors&&b.ogbLionDoors.length){
-      const llbl=document.createElement('div'); llbl.className='glbl'; llbl.style.marginTop='8px'; llbl.textContent='Lion Doors'; body.appendChild(llbl);
-      b.ogbLionDoors.forEach(d=>body.appendChild(mkSrow(cid,b.id,d.key,d.label,d.opts,bs)));
-    }
-
-    // Embedded Lecture Block (inside OGB)
-    if(b.lectureBlock){
-      const hr=document.createElement('hr'); hr.className='sub-divider'; body.appendChild(hr);
-      const lbh=document.createElement('div'); lbh.className='sub-header'; lbh.textContent='Lecture Block'; body.appendChild(lbh);
-      const rlbl=document.createElement('div'); rlbl.className='glbl'; rlbl.textContent='Lecture Rooms'; body.appendChild(rlbl);
-      (b.lectureRooms||[]).forEach(r=>{
-        body.appendChild(mkLvRow(cid,b.id,r.key,bs,r.label,()=>{refreshPill(cid,b.id,b);refreshCampusCount(cid);}));
-      });
-      const klbl=document.createElement('div'); klbl.className='glbl'; klbl.style.marginTop='8px'; klbl.textContent='Kitchen'; body.appendChild(klbl);
-      body.appendChild(mkSrow(cid,b.id,'_lbKitchen','Kitchen',b.kitchenOpts,bs));
-    }
   }
 
   // Reception Name field (Recreation Centre)
@@ -699,7 +720,9 @@ function refreshPill(cid,bid,b){
   if(bs._sl){pill.className='bldg-pill ok';pill.textContent='secured';return;}
   const tot=(b.floors||[]).reduce((a,f)=>a+(bs[f]||0),0)
     +(b.extraLevels||[]).reduce((a,e)=>a+(bs._extra?bs._extra[e.key]||0:0),0)
-    +(b.lectureBlock?(b.lectureRooms||[]).reduce((a,r)=>a+(bs[r.key]||0),0):0);
+    +(b.lectureBlock?(b.lectureRooms||[]).reduce((a,r)=>a+(bs[r.key]||0),0):0)
+    +(b.lectureBlock&&b.lectureStatusOpts?(bs._lbCount||0):0)
+    +(b.sections?b.sections.reduce((a,sec)=>a+sec.levels.reduce((a2,lv)=>a2+(bs[sec.key+'-'+lv]||0),0),0):0);
   if(tot>0){pill.className='bldg-pill occ';pill.textContent=tot+' person'+(tot!==1?'s':'');}
   else{pill.className='bldg-pill ok';pill.textContent='all clear';}
 }
@@ -724,12 +747,21 @@ function clearBldg(cid,b){
   (b.doors||[]).forEach(d=>{bs[d.key]=null; d.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${d.key}-${o}`);if(el)el.className='sbtn';});});
   (b.vonzWindows||[]).forEach(v=>{bs[v.key]=null; v.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${v.key}-${o}`);if(el)el.className='sbtn';});});
   (b.csbRollerDoors||[]).forEach(d=>{bs[d.key]=null; d.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${d.key}-${o}`);if(el)el.className='sbtn';});});
-  (b.ogbLionDoors||[]).forEach(d=>{bs[d.key]=null; d.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${d.key}-${o}`);if(el)el.className='sbtn';});});
+  (b.sections||[]).forEach(sec=>{sec.levels.forEach(lv=>{bs[sec.key+'-'+lv]=0; resetLvRow(cid,b.id,sec.key+'-'+lv);});});
+  if(b.ogbRollerLibrary){bs[b.ogbRollerLibrary.key]=null;b.ogbRollerLibrary.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${b.ogbRollerLibrary.key}-${o}`);if(el)el.className='sbtn';});}
+  if(b.ogbLionGate){bs[b.ogbLionGate.key]=null;b.ogbLionGate.opts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-${b.ogbLionGate.key}-${o}`);if(el)el.className='sbtn';});}
   if(b.kitchenOnly){bs._kitchen=null;(b.kitchenOpts||[]).forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-_kitchen-${o}`);if(el)el.className='sbtn';});}
   if(b.lectureBlock){
-    (b.lectureRooms||[]).forEach(r=>{bs[r.key]=0; resetLvRow(cid,b.id,r.key);});
-    bs._lbKitchen=null;
-    (b.kitchenOpts||[]).forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-_lbKitchen-${o}`);if(el)el.className='sbtn';});
+    if(b.lectureStatusOpts){
+      bs._lbStatus=null;
+      bs._lbCount=0;
+      resetLvRow(cid,b.id,'_lbCount');
+      b.lectureStatusOpts.forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-_lbStatus-${o}`);if(el)el.className='sbtn';});
+    } else {
+      (b.lectureRooms||[]).forEach(r=>{bs[r.key]=0; resetLvRow(cid,b.id,r.key);});
+      bs._lbKitchen=null;
+      (b.kitchenOpts||[]).forEach(o=>{const el=document.getElementById(`sb-${cid}-${b.id}-_lbKitchen-${o}`);if(el)el.className='sbtn';});
+    }
   }
   [...(b.preFloorItems||[]),...(b.postFloorItems||[])].forEach(item=>{
     bs[item.key]=null; bs[item.key+'_note']='';
@@ -772,6 +804,10 @@ function hasBldgData(b,bs){
   if((b.ogbLionDoors||[]).some(d=>bs[d.key])) return true;
   if(b.kitchenOnly&&bs._kitchen) return true;
   if(b.lectureBlock&&((b.lectureRooms||[]).some(r=>(bs[r.key]||0)>0)||bs._lbKitchen)) return true;
+  if(b.sections&&b.sections.some(sec=>sec.levels.some(lv=>(bs[sec.key+'-'+lv]||0)>0))) return true;
+  if(b.ogbRollerLibrary&&bs[b.ogbRollerLibrary.key]) return true;
+  if(b.ogbLionGate&&bs[b.ogbLionGate.key]) return true;
+  if(b.lectureBlock&&b.lectureStatusOpts&&(bs._lbStatus||(bs._lbCount||0)>0)) return true;
   if([...(b.preFloorItems||[]),...(b.postFloorItems||[])].some(item=>bs[item.key]||(bs[item.key+'_note']&&bs[item.key+'_note'].trim()))) return true;
   return false;
 }
@@ -803,6 +839,34 @@ function generateReport(){
         b.vonzWindows.forEach(v=>{
           if(bs[v.key]) lines.push(`  ${v.label}: ${bs[v.key]}`);
         });
+      }
+
+      // OGB Sections (North / South)
+      if(b.sections){
+        b.sections.forEach(sec=>{
+          const secHasData=sec.levels.some(lv=>(bs[sec.key+'-'+lv]||0)>0);
+          if(secHasData){
+            lines.push(`  ${sec.label}:`);
+            sec.levels.forEach(lv=>{
+              const n=bs[sec.key+'-'+lv]||0;
+              if(n>0){anyOcc=true;lines.push(`    ${lfl(lv)}: ${n}`);}
+            });
+          }
+        });
+        if(b.ogbRollerLibrary && bs[b.ogbRollerLibrary.key]){
+          lines.push(`  ${b.ogbRollerLibrary.label}: ${bs[b.ogbRollerLibrary.key]}`);
+        }
+        if(b.lectureBlock && b.lectureStatusOpts && (bs._lbStatus || (bs._lbCount||0)>0)){
+          const lbCount=bs._lbCount||0;
+          if(lbCount>0) anyOcc=true;
+          const lbParts=[];
+          if(lbCount>0) lbParts.push(`${lbCount} person${lbCount!==1?'s':''}`);
+          if(bs._lbStatus) lbParts.push(bs._lbStatus);
+          lines.push(`  Lecture Block: ${lbParts.join(', ')}`);
+        }
+        if(b.ogbLionGate && bs[b.ogbLionGate.key]){
+          lines.push(`  ${b.ogbLionGate.label}: ${bs[b.ogbLionGate.key]}`);
+        }
       }
 
       // Lecture Block (standalone building)
