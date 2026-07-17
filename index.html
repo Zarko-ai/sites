@@ -263,9 +263,8 @@ body{
 ══════════════════════════════ */
 function fl(hi,lo,asc){
   const a=[];
-  const lbl=i=>i===0?'Level G':'Level '+i;
-  if(asc) for(let i=lo;i<=hi;i++) a.push(lbl(i));
-  else for(let i=hi;i>=lo;i--) a.push(lbl(i));
+  if(asc) for(let i=lo;i<=hi;i++) a.push('Level '+i);
+  else for(let i=hi;i>=lo;i--) a.push('Level '+i);
   return a;
 }
 
@@ -348,8 +347,8 @@ const CAMPUSES=[
       {
         id:'ttr', name:'TTR', floors:[],
         sections:[
-          {key:'north', label:'North', levels:fl(4,1)},
-          {key:'south', label:'South', levels:fl(3,1)},
+          {key:'north', label:'North', levels:fl(4,0)},
+          {key:'south', label:'South', levels:fl(3,0)},
         ]
       },
       {
@@ -366,7 +365,7 @@ const CAMPUSES=[
     buildings:[
       {
         id:'rh',  name:'Rutherford House',
-        floors:['Level 12','Level 11','Level 10','Level 9','Level 8','Level 7','Level 6','Level 5','Level 4','Level 3','Level 2','Level 1','Level M','Level G','Level 0'],
+        floors:['Level 12','Level 11','Level 10','Level 9','Level 8','Level 7','Level 6','Level 5','Level 4','Level 3','Level 2','Level 1','Level M','Level G','Level B'],
         postFloorItems:[
           {type:'srow', key:'rh-kitchen', label:'Kitchen', opts:['Secure','Opened']},
         ]
